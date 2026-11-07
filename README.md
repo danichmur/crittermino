@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Crittermino
 
-## Getting Started
+A browser puzzle that plays like Fillomino, with animal homes instead of numbers.
 
-First, run the development server:
+- Mouse homes are 2 cells
+- Cat homes are 3
+- Dog homes are 4
+- Panda homes are 5
+- Lion homes are 6
+
+Fill every cell. A home must be exactly that size and connected edge to edge. Two homes of the same size cannot share a wall. The same level number is the same puzzle for everyone.
+
+## Play locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). The first five levels are a short tutorial. Progress, best scores, sound, and the daily streak are stored in `localStorage`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Node 20.19+ matches the toolchain. On Node 20.14, `package.json` pins `magic-string` to a CommonJS build so Tailwind can load.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Node 20.14 cannot `require()` the ESM-only `magic-string` that current Tailwind pulls in. `package.json` pins `magic-string` to 0.30.17, which still ships a CommonJS build. Node 20.19 or newer does not need that pin.
 
-## Learn More
+## Scripts
 
-To learn more about Next.js, take a look at the following resources:
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Start the Next.js app |
+| `npm run lint` | Run ESLint |
+| `npm run build` | Production build |
+| `npm run generate` | Rebuild `data/levels.json` (pass a count, e.g. `npm run generate -- 60`) |
+| `npm run verify` | Check every banked level is uniquely solvable and matches the generator |
+| `npm run assets` | Redraw the PWA icons and Open Graph image |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`npm run verify` regenerates each puzzle, so a 60-level check takes a couple of minutes.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## How puzzles are made
 
-## Deploy on Vercel
+`lib/generator.ts` seeds a random number generator with the level number, tiles the grid into connected homes, then removes clues while `lib/solver.ts` can still prove there is exactly one solution. Levels 1 and 2 are handmade lessons. Level 3 is a fixed lesson about same-size homes. Levels 1–300 ship in `data/levels.json` so they open instantly. Clearing level 300 shows a coming-soon screen instead of building another puzzle.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Grid sizes:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 1–5: tutorial, 3×3 then 4×4
+- 6–20: 5×5, mouse, cat, and dog
+- 21–50: 6×6, panda joins at 21 and lion at 36
+- 51–300: 7×7
+
+Mouse and cat alone cannot tile these squares without two homes of the same size touching, so dog is in the palette from the first lesson.
+
+## Deploy
+
+The app is a standard Next.js project and deploys to Vercel with no extra config. Point the project at this directory, leave the build command as `next build`, and serve it over HTTPS so the web app manifest and service worker can be installed.
+
+To use a custom domain such as `crittermino.com`, add it in the Vercel project and update `lib/site.ts` if the canonical URL changes. `app/sitemap.ts` and `app/robots.ts` follow that URL.
