@@ -389,10 +389,6 @@ export const useGame = create<GameStore>((set, get) => ({
   requestHint: () => {
     const state = get()
     if (!state.level || state.isComplete) return
-    if (state.hintsUsed >= 3) {
-      set({ hintAdOpen: true, menuOpen: false })
-      return
-    }
     applyHint()
   },
   grantHintFromAd: () => {

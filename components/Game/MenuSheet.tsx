@@ -32,6 +32,13 @@ export const MenuSheet = () => {
         >
           How to play
         </Link>
+        <Link
+          href="/privacy"
+          onClick={closeMenu}
+          className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-4 font-display font-semibold text-[#3D2C29] ring-1 ring-[#E5D5C0]"
+        >
+          Privacy
+        </Link>
         <Button variant="secondary" onClick={openSettings}>
           Settings
         </Button>

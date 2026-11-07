@@ -3,11 +3,9 @@
 import { useEffect } from 'react'
 import { animalFromSize } from '@/lib/animals'
 import { finishedRegions, neededRegions } from '@/lib/board'
-import { AdBanner } from '@/components/UI/AdBanner'
 import { Header } from '@/components/Layout/Header'
 import { AnimalSelector } from '@/components/Game/AnimalSelector'
 import { Grid } from '@/components/Game/Grid'
-import { HintAdModal } from '@/components/Game/HintAdModal'
 import { HintButton } from '@/components/Game/HintButton'
 import { MenuSheet, SettingsDialog } from '@/components/Game/MenuSheet'
 import { WinModal } from '@/components/Game/WinModal'
@@ -18,7 +16,6 @@ export const GameScreen = () => {
   const level = useGame((state) => state.level)
   const grid = useGame((state) => state.grid)
   const moves = useGame((state) => state.moves)
-  const hintsUsed = useGame((state) => state.hintsUsed)
   const selectedAnimal = useGame((state) => state.selectedAnimal)
   const shakes = useGame((state) => state.shakes)
   const bursts = useGame((state) => state.bursts)
@@ -28,7 +25,6 @@ export const GameScreen = () => {
   const isComplete = useGame((state) => state.isComplete)
   const menuOpen = useGame((state) => state.menuOpen)
   const settingsOpen = useGame((state) => state.settingsOpen)
-  const hintAdOpen = useGame((state) => state.hintAdOpen)
   const openMenu = useGame((state) => state.openMenu)
   const selectAnimal = useGame((state) => state.selectAnimal)
   const tapCell = useGame((state) => state.tapCell)
@@ -37,7 +33,7 @@ export const GameScreen = () => {
   const closeMenu = useGame((state) => state.closeMenu)
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent): void => {
-      if (menuOpen || settingsOpen || hintAdOpen || isComplete || !level) return
+      if (menuOpen || settingsOpen || isComplete || !level) return
       if (event.key === 'Escape') closeMenu()
       const index = Number(event.key) - 1
       const animals = level.palette
@@ -49,7 +45,7 @@ export const GameScreen = () => {
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [menuOpen, settingsOpen, hintAdOpen, isComplete, level, closeMenu, selectAnimal])
+  }, [menuOpen, settingsOpen, isComplete, level, closeMenu, selectAnimal])
   if (isGenerating || !level) {
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
@@ -84,7 +80,7 @@ export const GameScreen = () => {
         moves={moves}
         homes={`${done}/${needed} homes`}
         onMenu={openMenu}
-        hint={<HintButton hintsUsed={hintsUsed} onHint={requestHint} />}
+        hint={<HintButton onHint={requestHint} />}
       />
       <div className="flex min-h-0 flex-1 flex-col py-2">
         {introVisible && level.intro ? (
@@ -117,11 +113,9 @@ export const GameScreen = () => {
       </div>
       <div className="shrink-0">
         <AnimalSelector level={level} grid={grid} selected={selectedAnimal} onSelect={selectAnimal} />
-        {level.number > 5 ? <AdBanner /> : null}
       </div>
       <MenuSheet />
       <SettingsDialog />
-      <HintAdModal />
       <WinModal />
     </div>
   )

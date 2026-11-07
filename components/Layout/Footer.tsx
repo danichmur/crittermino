@@ -5,6 +5,9 @@ export const Footer = () => (
     <Link href="/how-to-play" className="underline-offset-4 hover:underline">
       How to play
     </Link>
+    <Link href="/privacy" className="underline-offset-4 hover:underline">
+      Privacy
+    </Link>
     <span>Free in the browser</span>
   </footer>
 )
