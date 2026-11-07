@@ -1,10 +1,18 @@
 export const SITE = {
   name: 'Crittermino',
-  url: 'https://crittermino.com',
-  title: 'Crittermino - Brain Logic Puzzle Game with Cute Animals',
+  url: 'https://crittermino.vercel.app',
+  title: 'Crittermino - Free Logic Puzzle Online',
   description:
-    'Free online logic puzzle game. Fill regions with cute animals in this addictive Fillomino-style brain teaser. Play in browser, no download needed!',
-  keywords: ['logic puzzle', 'brain game', 'fillomino', 'animal puzzle', 'cute game', 'free puzzle', 'online game'],
+    'Free logic puzzle online. Play a Fillomino brain puzzle in the browser, no download needed. Give each animal a home of the right size.',
+  keywords: [
+    'free logic puzzle online',
+    'fillomino game',
+    'brain puzzle no download',
+    'animal puzzle game',
+    'how to play fillomino',
+    'sudoku alternative',
+  ],
   themeColor: '#FF6B9D',
   background: '#FFF9F0',
+  analyticsId: 'G-Z8LJGLXT7K',
 } as const

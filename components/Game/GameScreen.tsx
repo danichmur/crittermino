@@ -14,6 +14,7 @@ import { useGame } from '@/hooks/useGame'
 
 export const GameScreen = () => {
   const level = useGame((state) => state.level)
+  const playMode = useGame((state) => state.playMode)
   const grid = useGame((state) => state.grid)
   const moves = useGame((state) => state.moves)
   const selectedAnimal = useGame((state) => state.selectedAnimal)
@@ -77,6 +78,7 @@ export const GameScreen = () => {
       <Header
         mode="game"
         level={level.number}
+        label={playMode === 'daily' ? 'Daily' : undefined}
         moves={moves}
         homes={`${done}/${needed} homes`}
         onMenu={openMenu}

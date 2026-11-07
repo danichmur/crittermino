@@ -1,6 +1,7 @@
 'use client'
 
 import { useReducedMotion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import { ANIMALS } from '@/lib/animals'
 import { LEVEL_CAP } from '@/lib/campaign'
 import { formatTime } from '@/lib/format'
@@ -19,13 +20,21 @@ export const WinModal = () => {
   const elapsedMs = useGame((state) => state.elapsedMs)
   const isNewBest = useGame((state) => state.isNewBest)
   const tutorial = useGame((state) => state.tutorialCelebration)
+  const playMode = useGame((state) => state.playMode)
   const startLevel = useGame((state) => state.startLevel)
+  const showHome = useGame((state) => state.showHome)
   const showSoon = useGame((state) => state.showSoon)
+  const router = useRouter()
   const restart = useGame((state) => state.restart)
   const showToast = useGame((state) => state.showToast)
   const reduceMotion = useReducedMotion()
   if (!level) return null
+  const isDaily = playMode === 'daily'
   const isLast = level.number >= LEVEL_CAP
+  const handleDailyDone = (): void => {
+    showHome()
+    router.push('/daily-challenge')
+  }
   const animals = ANIMALS.filter((animal) => level.palette.includes(animal.size))
   const share = async (): Promise<void> => {
     const seconds = Math.min(65_535, Math.max(0, Math.round(elapsedMs / 1000)))
@@ -50,7 +59,7 @@ export const WinModal = () => {
     }
   }
   return (
-    <Modal open={open} title={tutorial ? 'Tutorial complete' : `Level ${level.number} clear`} dismissable={false}>
+    <Modal open={open} title={isDaily ? 'Daily puzzle clear' : tutorial ? 'Tutorial complete' : `Level ${level.number} clear`} dismissable={false}>
       <div className="relative">
         {!reduceMotion
           ? CONFETTI.map((color, index) => (
@@ -100,9 +109,15 @@ export const WinModal = () => {
           </ul>
         ) : null}
         <div className="mt-5 flex flex-col gap-3">
-          <Button size="lg" onClick={() => (isLast ? showSoon() : startLevel(level.number + 1))}>
-            {tutorial ? 'Play level 6' : isLast ? 'Coming soon' : 'Next level'}
-          </Button>
+          {isDaily ? (
+            <Button size="lg" onClick={handleDailyDone}>
+              Today&apos;s page
+            </Button>
+          ) : (
+            <Button size="lg" onClick={() => (isLast ? showSoon() : startLevel(level.number + 1))}>
+              {tutorial ? 'Play level 6' : isLast ? 'Coming soon' : 'Next level'}
+            </Button>
+          )}
           <div className="grid grid-cols-2 gap-3">
             <Button variant="secondary" onClick={() => void share()}>
               Share

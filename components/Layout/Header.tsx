@@ -6,22 +6,28 @@ import type { ReactNode } from 'react'
 interface HeaderProps {
   mode?: 'site' | 'game'
   level?: number
+  label?: string
   moves?: number
   homes?: string
   onMenu?: () => void
   hint?: ReactNode
 }
 
-export const Header = ({ mode = 'site', level, moves, homes, onMenu, hint }: HeaderProps) => {
+export const Header = ({ mode = 'site', level, label, moves, homes, onMenu, hint }: HeaderProps) => {
   if (mode === 'site') {
     return (
-      <header className="flex items-center justify-between px-4 py-4">
-        <Link href="/" className="font-display text-xl font-bold text-[#3D2C29]">
+      <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-4">
+        <Link href="/" className="font-display text-xl font-bold text-[#3D2C29] focus-visible:outline-2 focus-visible:outline-[#FF6B9D]">
           Crittermino
         </Link>
-        <Link href="/how-to-play" className="text-sm font-medium text-[#8C7468] underline-offset-4 hover:underline">
-          How to play
-        </Link>
+        <nav aria-label="Site" className="flex items-center gap-4">
+          <Link href="/how-to-play" className="text-sm font-medium text-[#8C7468] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-[#FF6B9D]">
+            How to play
+          </Link>
+          <Link href="/blog" className="text-sm font-medium text-[#8C7468] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-[#FF6B9D]">
+            Blog
+          </Link>
+        </nav>
       </header>
     )
   }
@@ -38,7 +44,7 @@ export const Header = ({ mode = 'site', level, moves, homes, onMenu, hint }: Hea
         </svg>
       </button>
       <div className="text-center">
-        <p className="font-display text-lg leading-none font-bold">Level {level}</p>
+        <p className="font-display text-lg leading-none font-bold">{label ?? `Level ${level}`}</p>
         <p className="mt-1 text-xs text-[#8C7468] tabular-nums">
           {moves} {moves === 1 ? 'move' : 'moves'}
           {homes ? ` · ${homes}` : ''}

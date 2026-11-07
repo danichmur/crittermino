@@ -6,6 +6,7 @@ import { track } from '@/lib/analytics'
 import { completeSignatures, createGrid, isSolvedGrid, replaceAnimal } from '@/lib/board'
 import { generateLevel } from '@/lib/generator'
 import { LEVEL_CAP } from '@/lib/campaign'
+import { dailyLevelNumber } from '@/lib/daily'
 import { getLevel, hasLevel } from '@/lib/levels'
 import { buzz, playComplete, playError, playTap, playWin } from '@/lib/sound'
 import { findForcedMove, neighborsOf } from '@/lib/solver'
@@ -21,6 +22,7 @@ interface WinSnapshot {
 
 interface GameStore {
   view: 'home' | 'play' | 'levels' | 'soon'
+  playMode: 'campaign' | 'daily'
   level: Level | null
   grid: Cell[][]
   selectedAnimal: Animal | null
@@ -43,7 +45,8 @@ interface GameStore {
   showHome: () => void
   showLevels: () => void
   showSoon: () => void
-  startLevel: (levelNumber: number) => void
+  startLevel: (levelNumber: number, mode?: 'campaign' | 'daily') => void
+  startDaily: () => void
   selectAnimal: (animal: Animal) => void
   tapCell: (row: number, col: number) => void
   requestHint: () => void
@@ -158,6 +161,13 @@ const finishIfSolved = (level: Level, grid: Cell[][], moves: number, startedAt: 
   const elapsedMs = Date.now() - startedAt
   const progress = useProgress.getState().progress
   const previousBest = progress.bestMoves[level.number]
+  if (useGame.getState().playMode === 'daily') {
+    useProgress.getState().completeDaily()
+    track({ name: 'level_completed', level: level.number, moves, timeMs: elapsedMs })
+    playWin()
+    buzz([24, 40, 24, 40, 70])
+    return { isComplete: true, elapsedMs, isNewBest: false, tutorialCelebration: false }
+  }
   const tutorialCelebration = level.number === 5 && !progress.tutorialCompleted
   useProgress.getState().completeLevel(level.number, moves)
   track({ name: 'level_completed', level: level.number, moves, timeMs: elapsedMs })
@@ -262,6 +272,7 @@ const beginLevel = (level: Level): void => {
 
 export const useGame = create<GameStore>((set, get) => ({
   view: 'home',
+  playMode: 'campaign',
   level: null,
   grid: [],
   selectedAnimal: null,
@@ -296,7 +307,11 @@ export const useGame = create<GameStore>((set, get) => ({
   closeHintAd: () => set({ hintAdOpen: false }),
   dismissIntro: () => set({ introVisible: false }),
   selectAnimal: (animal) => set({ selectedAnimal: get().selectedAnimal === animal ? null : animal }),
-  startLevel: (levelNumber) => {
+  startDaily: () => {
+    get().startLevel(dailyLevelNumber(), 'daily')
+  },
+  startLevel: (levelNumber, mode = 'campaign') => {
+    set({ playMode: mode })
     if (levelNumber > LEVEL_CAP) {
       get().showSoon()
       return

@@ -16,24 +16,30 @@ export const GameApp = () => {
   const view = useGame((state) => state.view)
   const toast = useGame((state) => state.toast)
   const startLevel = useGame((state) => state.startLevel)
+  const startDaily = useGame((state) => state.startDaily)
   const showSoon = useGame((state) => state.showSoon)
-  const claimedNext = useRef(false)
+  const claimedLaunch = useRef(false)
   useEffect(() => {
     hydrate()
   }, [hydrate])
   useEffect(() => {
-    if (!ready || claimedNext.current) return
+    if (!ready || claimedLaunch.current) return
     const params = new URLSearchParams(window.location.search)
-    if (params.get('play') !== 'next') return
-    claimedNext.current = true
+    const play = params.get('play')
+    if (play !== 'next' && play !== 'daily') return
+    claimedLaunch.current = true
     window.history.replaceState(null, '', '/')
+    if (play === 'daily') {
+      startDaily()
+      return
+    }
     const progress = useProgress.getState().progress
     if (progress.completedLevels.includes(LEVEL_CAP)) {
       showSoon()
       return
     }
     startLevel(Math.min(LEVEL_CAP, Math.max(1, progress.currentLevel)))
-  }, [ready, showSoon, startLevel])
+  }, [ready, showSoon, startDaily, startLevel])
   return (
     <>
       {view === 'home' ? <HomeScreen /> : null}

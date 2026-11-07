@@ -33,6 +33,27 @@ export const MenuSheet = () => {
           How to play
         </Link>
         <Link
+          href="/daily-challenge"
+          onClick={closeMenu}
+          className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-4 font-display font-semibold text-[#3D2C29] ring-1 ring-[#E5D5C0]"
+        >
+          Daily puzzle
+        </Link>
+        <Link
+          href="/blog"
+          onClick={closeMenu}
+          className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-4 font-display font-semibold text-[#3D2C29] ring-1 ring-[#E5D5C0]"
+        >
+          Blog
+        </Link>
+        <Link
+          href="/about"
+          onClick={closeMenu}
+          className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-4 font-display font-semibold text-[#3D2C29] ring-1 ring-[#E5D5C0]"
+        >
+          About
+        </Link>
+        <Link
           href="/privacy"
           onClick={closeMenu}
           className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-4 font-display font-semibold text-[#3D2C29] ring-1 ring-[#E5D5C0]"
@@ -92,7 +113,7 @@ export const SettingsDialog = () => {
       </div>
       {confirmReset ? (
         <div className="mt-4">
-          <p className="text-sm text-[#8C7468]">This clears levels, streaks, and best scores on this device.</p>
+          <p className="text-sm text-[#8C7468]">This clears levels, streaks, daily clears, and best scores on this device.</p>
           <div className="mt-3 grid grid-cols-2 gap-2">
             <Button
               variant="secondary"

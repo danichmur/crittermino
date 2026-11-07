@@ -6,6 +6,7 @@ import { ANIMALS } from '@/lib/animals'
 import { LEVEL_CAP } from '@/lib/campaign'
 import { streakLabel } from '@/lib/storage'
 import { Button } from '@/components/UI/Button'
+import { HomeSeo } from '@/components/Game/HomeSeo'
 import { Footer } from '@/components/Layout/Footer'
 import { useInstallPrompt } from '@/components/PwaRegister'
 import { useGame } from '@/hooks/useGame'
@@ -31,6 +32,7 @@ export const HomeScreen = () => {
   const nextLevel = Math.min(progress.currentLevel, LEVEL_CAP)
   const continueLabel = nextLevel > 1 || progress.completedLevels.length > 0
   return (
+    <div>
     <div className="relative flex min-h-dvh flex-col px-5 pt-[max(1.5rem,env(safe-area-inset-top))]">
       <div className="pointer-events-none absolute inset-0 hidden overflow-hidden sm:block" aria-hidden="true">
         {FLOATERS.map((floater) => (
@@ -48,7 +50,7 @@ export const HomeScreen = () => {
         <p className="text-sm font-semibold tracking-wide text-[#E84B7F] uppercase">Logic puzzle</p>
         <h1 className="mt-2 font-display text-5xl font-bold text-[#3D2C29]">Crittermino</h1>
         <p className="mt-3 max-w-xs text-base text-[#8C7468]">
-          Fill the grid with animal homes. Each critter needs a region of exactly the right size, and same-size homes cannot touch.
+          A free Fillomino puzzle in the browser. No download. Fill the grid with animal homes. Each critter needs a region of exactly the right size, and same-size homes cannot touch.
         </p>
         <div className="mt-5 flex gap-2 text-3xl" aria-hidden="true">
           {ANIMALS.map((animal) => (
@@ -83,6 +85,8 @@ export const HomeScreen = () => {
           </p>
         ) : null}
       </main>
+    </div>
+      <HomeSeo />
       <Footer />
     </div>
   )

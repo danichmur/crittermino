@@ -47,6 +47,7 @@ export interface Progress {
   totalMoves: number
   streak: number
   lastPlayed: string
+  lastDaily: string
   soundEnabled: boolean
   hapticsEnabled: boolean
   tutorialCompleted: boolean

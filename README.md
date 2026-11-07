@@ -53,4 +53,12 @@ Mouse and cat alone cannot tile these squares without two homes of the same size
 
 The app is a standard Next.js project and deploys to Vercel with no extra config. Point the project at this directory, leave the build command as `next build`, and serve it over HTTPS so the web app manifest and service worker can be installed.
 
-To use a custom domain such as `crittermino.com`, add it in the Vercel project and update `lib/site.ts` if the canonical URL changes. `app/sitemap.ts` and `app/robots.ts` follow that URL.
+`lib/site.ts` is the canonical origin. It is `https://crittermino.vercel.app` because `crittermino.com` is not registered yet. `app/sitemap.ts` and `app/robots.ts` follow that URL. When the custom domain resolves, change `SITE.url` and add the domain in the Vercel project.
+
+## Google Search Console
+
+The live sitemap is `https://crittermino.vercel.app/sitemap.xml`. `robots.txt` points at it.
+
+1. In [Google Search Console](https://search.google.com/search-console), add the URL-prefix property `https://crittermino.vercel.app`.
+2. Choose the HTML tag method. The `content` value lives in `app/layout.tsx` and is printed as `<meta name="google-site-verification">`. `GOOGLE_SITE_VERIFICATION` overrides it when set.
+3. After that tag is on the live site, click Verify, then submit `sitemap.xml`.

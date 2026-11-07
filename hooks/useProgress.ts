@@ -2,6 +2,7 @@
 
 import { create } from 'zustand'
 import { LEVEL_CAP } from '@/lib/campaign'
+import { utcDateString } from '@/lib/daily'
 import { setHapticsEnabled, setSoundEnabled } from '@/lib/sound'
 import { defaultProgress, loadProgress, saveProgress, withStreak } from '@/lib/storage'
 import type { Progress } from '@/types/game'
@@ -15,6 +16,7 @@ interface ProgressStore {
   undoMove: () => void
   recordHint: () => void
   completeLevel: (level: number, moves: number) => void
+  completeDaily: () => void
   setSound: (enabled: boolean) => void
   setHaptics: (enabled: boolean) => void
   reset: () => void
@@ -67,6 +69,10 @@ export const useProgress = create<ProgressStore>((set, get) => ({
       currentLevel: Math.min(LEVEL_CAP, Math.max(current.currentLevel, level + 1)),
       tutorialCompleted: current.tutorialCompleted || level >= 5,
     })
+    set({ progress })
+  },
+  completeDaily: () => {
+    const progress = persist({ ...withStreak(get().progress), lastDaily: utcDateString() })
     set({ progress })
   },
   setSound: (enabled) => {

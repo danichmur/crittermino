@@ -5,12 +5,12 @@ export type AnalyticsEvent =
   | { name: 'tutorial_completed' }
   | { name: 'share_clicked'; level: number }
 
-/** Placeholder analytics. Pushes to dataLayer and POSTs to /api/analytics when a sink exists. */
+/** Sends a game event to Google Analytics and to the local analytics route. */
 export const track = (event: AnalyticsEvent): void => {
   if (typeof window === 'undefined') return
+  const { name, ...params } = event
+  window.gtag?.('event', name, params)
   const payload = { ...event, ts: Date.now() }
-  window.dataLayer = window.dataLayer ?? []
-  window.dataLayer.push(payload)
   void fetch('/api/analytics', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },

@@ -15,10 +15,10 @@ const readScore = async (params: SharePageProps['params']) => {
 
 export const generateMetadata = async ({ params }: SharePageProps): Promise<Metadata> => {
   const { code, score } = await readScore(params)
-  if (!score) return { title: 'Score not found', robots: { index: false, follow: false } }
+  if (!score) return { title: { absolute: 'Score not found' }, robots: { index: false, follow: false } }
   const sentence = shareSentence(score)
   return {
-    title: sentence,
+    title: { absolute: sentence },
     description: `${sentence} Play your own next puzzle.`,
     robots: { index: false, follow: true },
     alternates: { canonical: `/share/${code}` },
