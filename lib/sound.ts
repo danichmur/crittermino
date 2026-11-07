@@ -2,13 +2,34 @@ let audio: AudioContext | null = null
 let soundEnabled = true
 let hapticsEnabled = true
 
-const context = (): AudioContext | null => {
+type AudioCtor = typeof AudioContext
+
+const audioCtor = (): AudioCtor | null => {
   if (typeof window === 'undefined') return null
-  const Ctx = window.AudioContext
-  if (!Ctx) return null
-  if (!audio) audio = new Ctx()
-  if (audio.state === 'suspended') void audio.resume()
+  const legacy = window as Window & { webkitAudioContext?: AudioCtor }
+  return window.AudioContext ?? legacy.webkitAudioContext ?? null
+}
+
+const context = (): AudioContext | null => {
+  const Ctor = audioCtor()
+  if (!Ctor) return null
+  if (!audio) audio = new Ctor()
   return audio
+}
+
+/** Browsers block audio until a gesture, and a suspended context eats short tones. */
+const running = (ctx: AudioContext): Promise<void> => {
+  if (ctx.state === 'running') return Promise.resolve()
+  const buffer = ctx.createBuffer(1, 1, 22050)
+  const source = ctx.createBufferSource()
+  source.buffer = buffer
+  source.connect(ctx.destination)
+  try {
+    source.start()
+  } catch {
+    // The context can already be unlocking from an earlier tap.
+  }
+  return ctx.resume().then(() => undefined)
 }
 
 const tone = (
@@ -22,22 +43,29 @@ const tone = (
   if (!soundEnabled) return
   const ctx = context()
   if (!ctx) return
-  const start = ctx.currentTime + delay
-  const oscillator = ctx.createOscillator()
-  const gain = ctx.createGain()
-  oscillator.type = type
-  oscillator.frequency.setValueAtTime(frequency, start)
-  if (slide) oscillator.frequency.exponentialRampToValueAtTime(Math.max(40, slide), start + duration)
-  gain.gain.setValueAtTime(gainValue, start)
-  gain.gain.exponentialRampToValueAtTime(0.0001, start + duration)
-  oscillator.connect(gain)
-  gain.connect(ctx.destination)
-  oscillator.start(start)
-  oscillator.stop(start + duration + 0.02)
+  void running(ctx).then(() => {
+    if (!soundEnabled || ctx.state !== 'running') return
+    const start = ctx.currentTime + delay
+    const oscillator = ctx.createOscillator()
+    const gain = ctx.createGain()
+    oscillator.type = type
+    oscillator.frequency.setValueAtTime(frequency, start)
+    if (slide) oscillator.frequency.exponentialRampToValueAtTime(Math.max(40, slide), start + duration)
+    gain.gain.setValueAtTime(gainValue, start)
+    gain.gain.linearRampToValueAtTime(0.0001, start + duration)
+    oscillator.connect(gain)
+    gain.connect(ctx.destination)
+    oscillator.start(start)
+    oscillator.stop(start + duration + 0.02)
+  })
 }
 
 export const setSoundEnabled = (enabled: boolean): void => {
   soundEnabled = enabled
+  if (enabled) {
+    const ctx = context()
+    if (ctx) void running(ctx)
+  }
 }
 
 export const setHapticsEnabled = (enabled: boolean): void => {
@@ -68,4 +96,13 @@ export const playWin = (): void => {
 export const buzz = (pattern: number | number[]): void => {
   if (!hapticsEnabled || typeof navigator === 'undefined' || typeof navigator.vibrate !== 'function') return
   navigator.vibrate(pattern)
+}
+
+if (typeof window !== 'undefined') {
+  const prime = (): void => {
+    const ctx = context()
+    if (ctx) void running(ctx)
+  }
+  window.addEventListener('pointerdown', prime, { capture: true })
+  window.addEventListener('keydown', prime, { capture: true })
 }
