@@ -245,6 +245,7 @@ const applyHint = (): void => {
 }
 
 const beginLevel = (level: Level): void => {
+  window.scrollTo(0, 0)
   useGame.setState({
     view: 'play',
     level,

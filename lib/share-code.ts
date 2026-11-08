@@ -119,6 +119,9 @@ export const shareSentence = (score: ShareScore): string => {
   return `I cleared Crittermino level ${score.level} in ${score.moves} ${moveWord} · ${formatTime(score.seconds * 1000)}!`
 }
 
+/** The link a player sends. Score text stays in the message; the URL is the game. */
+export const shareHomeUrl = `${SITE.url}/`
+
 export const sharePageUrl = (code: string): string => `${SITE.url}/share/${code}`
 
-export const shareLine = (score: ShareScore, code: string): string => `${shareSentence(score)} ${sharePageUrl(code)}`
+export const shareLine = (score: ShareScore): string => `${shareSentence(score)} ${shareHomeUrl}`

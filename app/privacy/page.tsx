@@ -17,7 +17,7 @@ const sections = [
   },
   {
     title: 'What stays on this device',
-    body: 'The game saves progress in this browser’s local storage: the current level, cleared levels, best scores, hints used, move count, daily streak, the last day you played, the last daily puzzle you cleared, and whether sound and haptics are on. A share link encodes a level number, a move count, and a time so someone can open that result. It does not include your name. If you install the game, or visit the live site, the browser may keep a copy of the app on the device so it can open again. That copy is the game, not a profile of you.',
+    body: 'The game saves progress in this browser’s local storage: the current level, cleared levels, best scores, hints used, move count, daily streak, the last day you played, the last daily puzzle you cleared, and whether sound and haptics are on. A share message includes the level number, the move count, and the time as text, plus a link to the game. It does not include your name. If you install the game, or visit the live site, the browser may keep a copy of the app on the device so it can open again. That copy is the game, not a profile of you.',
   },
   {
     title: 'What the game sends',
@@ -50,7 +50,7 @@ export default function PrivacyPage() {
     <ContentPage crumbs={[{ href: '/', label: 'Home' }, { label: 'Privacy' }]}>
         <h1 className="font-display text-4xl font-bold">Privacy policy</h1>
         <p className="mt-3 text-[#8C7468]">
-          This policy covers {SITE.name} at {SITE.url}. Last updated November 7, 2026.
+          This policy covers {SITE.name} at {SITE.url}. Last updated November 8, 2026.
         </p>
         <ul className="mt-6 grid gap-3">
           {sections.map((section) => (

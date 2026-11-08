@@ -10,9 +10,11 @@ interface ModalProps {
   onClose?: () => void
   children: ReactNode
   dismissable?: boolean
+  /** Results sit in the middle. Menus stay a bottom sheet on a phone. */
+  placement?: 'center' | 'sheet'
 }
 
-export const Modal = ({ open, title, onClose, children, dismissable = true }: ModalProps) => {
+export const Modal = ({ open, title, onClose, children, dismissable = true, placement = 'sheet' }: ModalProps) => {
   const dialogRef = useRef<HTMLDivElement>(null)
   const reduceMotion = useReducedMotion()
   useEffect(() => {
@@ -20,7 +22,8 @@ export const Modal = ({ open, title, onClose, children, dismissable = true }: Mo
     const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null
     const originalOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    dialogRef.current?.focus()
+    window.scrollTo(0, 0)
+    dialogRef.current?.focus({ preventScroll: true })
     const onKeyDown = (event: KeyboardEvent): void => {
       if (event.key === 'Escape' && dismissable) onClose?.()
       if (event.key !== 'Tab' || !dialogRef.current) return
@@ -43,7 +46,8 @@ export const Modal = ({ open, title, onClose, children, dismissable = true }: Mo
     return () => {
       document.body.style.overflow = originalOverflow
       document.removeEventListener('keydown', onKeyDown)
-      previous?.focus()
+      window.scrollTo(0, 0)
+      previous?.focus({ preventScroll: true })
     }
   }, [open, dismissable, onClose])
   return (
@@ -56,7 +60,12 @@ export const Modal = ({ open, title, onClose, children, dismissable = true }: Mo
           aria-modal="true"
           aria-label={title}
           tabIndex={-1}
-          className="fixed inset-0 z-50 flex items-end justify-center px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] outline-none sm:items-center sm:p-3"
+          className={cn(
+            'fixed inset-0 z-50 flex justify-center overflow-y-auto px-3 outline-none',
+            placement === 'center'
+              ? 'items-center py-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))]'
+              : 'items-end pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:items-center sm:p-3',
+          )}
           initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: reduceMotion ? 0 : 12, pointerEvents: 'none' }}

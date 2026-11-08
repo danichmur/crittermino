@@ -74,7 +74,7 @@ export const GameScreen = () => {
   const ghostAnimal = coach?.kind === 'region' ? coach.animal : null
   const highlight = coach?.kind === 'cell' ? { row: coach.row, col: coach.col } : null
   return (
-    <div className="mx-auto flex h-dvh max-h-dvh w-full max-w-3xl flex-col overflow-hidden px-2 pt-[max(0.5rem,env(safe-area-inset-top))] pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:px-3">
+    <div className="fixed inset-x-0 top-0 mx-auto flex h-dvh max-h-dvh w-full max-w-3xl flex-col overflow-hidden px-2 pt-[max(0.5rem,env(safe-area-inset-top))] pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:px-3">
       <Header
         mode="game"
         level={level.number}

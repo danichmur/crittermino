@@ -1,4 +1,5 @@
 let audio: AudioContext | null = null
+let keeper: AudioBufferSourceNode | null = null
 let soundEnabled = true
 let hapticsEnabled = true
 
@@ -13,23 +14,76 @@ const audioCtor = (): AudioCtor | null => {
 const context = (): AudioContext | null => {
   const Ctor = audioCtor()
   if (!Ctor) return null
+  if (audio?.state === 'closed') {
+    audio = null
+    keeper = null
+  }
   if (!audio) audio = new Ctor()
   return audio
 }
 
-/** Browsers block audio until a gesture, and a suspended context eats short tones. */
-const running = (ctx: AudioContext): Promise<void> => {
-  if (ctx.state === 'running') return Promise.resolve()
-  const buffer = ctx.createBuffer(1, 1, 22050)
+/**
+ * iOS drops the audio session once every node has stopped, which is the pause
+ * on the results screen. A quiet loop started inside the gesture keeps it alive,
+ * and a fresh loop is started again if the session was suspended.
+ */
+const holdOpen = (ctx: AudioContext): void => {
+  const buffer = ctx.createBuffer(1, 22050, 22050)
   const source = ctx.createBufferSource()
+  const gain = ctx.createGain()
   source.buffer = buffer
-  source.connect(ctx.destination)
+  source.loop = true
+  gain.gain.value = 0.00001
+  source.connect(gain)
+  gain.connect(ctx.destination)
   try {
     source.start()
   } catch {
-    // The context can already be unlocking from an earlier tap.
+    return
   }
-  return ctx.resume().then(() => undefined)
+  if (keeper) {
+    try {
+      keeper.stop()
+    } catch {
+      // The previous loop already ended when the session was interrupted.
+    }
+    keeper.disconnect()
+  }
+  keeper = source
+}
+
+const unlock = (): void => {
+  const ctx = context()
+  if (!ctx) return
+  if (ctx.state !== 'running' || !keeper) holdOpen(ctx)
+  if (ctx.state !== 'running') void ctx.resume()
+}
+
+const playTone = (
+  ctx: AudioContext,
+  frequency: number,
+  duration: number,
+  type: OscillatorType,
+  gainValue: number,
+  delay: number,
+  slide?: number,
+): void => {
+  const start = ctx.currentTime + delay
+  const oscillator = ctx.createOscillator()
+  const gain = ctx.createGain()
+  oscillator.type = type
+  oscillator.frequency.setValueAtTime(frequency, start)
+  if (slide) oscillator.frequency.exponentialRampToValueAtTime(Math.max(40, slide), start + duration)
+  gain.gain.setValueAtTime(gainValue, start)
+  gain.gain.linearRampToValueAtTime(0.0001, start + duration)
+  oscillator.connect(gain)
+  gain.connect(ctx.destination)
+  oscillator.start(start)
+  oscillator.stop(start + duration + 0.02)
+  oscillator.onended = () => {
+    oscillator.disconnect()
+    gain.disconnect()
+  }
 }
 
 const tone = (
@@ -43,29 +97,19 @@ const tone = (
   if (!soundEnabled) return
   const ctx = context()
   if (!ctx) return
-  void running(ctx).then(() => {
-    if (!soundEnabled || ctx.state !== 'running') return
-    const start = ctx.currentTime + delay
-    const oscillator = ctx.createOscillator()
-    const gain = ctx.createGain()
-    oscillator.type = type
-    oscillator.frequency.setValueAtTime(frequency, start)
-    if (slide) oscillator.frequency.exponentialRampToValueAtTime(Math.max(40, slide), start + duration)
-    gain.gain.setValueAtTime(gainValue, start)
-    gain.gain.linearRampToValueAtTime(0.0001, start + duration)
-    oscillator.connect(gain)
-    gain.connect(ctx.destination)
-    oscillator.start(start)
-    oscillator.stop(start + duration + 0.02)
-  })
+  // Start the node in the same turn as the tap. Waiting on resume() runs after
+  // the gesture, and iOS then plays nothing for the rest of the session.
+  if (ctx.state !== 'running') void ctx.resume()
+  try {
+    playTone(ctx, frequency, duration, type, gainValue, delay, slide)
+  } catch {
+    // A closed context is replaced on the next tap.
+  }
 }
 
 export const setSoundEnabled = (enabled: boolean): void => {
   soundEnabled = enabled
-  if (enabled) {
-    const ctx = context()
-    if (ctx) void running(ctx)
-  }
+  if (enabled) unlock()
 }
 
 export const setHapticsEnabled = (enabled: boolean): void => {
@@ -99,10 +143,7 @@ export const buzz = (pattern: number | number[]): void => {
 }
 
 if (typeof window !== 'undefined') {
-  const prime = (): void => {
-    const ctx = context()
-    if (ctx) void running(ctx)
-  }
-  window.addEventListener('pointerdown', prime, { capture: true })
-  window.addEventListener('keydown', prime, { capture: true })
+  window.addEventListener('pointerdown', unlock, { capture: true })
+  window.addEventListener('touchstart', unlock, { capture: true, passive: true })
+  window.addEventListener('keydown', unlock, { capture: true })
 }

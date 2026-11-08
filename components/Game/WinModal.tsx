@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { ANIMALS } from '@/lib/animals'
 import { LEVEL_CAP } from '@/lib/campaign'
 import { formatTime } from '@/lib/format'
-import { encodeShareCode, shareLine, sharePageUrl, shareSentence } from '@/lib/share-code'
+import { shareHomeUrl, shareLine, shareSentence } from '@/lib/share-code'
 import { track } from '@/lib/analytics'
 import { Button } from '@/components/UI/Button'
 import { Modal } from '@/components/UI/Modal'
@@ -39,13 +39,12 @@ export const WinModal = () => {
   const share = async (): Promise<void> => {
     const seconds = Math.min(65_535, Math.max(0, Math.round(elapsedMs / 1000)))
     const score = { level: level.number, moves: Math.min(65_535, Math.max(0, moves)), seconds }
-    const code = encodeShareCode(score)
     const text = shareSentence(score)
-    const line = shareLine(score, code)
+    const line = shareLine(score)
     track({ name: 'share_clicked', level: level.number })
     if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
       try {
-        await navigator.share({ title: 'Crittermino', text, url: sharePageUrl(code) })
+        await navigator.share({ title: 'Crittermino', text, url: shareHomeUrl })
         return
       } catch (error) {
         if (error instanceof DOMException && error.name === 'AbortError') return
@@ -59,7 +58,7 @@ export const WinModal = () => {
     }
   }
   return (
-    <Modal open={open} title={isDaily ? 'Daily puzzle clear' : tutorial ? 'Tutorial complete' : `Level ${level.number} clear`} dismissable={false}>
+    <Modal open={open} placement="center" title={isDaily ? 'Daily puzzle clear' : tutorial ? 'Tutorial complete' : `Level ${level.number} clear`} dismissable={false}>
       <div className="relative">
         {!reduceMotion
           ? CONFETTI.map((color, index) => (
