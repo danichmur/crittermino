@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { copy } from '@/lib/i18n'
-import type { Locale } from '@/lib/locale'
+import { localizeHref, type Locale } from '@/lib/locale'
 import { SITE } from '@/lib/site'
 
 interface PageMetaInput {
@@ -9,27 +9,39 @@ interface PageMetaInput {
   path: string
   keywords?: readonly string[]
   published?: string
+  modified?: string
+  locale?: Locale
 }
 
+const languageAlternates = (path: string): Record<string, string> => ({
+  en: path,
+  ru: localizeHref('ru', path),
+  es: localizeHref('es', path),
+  'x-default': path,
+})
+
 /** Title, description, canonical, and social cards for a content URL. */
-export const pageMeta = ({ title, description, path, keywords, published }: PageMetaInput): Metadata => ({
+export const pageMeta = ({ title, description, path, keywords, published, modified, locale }: PageMetaInput): Metadata => {
+  const canonical = locale ? localizeHref(locale, path) : path
+  return {
   title,
   description,
   ...(keywords ? { keywords: [...keywords] } : {}),
-  alternates: { canonical: path },
+  alternates: locale ? { canonical, languages: languageAlternates(path) } : { canonical },
   openGraph: published
     ? {
         title,
         description,
-        url: path,
+        url: canonical,
         type: 'article',
         publishedTime: published,
+        ...(modified ? { modifiedTime: modified } : {}),
         images: ['/og-image.png'],
       }
     : {
         title,
         description,
-        url: path,
+        url: canonical,
         type: 'website',
         images: ['/og-image.png'],
       },
@@ -39,7 +51,8 @@ export const pageMeta = ({ title, description, path, keywords, published }: Page
     description,
     images: ['/og-image.png'],
   },
-})
+  }
+}
 
 export const breadcrumbJsonLd = (crumbs: ReadonlyArray<{ name: string; path: string }>) => ({
   '@context': 'https://schema.org',

@@ -4,14 +4,15 @@ import Link from 'next/link'
 import { ANIMALS } from '@/lib/animals'
 import { cellCountLabel } from '@/lib/i18n'
 import { useI18n } from '@/components/Locale/LocaleProvider'
+import { localizeHref } from '@/lib/locale'
 
 export const HomeSeo = () => {
   const { locale, t } = useI18n()
   const readMore = [
-    { href: '/how-to-play', label: t.howToPlay },
-    { href: '/daily-challenge', label: t.dailyPuzzle },
-    { href: '/blog', label: t.strategies },
-    { href: '/about', label: t.aboutGame },
+    { href: localizeHref(locale, '/how-to-play'), label: t.howToPlay },
+    { href: localizeHref(locale, '/daily-challenge'), label: t.dailyPuzzle },
+    { href: localizeHref(locale, '/blog'), label: t.strategies },
+    { href: localizeHref(locale, '/about'), label: t.aboutGame },
   ] as const
   return (
     <div className="mx-auto w-full max-w-lg px-5 pb-2">

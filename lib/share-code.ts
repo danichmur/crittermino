@@ -124,9 +124,13 @@ export const shareSentence = (score: ShareScore, locale: Locale = 'en'): string 
     time: formatTime(score.seconds * 1000),
   })
 
-/** The link a player sends. Score text stays in the message; the URL is the game. */
-export const shareHomeUrl = `${SITE.url}/`
-
 export const sharePageUrl = (code: string): string => `${SITE.url}/share/${code}`
 
-export const shareLine = (score: ShareScore, locale: Locale = 'en'): string => `${shareSentence(score, locale)} ${shareHomeUrl}`
+/** Sentence plus the result page. One call, so the native sheet and the clipboard use the same token. */
+export const shareMessage = (score: ShareScore, locale: Locale = 'en'): { text: string; url: string; line: string } => {
+  const text = shareSentence(score, locale)
+  const url = sharePageUrl(encodeShareCode(score))
+  return { text, url, line: `${text} ${url}` }
+}
+
+export const shareLine = (score: ShareScore, locale: Locale = 'en'): string => shareMessage(score, locale).line

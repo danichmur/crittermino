@@ -5,7 +5,7 @@ import Script from 'next/script'
 import { LocaleProvider } from '@/components/Locale/LocaleProvider'
 import { PwaRegister } from '@/components/PwaRegister'
 import { copy } from '@/lib/i18n'
-import { getLocale } from '@/lib/locale-server'
+import { getLocale, getPathLocale } from '@/lib/locale-server'
 import { SITE } from '@/lib/site'
 import './globals.css'
 
@@ -54,6 +54,7 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   const locale = await getLocale()
+  const pathLocked = (await getPathLocale()) !== null
   return (
     <html lang={locale} className={`${fredoka.variable} ${nunito.variable} ${inter.variable}`} suppressHydrationWarning>
       <body className="font-sans antialiased">
@@ -61,7 +62,9 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <Script id="google-analytics" strategy="afterInteractive">
           {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','${SITE.analyticsId}');`}
         </Script>
-        <LocaleProvider initialLocale={locale}>{children}</LocaleProvider>
+        <LocaleProvider initialLocale={locale} pathLocked={pathLocked}>
+          {children}
+        </LocaleProvider>
         <PwaRegister />
       </body>
     </html>

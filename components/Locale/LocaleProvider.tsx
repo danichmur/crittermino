@@ -14,21 +14,26 @@ const LocaleContext = createContext<LocaleContextValue | null>(null)
 
 interface LocaleProviderProps {
   initialLocale: Locale
+  pathLocked?: boolean
   children: ReactNode
 }
 
-export const LocaleProvider = ({ initialLocale, children }: LocaleProviderProps) => {
+export const LocaleProvider = ({ initialLocale, pathLocked = false, children }: LocaleProviderProps) => {
   const [locale, setLocaleState] = useState<Locale>(initialLocale)
   setActiveLocale(locale)
   useEffect(() => {
     document.documentElement.lang = locale
   }, [locale])
   useEffect(() => {
+    if (pathLocked) {
+      persistLocale(initialLocale)
+      return
+    }
     const stored = readStoredLocale()
     if (!stored || stored === initialLocale) return
     setLocaleState(stored)
     persistLocale(stored)
-  }, [initialLocale])
+  }, [initialLocale, pathLocked])
   const setLocale = (next: Locale): void => {
     setLocaleState(next)
     setActiveLocale(next)

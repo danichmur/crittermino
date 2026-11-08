@@ -2,15 +2,16 @@
 
 import Link from 'next/link'
 import { useI18n } from '@/components/Locale/LocaleProvider'
+import { localizeHref } from '@/lib/locale'
 
 export const Footer = () => {
-  const { t } = useI18n()
+  const { locale, t } = useI18n()
   const links = [
-    { href: '/how-to-play', label: t.howToPlay },
-    { href: '/daily-challenge', label: t.daily },
-    { href: '/blog', label: t.blog },
-    { href: '/about', label: t.about },
-    { href: '/privacy', label: t.privacy },
+    { href: localizeHref(locale, '/how-to-play'), label: t.howToPlay },
+    { href: localizeHref(locale, '/daily-challenge'), label: t.daily },
+    { href: localizeHref(locale, '/blog'), label: t.blog },
+    { href: localizeHref(locale, '/about'), label: t.about },
+    { href: localizeHref(locale, '/privacy'), label: t.privacy },
   ] as const
   return (
     <footer className="mt-auto px-4 py-6 text-sm text-[#8C7468]">

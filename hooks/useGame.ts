@@ -362,15 +362,11 @@ export const useGame = create<GameStore>((set, get) => ({
       playTap()
       return
     }
-    if (!state.selectedAnimal) {
-      if (current.animal) {
-        set({ selectedAnimal: current.animal, coach: null })
-        return
-      }
+    if (!current.animal && !state.selectedAnimal) {
       get().showToast(copy[getActiveLocale()].pickAnimal)
       return
     }
-    const isErase = current.animal === state.selectedAnimal
+    const isErase = Boolean(current.animal)
     const nextAnimal = isErase ? null : state.selectedAnimal
     const grid = replaceAnimal(state.grid, row, col, nextAnimal)
     const placed = grid[row]?.[col]

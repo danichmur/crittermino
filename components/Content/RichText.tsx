@@ -1,8 +1,20 @@
 import Link from 'next/link'
 import type { ReactNode } from 'react'
+import { localizeHref, type Locale } from '@/lib/locale'
 
 const isSafeHref = (href: string): boolean =>
   (href.startsWith('/') && !href.startsWith('//')) || href.startsWith('https://')
+
+/** Point /blog links at the translation the reader is on. Other paths stay put. */
+export const prefixRichText = (text: string, locale: Locale): string => {
+  if (locale === 'en') return text
+  return text.replace(/\[\[(\/blog(?:\/[^\]|]+)*)\|([^\]]+)\]\]/g, (_match, href: string, label: string) => {
+    return `[[${localizeHref(locale, href)}|${label}]]`
+  })
+}
+
+/** Visible label of a rich-text link, for schema and other plain-text surfaces. */
+export const stripRichText = (text: string): string => text.replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2')
 
 /** Turns `[[/path|label]]` and `[[https://…|label]]` into links. Other text stays text. */
 export const richText = (text: string): ReactNode[] => {

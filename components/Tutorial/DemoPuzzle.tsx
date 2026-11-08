@@ -17,9 +17,13 @@ export const DemoPuzzle = () => {
   const { t } = useI18n()
   const onPress = (row: number, col: number): void => {
     const cell = grid[row]?.[col]
-    if (!cell || cell.isHint || !selected || solved) return
-    const next = cell.animal === selected ? null : selected
-    setGrid(replaceAnimal(grid, row, col, next))
+    if (!cell || cell.isHint || solved) return
+    if (cell.animal) {
+      setGrid(replaceAnimal(grid, row, col, null))
+      return
+    }
+    if (!selected) return
+    setGrid(replaceAnimal(grid, row, col, selected))
   }
   return (
     <div className="mx-auto w-full max-w-sm">

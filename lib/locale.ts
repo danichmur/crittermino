@@ -6,6 +6,9 @@ export const LOCALE_COOKIE = 'crittermino-locale'
 
 export const LOCALE_HEADER = 'x-locale'
 
+/** Set only when the URL itself starts with /ru or /es. Empty means the address is the English one. */
+export const PATH_LOCALE_HEADER = 'x-path-locale'
+
 export const LOCALE_LABEL: Record<Locale, string> = {
   en: 'English',
   es: 'Español',
@@ -89,6 +92,14 @@ export const persistLocale = (locale: Locale): void => {
   }
   const secure = window.location.protocol === 'https:' ? '; Secure' : ''
   document.cookie = `${LOCALE_COOKIE}=${locale}; Path=/; Max-Age=31536000; SameSite=Lax${secure}`
+}
+
+/** English stays unprefixed. /ru and /es are real addresses a crawler can request. */
+export const localizeHref = (locale: Locale, path: string): string => {
+  if (!path.startsWith('/') || path.startsWith('//')) return path
+  const bare = path.replace(/^\/(ru|es)(?=\/|$)/, '') || '/'
+  if (locale === 'en') return bare
+  return bare === '/' ? `/${locale}` : `/${locale}${bare}`
 }
 
 export const readStoredLocale = (): Locale | null => {

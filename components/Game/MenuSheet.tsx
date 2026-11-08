@@ -12,7 +12,6 @@ import { useProgress } from '@/hooks/useProgress'
 export const MenuSheet = () => {
   const open = useGame((state) => state.menuOpen)
   const closeMenu = useGame((state) => state.closeMenu)
-  const restart = useGame((state) => state.restart)
   const showLevels = useGame((state) => state.showLevels)
   const showHome = useGame((state) => state.showHome)
   const openSettings = useGame((state) => state.openSettings)
@@ -23,9 +22,6 @@ export const MenuSheet = () => {
       <h2 className="font-display text-2xl font-bold">{t.menu}</h2>
       <div className="mt-4 flex flex-col gap-2">
         <Button onClick={closeMenu}>{t.continue}</Button>
-        <Button variant="secondary" onClick={restart}>
-          {t.restartLevel}
-        </Button>
         <Button variant="secondary" onClick={showLevels}>
           {t.levelSelect}
         </Button>

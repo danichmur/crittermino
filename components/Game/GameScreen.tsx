@@ -7,6 +7,7 @@ import { Header } from '@/components/Layout/Header'
 import { AnimalSelector } from '@/components/Game/AnimalSelector'
 import { Grid } from '@/components/Game/Grid'
 import { HintButton } from '@/components/Game/HintButton'
+import { RestartButton } from '@/components/Game/RestartButton'
 import { MenuSheet, SettingsDialog } from '@/components/Game/MenuSheet'
 import { WinModal } from '@/components/Game/WinModal'
 import { InteractiveTutorial } from '@/components/Tutorial/InteractiveTutorial'
@@ -29,6 +30,7 @@ export const GameScreen = () => {
   const menuOpen = useGame((state) => state.menuOpen)
   const settingsOpen = useGame((state) => state.settingsOpen)
   const openMenu = useGame((state) => state.openMenu)
+  const restart = useGame((state) => state.restart)
   const selectAnimal = useGame((state) => state.selectAnimal)
   const tapCell = useGame((state) => state.tapCell)
   const requestHint = useGame((state) => state.requestHint)
@@ -90,6 +92,7 @@ export const GameScreen = () => {
         moves={moves}
         homes={homeCountLabel(locale, done, needed)}
         onMenu={openMenu}
+        restart={<RestartButton onRestart={restart} />}
         hint={<HintButton onHint={requestHint} />}
       />
       <div className="flex min-h-0 flex-1 flex-col py-2">

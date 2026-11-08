@@ -4,6 +4,7 @@ import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { useI18n } from '@/components/Locale/LocaleProvider'
 import { fill, pluralWord } from '@/lib/i18n'
+import { localizeHref } from '@/lib/locale'
 
 interface HeaderProps {
   mode?: 'site' | 'game'
@@ -12,22 +13,23 @@ interface HeaderProps {
   moves?: number
   homes?: string
   onMenu?: () => void
+  restart?: ReactNode
   hint?: ReactNode
 }
 
-export const Header = ({ mode = 'site', level, label, moves, homes, onMenu, hint }: HeaderProps) => {
+export const Header = ({ mode = 'site', level, label, moves, homes, onMenu, restart, hint }: HeaderProps) => {
   const { locale, t } = useI18n()
   if (mode === 'site') {
     return (
       <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-4">
-        <Link href="/" className="font-display text-xl font-bold text-[#3D2C29] focus-visible:outline-2 focus-visible:outline-[#FF6B9D]">
+        <Link href={localizeHref(locale, '/')} className="font-display text-xl font-bold text-[#3D2C29] focus-visible:outline-2 focus-visible:outline-[#FF6B9D]">
           Crittermino
         </Link>
         <nav aria-label="Crittermino" className="flex items-center gap-4">
-          <Link href="/how-to-play" className="text-sm font-medium text-[#8C7468] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-[#FF6B9D]">
+          <Link href={localizeHref(locale, '/how-to-play')} className="text-sm font-medium text-[#8C7468] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-[#FF6B9D]">
             {t.howToPlay}
           </Link>
-          <Link href="/blog" className="text-sm font-medium text-[#8C7468] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-[#FF6B9D]">
+          <Link href={localizeHref(locale, '/blog')} className="text-sm font-medium text-[#8C7468] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-[#FF6B9D]">
             {t.blog}
           </Link>
         </nav>
@@ -53,7 +55,10 @@ export const Header = ({ mode = 'site', level, label, moves, homes, onMenu, hint
           {homes ? ` · ${homes}` : ''}
         </p>
       </div>
-      {hint}
+      <div className="flex items-center gap-2">
+        {restart}
+        {hint}
+      </div>
     </header>
   )
 }

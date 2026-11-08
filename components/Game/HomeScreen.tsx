@@ -1,9 +1,11 @@
 'use client'
 
 import Link from 'next/link'
+import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ANIMALS } from '@/lib/animals'
 import { LEVEL_CAP } from '@/lib/campaign'
+import { utcDateString } from '@/lib/daily'
 import { fill, pluralWord } from '@/lib/i18n'
 import { streakLabel } from '@/lib/storage'
 import { Button } from '@/components/UI/Button'
@@ -25,9 +27,12 @@ const FLOATERS = [
 export const HomeScreen = () => {
   const progress = useProgress((state) => state.progress)
   const ready = useProgress((state) => state.ready)
+  const hydrate = useProgress((state) => state.hydrate)
   const startLevel = useGame((state) => state.startLevel)
+  const startDaily = useGame((state) => state.startDaily)
   const showLevels = useGame((state) => state.showLevels)
   const showSoon = useGame((state) => state.showSoon)
+  const [dailyFinishedNote, setDailyFinishedNote] = useState(false)
   const reduceMotion = useReducedMotion()
   const { canInstall, install } = useInstallPrompt()
   const { locale, t } = useI18n()
@@ -35,6 +40,16 @@ export const HomeScreen = () => {
   const caughtUp = progress.completedLevels.includes(LEVEL_CAP)
   const nextLevel = Math.min(progress.currentLevel, LEVEL_CAP)
   const continueLabel = nextLevel > 1 || progress.completedLevels.length > 0
+  const handleDailyClick = (): void => {
+    hydrate()
+    const finishedToday = useProgress.getState().progress.lastDaily === utcDateString()
+    if (finishedToday) {
+      setDailyFinishedNote(true)
+      return
+    }
+    setDailyFinishedNote(false)
+    startDaily()
+  }
   return (
     <div>
     <div className="relative flex min-h-dvh flex-col px-5 pt-[max(0.75rem,env(safe-area-inset-top))]">
@@ -69,6 +84,14 @@ export const HomeScreen = () => {
           <Button size="lg" onClick={() => (caughtUp ? showSoon() : startLevel(nextLevel))}>
             {caughtUp ? t.comingSoon : continueLabel ? fill(t.continueLevel, { n: nextLevel }) : t.play}
           </Button>
+          <Button variant="secondary" onClick={handleDailyClick}>
+            {t.dailyPuzzle}
+          </Button>
+          {dailyFinishedNote ? (
+            <p role="status" className="rounded-2xl bg-white px-4 py-3 text-sm font-medium leading-relaxed text-[#3D2C29] ring-1 ring-[#E5D5C0]">
+              {t.dailyDoneToday}
+            </p>
+          ) : null}
           <Button variant="secondary" onClick={showLevels}>
             {t.levelSelect}
           </Button>

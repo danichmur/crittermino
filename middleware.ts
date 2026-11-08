@@ -1,13 +1,28 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { isLocale, LOCALE_COOKIE, LOCALE_HEADER, localeFromAcceptLanguage, localeFromCountry } from '@/lib/locale'
+import { isLocale, LOCALE_COOKIE, LOCALE_HEADER, PATH_LOCALE_HEADER, localeFromAcceptLanguage, localeFromCountry } from '@/lib/locale'
+
+const PREFIX = /^\/(ru|es)(?=\/|$)/
 
 export const middleware = (request: NextRequest): NextResponse => {
+  const prefixed = request.nextUrl.pathname.match(PREFIX)
+  const pathLocale = prefixed?.[1]
   const saved = request.cookies.get(LOCALE_COOKIE)?.value
   const country = request.headers.get('x-vercel-ip-country')
-  const locale = isLocale(saved) ? saved : country ? localeFromCountry(country) : localeFromAcceptLanguage(request.headers.get('accept-language'))
+  const locale = isLocale(pathLocale)
+    ? pathLocale
+    : isLocale(saved)
+      ? saved
+      : country
+        ? localeFromCountry(country)
+        : localeFromAcceptLanguage(request.headers.get('accept-language'))
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set(LOCALE_HEADER, locale)
-  return NextResponse.next({ request: { headers: requestHeaders } })
+  requestHeaders.set(PATH_LOCALE_HEADER, isLocale(pathLocale) ? pathLocale : '')
+  if (!isLocale(pathLocale)) return NextResponse.next({ request: { headers: requestHeaders } })
+  const url = request.nextUrl.clone()
+  const stripped = request.nextUrl.pathname.replace(PREFIX, '')
+  url.pathname = stripped === '' ? '/' : stripped
+  return NextResponse.rewrite(url, { request: { headers: requestHeaders } })
 }
 
 export const config = {

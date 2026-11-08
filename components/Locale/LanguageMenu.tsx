@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useId, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useI18n } from '@/components/Locale/LocaleProvider'
-import { LOCALE_FLAG, LOCALE_LABEL, LOCALES, type Locale } from '@/lib/locale'
+import { LOCALE_FLAG, LOCALE_LABEL, LOCALES, localizeHref, type Locale } from '@/lib/locale'
 import { cn } from '@/lib/cn'
 
 interface LanguageChoicesProps {
@@ -11,8 +12,15 @@ interface LanguageChoicesProps {
 
 export const LanguageChoices = ({ onChoose }: LanguageChoicesProps) => {
   const { locale, setLocale, t } = useI18n()
+  const router = useRouter()
   const handleChoose = (next: Locale): void => {
     setLocale(next)
+    const current = window.location.pathname
+    const bare = current.replace(/^\/(ru|es)(?=\/|$)/, '') || '/'
+    if (bare !== '/') {
+      const target = localizeHref(next, bare)
+      if (target !== current) router.push(target)
+    }
     onChoose?.()
   }
   return (

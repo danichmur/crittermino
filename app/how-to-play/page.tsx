@@ -7,11 +7,12 @@ import { JsonLd } from '@/components/Seo/JsonLd'
 import { DemoPuzzle } from '@/components/Tutorial/DemoPuzzle'
 import { ANIMALS } from '@/lib/animals'
 import { cellCountLabel, copy } from '@/lib/i18n'
+import { localizeHref } from '@/lib/locale'
 import { getLocale } from '@/lib/locale-server'
 import { breadcrumbJsonLd, pageMeta } from '@/lib/seo'
 import { SITE } from '@/lib/site'
 
-const mouse = { glyph: '🐭', fill: '#FFE5EC' }
+const mouse = { glyph: '🐭', fill: '#E8ECF1' }
 const empty = { glyph: '', fill: '#FFFFFF' }
 const ruleIds = ['fill', 'size', 'apart'] as const
 
@@ -105,7 +106,7 @@ export default async function HowToPlayPage() {
       <DemoPuzzle />
       <p className="mt-6 text-sm leading-relaxed text-[#8C7468]">
         {text.howToLongerBefore}
-        <Link href="/blog/how-to-solve-fillomino-puzzles" className="font-semibold text-[#3D2C29] underline-offset-4 hover:underline">
+        <Link href={localizeHref(locale, '/blog/how-to-solve-fillomino-puzzles')} className="font-semibold text-[#3D2C29] underline-offset-4 hover:underline">
           {text.howToSolveLink}
         </Link>
         {text.howToLongerMiddle}

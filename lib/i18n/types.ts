@@ -67,6 +67,7 @@ export interface Copy {
   readonly continue: string
   readonly restartLevel: string
   readonly dailyPuzzle: string
+  readonly dailyDoneToday: string
   readonly settings: string
   readonly moreAnimals: string
   readonly moreAnimalsBody: string

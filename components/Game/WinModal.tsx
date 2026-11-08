@@ -6,7 +6,7 @@ import { ANIMALS } from '@/lib/animals'
 import { LEVEL_CAP } from '@/lib/campaign'
 import { formatTime } from '@/lib/format'
 import { fill, pluralWord } from '@/lib/i18n'
-import { shareHomeUrl, shareLine, shareSentence } from '@/lib/share-code'
+import { shareMessage } from '@/lib/share-code'
 import { useI18n } from '@/components/Locale/LocaleProvider'
 import { track } from '@/lib/analytics'
 import { Button } from '@/components/UI/Button'
@@ -42,12 +42,11 @@ export const WinModal = () => {
   const share = async (): Promise<void> => {
     const seconds = Math.min(65_535, Math.max(0, Math.round(elapsedMs / 1000)))
     const score = { level: level.number, moves: Math.min(65_535, Math.max(0, moves)), seconds }
-    const text = shareSentence(score, locale)
-    const line = shareLine(score, locale)
+    const { text, url, line } = shareMessage(score, locale)
     track({ name: 'share_clicked', level: level.number })
     if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
       try {
-        await navigator.share({ title: 'Crittermino', text, url: shareHomeUrl })
+        await navigator.share({ title: 'Crittermino', text, url })
         return
       } catch (error) {
         if (error instanceof DOMException && error.name === 'AbortError') return

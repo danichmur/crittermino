@@ -62,30 +62,28 @@ export const Modal = ({ open, title, onClose, children, dismissable = true, plac
           aria-modal="true"
           aria-label={title}
           tabIndex={-1}
-          className={cn(
-            'fixed inset-0 z-50 flex justify-center overflow-y-auto px-3 outline-none',
-            placement === 'center'
-              ? 'items-center py-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))]'
-              : 'items-end pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:items-center sm:p-3',
-          )}
+          className="fixed inset-x-0 top-0 z-50 h-dvh overflow-y-auto overscroll-contain outline-none"
           initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: reduceMotion ? 0 : 12, pointerEvents: 'none' }}
           transition={{ duration: 0.2, ease: 'easeOut' }}
         >
-          <button
-            type="button"
-            aria-label={dismissable ? t.closeDialog : undefined}
-            className="absolute inset-0 bg-[#3D2C29]/40"
-            onClick={dismissable ? onClose : undefined}
-            tabIndex={dismissable ? 0 : -1}
-          />
           <div
             className={cn(
-              'relative z-10 max-h-[90dvh] w-full max-w-md overflow-y-auto rounded-3xl bg-[#FFF9F0] p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-2xl',
+              'relative flex min-h-full w-full justify-center px-3',
+              placement === 'center'
+                ? 'items-center pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))]'
+                : 'items-end pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:items-center sm:p-3',
             )}
           >
-            {children}
+            <button
+              type="button"
+              aria-label={dismissable ? t.closeDialog : undefined}
+              className="absolute inset-0 bg-[#3D2C29]/40"
+              onClick={dismissable ? onClose : undefined}
+              tabIndex={dismissable ? 0 : -1}
+            />
+            <div className="relative z-10 max-h-[90dvh] w-full max-w-md overflow-y-auto rounded-3xl bg-[#FFF9F0] p-5 shadow-2xl">{children}</div>
           </div>
         </motion.div>
       ) : null}
