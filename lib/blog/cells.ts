@@ -10,7 +10,7 @@ interface AnimalPaint {
 
 const mousePaint: AnimalPaint = { glyph: '🐭', fill: '#E8ECF1', found: '#D2D8E2' }
 const catPaint: AnimalPaint = { glyph: '🐱', fill: '#FFF4CC', found: '#FFE58A' }
-const dogPaint: AnimalPaint = { glyph: '🐶', fill: '#E5F4FF', found: '#C4E4FF' }
+const dogPaint: AnimalPaint = { glyph: '🐶', fill: '#F6E6D4', found: '#E8CDB0' }
 const pandaPaint: AnimalPaint = { glyph: '🐼', fill: '#E8F5E8', found: '#C8EBC8' }
 const lionPaint: AnimalPaint = { glyph: '🦁', fill: '#FFE5D9', found: '#FFCDB3' }
 

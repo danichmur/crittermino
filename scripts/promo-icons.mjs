@@ -26,9 +26,9 @@ const page = (body, extra = '') => `<!doctype html><html><head><meta charset="ut
 const A = page(
   `<div class="ic" style="background:linear-gradient(145deg,#FF6B9D,#FF9EC4);">
      <div class="board">
-       <div class="cell" style="background:#FFD0DC;border-color:#FF6B9D;"><span>🐭</span><b style="color:#A61E4D">2</b></div>
+       <div class="cell" style="background:#D2D8E2;border-color:#7C8796;"><span>🐭</span><b style="color:#3E4856">2</b></div>
        <div class="cell" style="background:#FFE58A;border-color:#E6B325;"><span>🐱</span><b style="color:#8A6A00">3</b></div>
-       <div class="cell" style="background:#C4E4FF;border-color:#4DA3FF;"><span>🐶</span><b style="color:#0B5CAD">4</b></div>
+       <div class="cell" style="background:#E8CDB0;border-color:#C0844A;"><span>🐶</span><b style="color:#6B4124">4</b></div>
        <div class="cell" style="background:#C8EBC8;border-color:#3CB371;"><span>🐼</span><b style="color:#1B7A45">5</b></div>
      </div>
    </div>`,
@@ -45,11 +45,11 @@ const B = page(
   `<div class="ic" style="background:linear-gradient(145deg,#FF6B9D,#FFB0CE);">
      <div class="home"><span>🐭</span><b>2</b></div>
    </div>`,
-  `.home { width:330px; height:330px; background:#FFFFFF; border:12px solid #FFD0DC; border-radius:84px;
+  `.home { width:330px; height:330px; background:#FFFFFF; border:12px solid #D2D8E2; border-radius:84px;
            display:flex; align-items:center; justify-content:center; position:relative;
            box-shadow:0 24px 50px rgba(61,44,41,0.28); }
    .home span { font-size:200px; line-height:1; }
-   .home b { position:absolute; right:34px; bottom:24px; font-size:60px; color:#A61E4D; }`,
+   .home b { position:absolute; right:34px; bottom:24px; font-size:60px; color:#3E4856; }`,
 )
 
 // C — critter on a faint grid (playful, scales small)

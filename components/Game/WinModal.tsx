@@ -13,7 +13,7 @@ import { Button } from '@/components/UI/Button'
 import { Modal } from '@/components/UI/Modal'
 import { useGame } from '@/hooks/useGame'
 
-const CONFETTI = ['#FF6B9D', '#E6B325', '#4DA3FF', '#3CB371', '#FF8C42', '#FFFFFF']
+const CONFETTI = ['#FF6B9D', '#E6B325', '#C0844A', '#3CB371', '#FF8C42', '#FFFFFF']
 
 export const WinModal = () => {
   const level = useGame((state) => state.level)

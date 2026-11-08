@@ -17,7 +17,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8">${FONT}
     display:flex; align-items:center; justify-content:center; gap:56px;
     background:
       radial-gradient(circle at 0% 0%, #ffe5ec 0%, transparent 38%),
-      radial-gradient(circle at 100% 100%, #e5f4ff 0%, transparent 34%),
+      radial-gradient(circle at 100% 100%, #f6e6d4 0%, transparent 34%),
       #fff9f0;
     font-family:'Fredoka',sans-serif;
   }
@@ -38,9 +38,9 @@ const html = `<!doctype html><html><head><meta charset="utf-8">${FONT}
 </style></head>
 <body>
   <div class="mark"><div class="grid">
-    <div class="cell" style="background:#FFD0DC;"><span>🐭</span><b style="color:#A61E4D">2</b></div>
+    <div class="cell" style="background:#D2D8E2;"><span>🐭</span><b style="color:#3E4856">2</b></div>
     <div class="cell" style="background:#FFE58A;"><span>🐱</span><b style="color:#8A6A00">3</b></div>
-    <div class="cell" style="background:#C4E4FF;"><span>🐶</span><b style="color:#0B5CAD">4</b></div>
+    <div class="cell" style="background:#E8CDB0;"><span>🐶</span><b style="color:#6B4124">4</b></div>
     <div class="cell" style="background:#C8EBC8;"><span>🐼</span><b style="color:#1B7A45">5</b></div>
   </div></div>
   <div class="name">Crittermino</div>

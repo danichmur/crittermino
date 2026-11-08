@@ -22,9 +22,9 @@ const board = (pad, gap, radius, bg) => `<!doctype html><html><head><meta charse
   .cell b { position:absolute; right:18px; bottom:10px; }
 </style></head>
 <body><div class="full">
-  <div class="cell" style="background:#FFD0DC;"><span>🐭</span><b style="color:#A61E4D">2</b></div>
+  <div class="cell" style="background:#D2D8E2;"><span>🐭</span><b style="color:#3E4856">2</b></div>
   <div class="cell" style="background:#FFE58A;"><span>🐱</span><b style="color:#8A6A00">3</b></div>
-  <div class="cell" style="background:#C4E4FF;"><span>🐶</span><b style="color:#0B5CAD">4</b></div>
+  <div class="cell" style="background:#E8CDB0;"><span>🐶</span><b style="color:#6B4124">4</b></div>
   <div class="cell" style="background:#C8EBC8;"><span>🐼</span><b style="color:#1B7A45">5</b></div>
 </div></body></html>`
 

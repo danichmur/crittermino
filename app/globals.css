@@ -22,7 +22,7 @@ body {
   min-height: 100dvh;
   background:
     radial-gradient(circle at 0% 0%, #ffe5ec 0%, transparent 34%),
-    radial-gradient(circle at 100% 0%, #e5f4ff 0%, transparent 30%),
+    radial-gradient(circle at 100% 0%, #f6e6d4 0%, transparent 30%),
     #fff9f0;
   color: #3d2c29;
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
