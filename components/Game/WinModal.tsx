@@ -5,7 +5,9 @@ import { useRouter } from 'next/navigation'
 import { ANIMALS } from '@/lib/animals'
 import { LEVEL_CAP } from '@/lib/campaign'
 import { formatTime } from '@/lib/format'
+import { fill, pluralWord } from '@/lib/i18n'
 import { shareHomeUrl, shareLine, shareSentence } from '@/lib/share-code'
+import { useI18n } from '@/components/Locale/LocaleProvider'
 import { track } from '@/lib/analytics'
 import { Button } from '@/components/UI/Button'
 import { Modal } from '@/components/UI/Modal'
@@ -28,6 +30,7 @@ export const WinModal = () => {
   const restart = useGame((state) => state.restart)
   const showToast = useGame((state) => state.showToast)
   const reduceMotion = useReducedMotion()
+  const { locale, t } = useI18n()
   if (!level) return null
   const isDaily = playMode === 'daily'
   const isLast = level.number >= LEVEL_CAP
@@ -39,8 +42,8 @@ export const WinModal = () => {
   const share = async (): Promise<void> => {
     const seconds = Math.min(65_535, Math.max(0, Math.round(elapsedMs / 1000)))
     const score = { level: level.number, moves: Math.min(65_535, Math.max(0, moves)), seconds }
-    const text = shareSentence(score)
-    const line = shareLine(score)
+    const text = shareSentence(score, locale)
+    const line = shareLine(score, locale)
     track({ name: 'share_clicked', level: level.number })
     if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
       try {
@@ -52,13 +55,13 @@ export const WinModal = () => {
     }
     try {
       await navigator.clipboard.writeText(line)
-      showToast('Score copied')
+      showToast(t.scoreCopied)
     } catch {
       showToast(line)
     }
   }
   return (
-    <Modal open={open} placement="center" title={isDaily ? 'Daily puzzle clear' : tutorial ? 'Tutorial complete' : `Level ${level.number} clear`} dismissable={false}>
+    <Modal open={open} placement="center" title={isDaily ? t.dailyClear : tutorial ? t.tutorialComplete : fill(t.levelClear, { n: level.number })} dismissable={false}>
       <div className="relative">
         {!reduceMotion
           ? CONFETTI.map((color, index) => (
@@ -87,42 +90,42 @@ export const WinModal = () => {
             </span>
           ))}
         </div>
-        <h2 className="text-center font-display text-3xl font-bold">{tutorial ? 'Tutorial complete!' : 'Homes found!'}</h2>
+        <h2 className="text-center font-display text-3xl font-bold">{tutorial ? t.tutorialDone : t.homesFound}</h2>
         <div className="mt-4 grid grid-cols-2 gap-3">
           <div className="rounded-3xl bg-white px-2 py-4 text-center ring-1 ring-[#E5D5C0]">
             <p className="font-display text-5xl leading-none font-bold tracking-tight text-[#3D2C29] tabular-nums sm:text-7xl">{moves}</p>
-            <p className="mt-2 text-base font-semibold text-[#8C7468]">{moves === 1 ? 'move' : 'moves'}</p>
+            <p className="mt-2 text-base font-semibold text-[#8C7468]">{pluralWord(locale, moves, 'move')}</p>
           </div>
           <div className="rounded-3xl bg-white px-2 py-4 text-center ring-1 ring-[#E5D5C0]">
             <p className="font-display text-5xl leading-none font-bold tracking-tight text-[#3D2C29] tabular-nums sm:text-7xl">{formatTime(elapsedMs)}</p>
-            <p className="mt-2 text-base font-semibold text-[#8C7468]">time</p>
+            <p className="mt-2 text-base font-semibold text-[#8C7468]">{t.time}</p>
           </div>
         </div>
-        {isNewBest ? <p className="mt-3 text-center font-display text-xl font-bold text-[#E84B7F]">New best</p> : null}
-        {isLast ? <p className="mt-3 text-center text-sm text-[#3D2C29]">That was the last home for now.</p> : null}
+        {isNewBest ? <p className="mt-3 text-center font-display text-xl font-bold text-[#E84B7F]">{t.newBest}</p> : null}
+        {isLast ? <p className="mt-3 text-center text-sm text-[#3D2C29]">{t.lastHome}</p> : null}
         {tutorial ? (
           <ul className="mt-4 space-y-2 text-sm text-[#3D2C29]">
-            <li>Fill every cell.</li>
-            <li>Each animal needs a home of exactly its number: mouse 2, cat 3, dog 4, panda 5, lion 6.</li>
-            <li>Two homes of the same size cannot share a wall. Corners may touch.</li>
+            <li>{t.ruleFill}</li>
+            <li>{t.ruleSize}</li>
+            <li>{t.ruleApart}</li>
           </ul>
         ) : null}
         <div className="mt-5 flex flex-col gap-3">
           {isDaily ? (
             <Button size="lg" onClick={handleDailyDone}>
-              Today&apos;s page
+              {t.todaysPage}
             </Button>
           ) : (
             <Button size="lg" onClick={() => (isLast ? showSoon() : startLevel(level.number + 1))}>
-              {tutorial ? 'Play level 6' : isLast ? 'Coming soon' : 'Next level'}
+              {tutorial ? t.playLevel6 : isLast ? t.comingSoon : t.nextLevel}
             </Button>
           )}
           <div className="grid grid-cols-2 gap-3">
             <Button variant="secondary" onClick={() => void share()}>
-              Share
+              {t.share}
             </Button>
             <Button variant="secondary" onClick={restart}>
-              Replay
+              {t.replay}
             </Button>
           </div>
         </div>

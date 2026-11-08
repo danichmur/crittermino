@@ -5,31 +5,38 @@ import { ContentPage } from '@/components/Layout/ContentPage'
 import { PlayLink } from '@/components/Layout/PlayLink'
 import { JsonLd } from '@/components/Seo/JsonLd'
 import { dailyLevelNumber, formatDailyDate, utcDateString } from '@/lib/daily'
+import { copy, fill } from '@/lib/i18n'
+import { getLocale } from '@/lib/locale-server'
 import { breadcrumbJsonLd, pageMeta } from '@/lib/seo'
 import { SITE } from '@/lib/site'
 
 export const dynamic = 'force-dynamic'
 
-const crumbs = [
-  { name: 'Home', path: '/' },
-  { name: 'Daily challenge', path: '/daily-challenge' },
-] as const
+const linkClass = 'font-semibold text-[#3D2C29] underline-offset-4 hover:underline'
 
-export const generateMetadata = (): Metadata => {
-  const label = formatDailyDate()
+export const generateMetadata = async (): Promise<Metadata> => {
+  const locale = await getLocale()
+  const text = copy[locale]
+  const date = formatDailyDate(new Date(), locale)
   return pageMeta({
-    title: 'Daily logic puzzle',
-    description: `The Crittermino daily for ${label}. One Fillomino grid for every player, free in the browser. The board changes at midnight UTC.`,
+    title: text.dailyMetaTitle,
+    description: fill(text.dailyMetaDescription, { date }),
     path: '/daily-challenge',
     keywords: ['daily logic puzzle', 'fillomino daily', 'free logic puzzle online'],
   })
 }
 
-export default function DailyChallengePage() {
+export default async function DailyChallengePage() {
+  const locale = await getLocale()
+  const text = copy[locale]
   const now = new Date()
-  const label = formatDailyDate(now)
+  const date = formatDailyDate(now, locale)
   const utcDate = utcDateString(now)
   const levelNumber = dailyLevelNumber(now)
+  const crumbs = [
+    { name: text.home, path: '/' },
+    { name: text.dailyHeading, path: '/daily-challenge' },
+  ] as const
   return (
     <ContentPage crumbs={crumbs.map((crumb) => ({ href: crumb.path === '/daily-challenge' ? undefined : crumb.path, label: crumb.name }))}>
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
@@ -37,38 +44,36 @@ export default function DailyChallengePage() {
         data={{
           '@context': 'https://schema.org',
           '@type': 'WebPage',
-          name: 'Crittermino daily challenge',
+          name: text.dailyJsonName,
           url: `${SITE.url}/daily-challenge`,
-          description: `One shared Fillomino grid for ${label} UTC.`,
+          description: fill(text.dailyJsonDescription, { date }),
           dateModified: utcDate,
         }}
       />
-      <p className="text-sm font-semibold tracking-wide text-[#E84B7F] uppercase">Same grid for everyone</p>
-      <h1 className="mt-2 font-display text-4xl font-bold">Daily challenge</h1>
-      <p className="mt-3 leading-relaxed text-[#8C7468]">
-        One Fillomino board for {label}. It changes at midnight UTC. You play it in the browser, with no download and no account.
-      </p>
+      <p className="text-sm font-semibold tracking-wide text-[#E84B7F] uppercase">{text.dailyEyebrow}</p>
+      <h1 className="mt-2 font-display text-4xl font-bold">{text.dailyHeading}</h1>
+      <p className="mt-3 leading-relaxed text-[#8C7468]">{fill(text.dailyLead, { date })}</p>
       <DailyStatus utcDate={utcDate} />
       <ul className="mt-6 grid gap-3">
+        {text.dailyCards.map((card) => (
+          <li key={card.title} className="rounded-3xl bg-white p-4 ring-1 ring-[#E5D5C0]">
+            <h2 className="font-display text-xl font-bold">{card.title}</h2>
+            <p className="mt-1 text-sm leading-relaxed text-[#8C7468]">{fill(card.body, { level: levelNumber })}</p>
+          </li>
+        ))}
         <li className="rounded-3xl bg-white p-4 ring-1 ring-[#E5D5C0]">
-          <h2 className="font-display text-xl font-bold">Today’s grid</h2>
+          <h2 className="font-display text-xl font-bold">{text.howToPlay}</h2>
           <p className="mt-1 text-sm leading-relaxed text-[#8C7468]">
-            Today uses campaign level {levelNumber}. The animals and the walls are the real puzzle. Clearing it on this device does not move your campaign level, and it does not mark that level done. You can meet it again later in the path.
-          </p>
-        </li>
-        <li className="rounded-3xl bg-white p-4 ring-1 ring-[#E5D5C0]">
-          <h2 className="font-display text-xl font-bold">The rules, in one breath</h2>
-          <p className="mt-1 text-sm leading-relaxed text-[#8C7468]">
-            Fill every cell. Mouse is 2, cat 3, dog 4, panda 5, lion 6. Homes connect edge to edge. Two homes of the same size cannot share a wall. The{' '}
-            <Link href="/how-to-play" className="font-semibold text-[#3D2C29] underline-offset-4 hover:underline">
-              how to play page
-            </Link>{' '}
-            has examples if you want them first.
+            {text.dailyRulesBefore}
+            <Link href="/how-to-play" className={linkClass}>
+              {text.dailyHowLink}
+            </Link>
+            {text.dailyRulesAfter}
           </p>
         </li>
       </ul>
       <div className="mt-8">
-        <PlayLink href="/?play=daily">Play today’s puzzle</PlayLink>
+        <PlayLink href="/?play=daily">{text.dailyPlay}</PlayLink>
       </div>
     </ContentPage>
   )

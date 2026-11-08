@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { ShareScreen } from '@/components/Game/ShareScreen'
+import { copy } from '@/lib/i18n'
+import { getLocale } from '@/lib/locale-server'
 import { decodeShareCode, sharePageUrl, shareSentence } from '@/lib/share-code'
 import { SITE } from '@/lib/site'
 
@@ -15,16 +17,18 @@ const readScore = async (params: SharePageProps['params']) => {
 
 export const generateMetadata = async ({ params }: SharePageProps): Promise<Metadata> => {
   const { code, score } = await readScore(params)
-  if (!score) return { title: { absolute: 'Score not found' }, robots: { index: false, follow: false } }
-  const sentence = shareSentence(score)
+  const locale = await getLocale()
+  const text = copy[locale]
+  if (!score) return { title: { absolute: text.scoreNotFound }, robots: { index: false, follow: false } }
+  const sentence = shareSentence(score, locale)
   return {
     title: { absolute: sentence },
-    description: `${sentence} Play your own next puzzle.`,
+    description: `${sentence} ${text.shareNext}`,
     robots: { index: false, follow: true },
     alternates: { canonical: `/share/${code}` },
     openGraph: {
       title: sentence,
-      description: 'A shared Crittermino score. The next puzzle is yours.',
+      description: text.shareShared,
       url: sharePageUrl(code),
       siteName: SITE.name,
       images: ['/og-image.png'],

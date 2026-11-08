@@ -3,26 +3,27 @@ import Link from 'next/link'
 import { ContentPage } from '@/components/Layout/ContentPage'
 import { JsonLd } from '@/components/Seo/JsonLd'
 import { BLOG_POSTS, formatPublished } from '@/lib/blog'
+import { copy } from '@/lib/i18n'
+import { getLocale } from '@/lib/locale-server'
 import { breadcrumbJsonLd, pageMeta } from '@/lib/seo'
 import { SITE } from '@/lib/site'
 
-const title = 'Puzzle strategies'
-const description =
-  'Notes on solving Fillomino, playing Crittermino, and how this puzzle differs from Sudoku. Free to read, then play in the browser.'
+export const generateMetadata = async (): Promise<Metadata> => {
+  const text = copy[await getLocale()]
+  return pageMeta({
+    title: text.blogMetaTitle,
+    description: text.blogMetaDescription,
+    path: '/blog',
+    keywords: ['fillomino strategy', 'logic puzzle', 'crittermino'],
+  })
+}
 
-export const metadata: Metadata = pageMeta({
-  title,
-  description,
-  path: '/blog',
-  keywords: ['fillomino strategy', 'logic puzzle', 'crittermino'],
-})
-
-const crumbs = [
-  { name: 'Home', path: '/' },
-  { name: 'Blog', path: '/blog' },
-] as const
-
-export default function BlogIndexPage() {
+export default async function BlogIndexPage() {
+  const text = copy[await getLocale()]
+  const crumbs = [
+    { name: text.home, path: '/' },
+    { name: text.blog, path: '/blog' },
+  ] as const
   return (
     <ContentPage crumbs={crumbs.map((crumb) => ({ href: crumb.path === '/blog' ? undefined : crumb.path, label: crumb.name }))}>
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
@@ -30,9 +31,9 @@ export default function BlogIndexPage() {
         data={{
           '@context': 'https://schema.org',
           '@type': 'Blog',
-          name: 'Crittermino blog',
+          name: text.blogName,
           url: `${SITE.url}/blog`,
-          description,
+          description: text.blogMetaDescription,
           blogPost: BLOG_POSTS.map((post) => ({
             '@type': 'BlogPosting',
             headline: post.title,
@@ -41,10 +42,9 @@ export default function BlogIndexPage() {
           })),
         }}
       />
-      <h1 className="font-display text-4xl font-bold">Strategies</h1>
-      <p className="mt-3 leading-relaxed text-[#8C7468]">
-        How to solve a Fillomino board, how the animals in Crittermino behave, and a few other puzzles worth a sitting.
-      </p>
+      <h1 className="font-display text-4xl font-bold">{text.blogHeading}</h1>
+      <p className="mt-3 leading-relaxed text-[#8C7468]">{text.blogLead}</p>
+      {text.blogEnglishNote ? <p className="mt-2 text-sm font-medium text-[#E84B7F]">{text.blogEnglishNote}</p> : null}
       <ul className="mt-6 grid gap-3">
         {BLOG_POSTS.map((post) => (
           <li key={post.slug}>

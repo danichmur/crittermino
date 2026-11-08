@@ -1,4 +1,6 @@
 import { LEVEL_CAP } from '@/lib/campaign'
+import { formatStreak } from '@/lib/i18n'
+import type { Locale } from '@/lib/locale'
 import type { Progress } from '@/types/game'
 
 const STORAGE_KEY = 'crittermino-progress-v1'
@@ -37,10 +39,10 @@ export const withStreak = (progress: Progress): Progress => {
   return { ...progress, streak, lastPlayed: today }
 }
 
-export const streakLabel = (progress: Progress): string | null => {
+export const streakLabel = (progress: Progress, locale: Locale): string | null => {
   if (!progress.lastPlayed || progress.streak <= 0) return null
-  if (progress.lastPlayed === localDate()) return `${progress.streak}-day streak`
-  if (progress.lastPlayed === previousDate()) return `Play today to keep a ${progress.streak}-day streak`
+  if (progress.lastPlayed === localDate()) return formatStreak(locale, progress.streak, 'today')
+  if (progress.lastPlayed === previousDate()) return formatStreak(locale, progress.streak, 'keep')
   return null
 }
 

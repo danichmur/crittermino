@@ -3,6 +3,8 @@
 import { useEffect, useRef } from 'react'
 import { motion, useAnimationControls, useReducedMotion } from 'framer-motion'
 import { getAnimalByEmoji } from '@/lib/animals'
+import { fill } from '@/lib/i18n'
+import { useI18n } from '@/components/Locale/LocaleProvider'
 import { cn } from '@/lib/cn'
 import type { Animal, Cell as CellData } from '@/types/game'
 import { TutorialHand } from '@/components/Tutorial/InteractiveTutorial'
@@ -20,6 +22,7 @@ export const Cell = ({ cell, shake, showHand, highlighted, ghost, onPress }: Cel
   const controls = useAnimationControls()
   const reduceMotion = useReducedMotion()
   const wasComplete = useRef(cell.isComplete)
+  const { t } = useI18n()
   const animal = cell.animal ? getAnimalByEmoji(cell.animal) : null
   const ghostAnimal = ghost ? getAnimalByEmoji(ghost) : null
   useEffect(() => {
@@ -37,11 +40,11 @@ export const Cell = ({ cell, shake, showHand, highlighted, ghost, onPress }: Cel
     wasComplete.current = cell.isComplete
   }, [cell.isComplete, reduceMotion, controls])
   const label = [
-    `Row ${cell.row + 1}, column ${cell.col + 1}`,
-    animal ? animal.name : 'empty',
-    cell.isHint ? 'given' : null,
-    cell.isComplete ? 'complete' : null,
-    cell.hasError ? 'does not fit' : null,
+    fill(t.cellWhere, { row: cell.row + 1, column: cell.col + 1 }),
+    animal ? t.animals[animal.emoji] : t.cellEmpty,
+    cell.isHint ? t.cellGiven : null,
+    cell.isComplete ? t.cellComplete : null,
+    cell.hasError ? t.cellError : null,
   ]
     .filter(Boolean)
     .join(', ')

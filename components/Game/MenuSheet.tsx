@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { LanguageChoices } from '@/components/Locale/LanguageMenu'
+import { useI18n } from '@/components/Locale/LocaleProvider'
 import { Button } from '@/components/UI/Button'
 import { Modal } from '@/components/UI/Modal'
 import { useGame } from '@/hooks/useGame'
@@ -14,64 +16,46 @@ export const MenuSheet = () => {
   const showLevels = useGame((state) => state.showLevels)
   const showHome = useGame((state) => state.showHome)
   const openSettings = useGame((state) => state.openSettings)
+  const { t } = useI18n()
+  const linkClass = 'inline-flex min-h-11 items-center justify-center rounded-full bg-white px-4 font-display font-semibold text-[#3D2C29] ring-1 ring-[#E5D5C0]'
   return (
-    <Modal open={open} title="Menu" onClose={closeMenu}>
-      <h2 className="font-display text-2xl font-bold">Menu</h2>
+    <Modal open={open} title={t.menu} onClose={closeMenu}>
+      <h2 className="font-display text-2xl font-bold">{t.menu}</h2>
       <div className="mt-4 flex flex-col gap-2">
-        <Button onClick={closeMenu}>Continue</Button>
+        <Button onClick={closeMenu}>{t.continue}</Button>
         <Button variant="secondary" onClick={restart}>
-          Restart level
+          {t.restartLevel}
         </Button>
         <Button variant="secondary" onClick={showLevels}>
-          Level select
+          {t.levelSelect}
         </Button>
-        <Link
-          href="/how-to-play"
-          onClick={closeMenu}
-          className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-4 font-display font-semibold text-[#3D2C29] ring-1 ring-[#E5D5C0]"
-        >
-          How to play
+        <Link href="/how-to-play" onClick={closeMenu} className={linkClass}>
+          {t.howToPlay}
         </Link>
-        <Link
-          href="/daily-challenge"
-          onClick={closeMenu}
-          className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-4 font-display font-semibold text-[#3D2C29] ring-1 ring-[#E5D5C0]"
-        >
-          Daily puzzle
+        <Link href="/daily-challenge" onClick={closeMenu} className={linkClass}>
+          {t.dailyPuzzle}
         </Link>
-        <Link
-          href="/blog"
-          onClick={closeMenu}
-          className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-4 font-display font-semibold text-[#3D2C29] ring-1 ring-[#E5D5C0]"
-        >
-          Blog
+        <Link href="/blog" onClick={closeMenu} className={linkClass}>
+          {t.blog}
         </Link>
-        <Link
-          href="/about"
-          onClick={closeMenu}
-          className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-4 font-display font-semibold text-[#3D2C29] ring-1 ring-[#E5D5C0]"
-        >
-          About
+        <Link href="/about" onClick={closeMenu} className={linkClass}>
+          {t.about}
         </Link>
-        <Link
-          href="/privacy"
-          onClick={closeMenu}
-          className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-4 font-display font-semibold text-[#3D2C29] ring-1 ring-[#E5D5C0]"
-        >
-          Privacy
+        <Link href="/privacy" onClick={closeMenu} className={linkClass}>
+          {t.privacy}
         </Link>
         <Button variant="secondary" onClick={openSettings}>
-          Settings
+          {t.settings}
         </Button>
         <Button variant="ghost" onClick={showHome}>
-          Home
+          {t.home}
         </Button>
       </div>
       <div className="mt-4 rounded-2xl bg-white p-3 ring-1 ring-[#E5D5C0]">
-        <p className="font-display font-semibold">More animals</p>
-        <p className="mt-1 text-sm text-[#8C7468]">Cosmetic unlocks are coming later. The puzzle stays free.</p>
+        <p className="font-display font-semibold">{t.moreAnimals}</p>
+        <p className="mt-1 text-sm text-[#8C7468]">{t.moreAnimalsBody}</p>
         <Button className="mt-3" variant="secondary" disabled>
-          Unlock more animals
+          {t.unlockAnimals}
         </Button>
       </div>
     </Modal>
@@ -88,9 +72,14 @@ export const SettingsDialog = () => {
   const reset = useProgress((state) => state.reset)
   const showHome = useGame((state) => state.showHome)
   const [confirmReset, setConfirmReset] = useState(false)
+  const { t } = useI18n()
   return (
-    <Modal open={open} title="Settings" onClose={closeSettings}>
-      <h2 className="font-display text-2xl font-bold">Settings</h2>
+    <Modal open={open} title={t.settings} onClose={closeSettings}>
+      <h2 className="font-display text-2xl font-bold">{t.settings}</h2>
+      <div className="mt-4">
+        <p className="mb-2 font-display font-semibold">{t.language}</p>
+        <LanguageChoices />
+      </div>
       <div className="mt-4 flex flex-col gap-2">
         <button
           type="button"
@@ -98,8 +87,8 @@ export const SettingsDialog = () => {
           onClick={() => setSound(!soundEnabled)}
           className="flex min-h-11 items-center justify-between rounded-2xl bg-white px-4 text-left ring-1 ring-[#E5D5C0]"
         >
-          <span>Sound</span>
-          <span className="font-semibold">{soundEnabled ? 'On' : 'Off'}</span>
+          <span>{t.sound}</span>
+          <span className="font-semibold">{soundEnabled ? t.on : t.off}</span>
         </button>
         <button
           type="button"
@@ -107,13 +96,13 @@ export const SettingsDialog = () => {
           onClick={() => setHaptics(!hapticsEnabled)}
           className="flex min-h-11 items-center justify-between rounded-2xl bg-white px-4 text-left ring-1 ring-[#E5D5C0]"
         >
-          <span>Haptics</span>
-          <span className="font-semibold">{hapticsEnabled ? 'On' : 'Off'}</span>
+          <span>{t.haptics}</span>
+          <span className="font-semibold">{hapticsEnabled ? t.on : t.off}</span>
         </button>
       </div>
       {confirmReset ? (
         <div className="mt-4">
-          <p className="text-sm text-[#8C7468]">This clears levels, streaks, daily clears, and best scores on this device.</p>
+          <p className="text-sm text-[#8C7468]">{t.resetWarning}</p>
           <div className="mt-3 grid grid-cols-2 gap-2">
             <Button
               variant="secondary"
@@ -123,16 +112,16 @@ export const SettingsDialog = () => {
                 showHome()
               }}
             >
-              Confirm reset
+              {t.confirmReset}
             </Button>
             <Button variant="ghost" onClick={() => setConfirmReset(false)}>
-              Cancel
+              {t.cancel}
             </Button>
           </div>
         </div>
       ) : (
         <Button className="mt-5" variant="secondary" onClick={() => setConfirmReset(true)}>
-          Reset progress
+          {t.resetProgress}
         </Button>
       )}
     </Modal>

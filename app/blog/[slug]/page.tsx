@@ -6,6 +6,8 @@ import { ContentPage } from '@/components/Layout/ContentPage'
 import { PlayLink } from '@/components/Layout/PlayLink'
 import { JsonLd } from '@/components/Seo/JsonLd'
 import { BLOG_POSTS, formatPublished, getPost } from '@/lib/blog'
+import { copy } from '@/lib/i18n'
+import { getLocale } from '@/lib/locale-server'
 import { breadcrumbJsonLd, pageMeta } from '@/lib/seo'
 import { SITE } from '@/lib/site'
 
@@ -18,7 +20,8 @@ export const generateStaticParams = (): Array<{ slug: string }> => BLOG_POSTS.ma
 export const generateMetadata = async ({ params }: ArticlePageProps): Promise<Metadata> => {
   const { slug } = await params
   const post = getPost(slug)
-  if (!post) return { title: 'Article not found' }
+  const text = copy[await getLocale()]
+  if (!post) return { title: text.articleNotFound }
   return pageMeta({
     title: post.title,
     description: post.description,
@@ -32,9 +35,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params
   const post = getPost(slug)
   if (!post) notFound()
+  const text = copy[await getLocale()]
   const crumbs = [
-    { name: 'Home', path: '/' },
-    { name: 'Blog', path: '/blog' },
+    { name: text.home, path: '/' },
+    { name: text.blog, path: '/blog' },
     { name: post.title, path: `/blog/${post.slug}` },
   ] as const
   const related = BLOG_POSTS.filter((item) => item.slug !== post.slug).slice(0, 3)
@@ -67,17 +71,17 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <p className="mt-3 leading-relaxed text-[#8C7468]">{post.description}</p>
       <ArticleBody sections={post.sections} />
       <div className="mt-10">
-        <PlayLink>Play a level</PlayLink>
+        <PlayLink>{text.playALevel}</PlayLink>
         <Link
           href="/daily-challenge"
           className="mt-3 inline-flex min-h-11 w-full items-center justify-center font-display font-semibold text-[#3D2C29] underline-offset-4 hover:underline"
         >
-          Play today’s puzzle
+          {text.playToday}
         </Link>
       </div>
       <section className="mt-10" aria-labelledby="more-notes">
         <h2 id="more-notes" className="font-display text-2xl font-bold">
-          More notes
+          {text.moreNotes}
         </h2>
         <ul className="mt-3 grid gap-2">
           {related.map((item) => (

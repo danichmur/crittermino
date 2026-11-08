@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { LEVEL_CAP } from '@/lib/campaign'
 import { cn } from '@/lib/cn'
+import { useI18n } from '@/components/Locale/LocaleProvider'
+import { moveCountLabel } from '@/lib/i18n'
 import { Button } from '@/components/UI/Button'
 import { useGame } from '@/hooks/useGame'
 import { useProgress } from '@/hooks/useProgress'
@@ -20,25 +22,26 @@ export const LevelSelect = () => {
   const first = safePage * PAGE_SIZE + 1
   const last = Math.min(unlocked, first + PAGE_SIZE - 1)
   const levels = Array.from({ length: last - first + 1 }, (_, index) => first + index)
+  const { locale, t } = useI18n()
   return (
     <div className="flex min-h-dvh flex-col px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-3xl font-bold">Levels</h1>
+        <h1 className="font-display text-3xl font-bold">{t.levels}</h1>
         <Button variant="ghost" onClick={showHome}>
-          Home
+          {t.home}
         </Button>
       </div>
-      <p className="mt-1 text-sm text-[#8C7468]">Cleared puzzles stay open, so you can chase a better score.</p>
+      <p className="mt-1 text-sm text-[#8C7468]">{t.chaseScore}</p>
       {pageCount > 1 ? (
         <div className="mt-4 flex items-center justify-between gap-2">
           <Button variant="secondary" onClick={() => setPage(safePage - 1)} disabled={safePage === 0}>
-            Previous
+            {t.previous}
           </Button>
           <p className="text-sm font-medium text-[#8C7468] tabular-nums">
             {first}–{last}
           </p>
           <Button variant="secondary" onClick={() => setPage(safePage + 1)} disabled={safePage >= pageCount - 1}>
-            Next
+            {t.next}
           </Button>
         </div>
       ) : null}
@@ -60,7 +63,7 @@ export const LevelSelect = () => {
             >
               <span className="font-display text-lg font-bold tabular-nums">{level}</span>
               <span className="text-[10px] text-[#8C7468] tabular-nums">
-                {cleared ? (best ? `${best} ${best === 1 ? 'move' : 'moves'}` : 'Cleared') : 'Open'}
+                {cleared ? (best ? moveCountLabel(locale, best) : t.cleared) : t.open}
               </span>
             </button>
           )

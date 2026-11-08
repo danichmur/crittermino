@@ -4,9 +4,12 @@ import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ANIMALS } from '@/lib/animals'
 import { LEVEL_CAP } from '@/lib/campaign'
+import { fill, pluralWord } from '@/lib/i18n'
 import { streakLabel } from '@/lib/storage'
 import { Button } from '@/components/UI/Button'
 import { HomeSeo } from '@/components/Game/HomeSeo'
+import { LanguageMenu } from '@/components/Locale/LanguageMenu'
+import { useI18n } from '@/components/Locale/LocaleProvider'
 import { Footer } from '@/components/Layout/Footer'
 import { useInstallPrompt } from '@/components/PwaRegister'
 import { useGame } from '@/hooks/useGame'
@@ -27,13 +30,17 @@ export const HomeScreen = () => {
   const showSoon = useGame((state) => state.showSoon)
   const reduceMotion = useReducedMotion()
   const { canInstall, install } = useInstallPrompt()
-  const streak = ready ? streakLabel(progress) : null
+  const { locale, t } = useI18n()
+  const streak = ready ? streakLabel(progress, locale) : null
   const caughtUp = progress.completedLevels.includes(LEVEL_CAP)
   const nextLevel = Math.min(progress.currentLevel, LEVEL_CAP)
   const continueLabel = nextLevel > 1 || progress.completedLevels.length > 0
   return (
     <div>
-    <div className="relative flex min-h-dvh flex-col px-5 pt-[max(1.5rem,env(safe-area-inset-top))]">
+    <div className="relative flex min-h-dvh flex-col px-5 pt-[max(0.75rem,env(safe-area-inset-top))]">
+      <div className="relative z-20 flex justify-end">
+        <LanguageMenu />
+      </div>
       <div className="pointer-events-none absolute inset-0 hidden overflow-hidden sm:block" aria-hidden="true">
         {FLOATERS.map((floater) => (
           <motion.span
@@ -47,14 +54,12 @@ export const HomeScreen = () => {
         ))}
       </div>
       <main className="relative z-10 flex flex-1 flex-col items-center justify-center text-center">
-        <p className="text-sm font-semibold tracking-wide text-[#E84B7F] uppercase">Logic puzzle</p>
+        <p className="text-sm font-semibold tracking-wide text-[#E84B7F] uppercase">{t.logicPuzzle}</p>
         <h1 className="mt-2 font-display text-5xl font-bold text-[#3D2C29]">Crittermino</h1>
-        <p className="mt-3 max-w-xs text-base text-[#8C7468]">
-          A free Fillomino puzzle in the browser. No download. Fill the grid with animal homes. Each critter needs a region of exactly the right size, and same-size homes cannot touch.
-        </p>
+        <p className="mt-3 max-w-xs text-base text-[#8C7468]">{t.tagline}</p>
         <div className="mt-5 flex gap-2 text-3xl" aria-hidden="true">
           {ANIMALS.map((animal) => (
-            <span key={animal.emoji} title={`${animal.name} ${animal.size}`}>
+            <span key={animal.emoji} title={`${t.animals[animal.emoji]} ${animal.size}`}>
               {animal.emoji}
             </span>
           ))}
@@ -62,26 +67,30 @@ export const HomeScreen = () => {
         {streak ? <p className="mt-4 rounded-full bg-white px-3 py-1 text-sm font-medium ring-1 ring-[#E5D5C0]">{streak}</p> : null}
         <div className="mt-6 flex w-full max-w-xs flex-col gap-3">
           <Button size="lg" onClick={() => (caughtUp ? showSoon() : startLevel(nextLevel))}>
-            {caughtUp ? 'Coming soon' : continueLabel ? `Continue · Level ${nextLevel}` : 'Play'}
+            {caughtUp ? t.comingSoon : continueLabel ? fill(t.continueLevel, { n: nextLevel }) : t.play}
           </Button>
           <Button variant="secondary" onClick={showLevels}>
-            Level select
+            {t.levelSelect}
           </Button>
           <Link
             href="/how-to-play"
             className="inline-flex min-h-11 items-center justify-center rounded-full px-4 font-display font-semibold text-[#3D2C29] underline-offset-4 hover:underline"
           >
-            How to play
+            {t.howToPlay}
           </Link>
           {canInstall ? (
             <Button variant="secondary" onClick={() => void install()}>
-              Install app
+              {t.installApp}
             </Button>
           ) : null}
         </div>
         {ready && progress.completedLevels.length > 0 ? (
           <p className="mt-6 text-sm text-[#8C7468] tabular-nums">
-            {progress.completedLevels.length} cleared · {progress.totalMoves} moves
+            {fill(t.clearedSummary, {
+              cleared: progress.completedLevels.length,
+              moves: progress.totalMoves,
+              move: pluralWord(locale, progress.totalMoves, 'move'),
+            })}
           </p>
         ) : null}
       </main>

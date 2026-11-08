@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 import type { ReactNode } from 'react'
+import { useI18n } from '@/components/Locale/LocaleProvider'
+import { fill, pluralWord } from '@/lib/i18n'
 
 interface HeaderProps {
   mode?: 'site' | 'game'
@@ -14,18 +16,19 @@ interface HeaderProps {
 }
 
 export const Header = ({ mode = 'site', level, label, moves, homes, onMenu, hint }: HeaderProps) => {
+  const { locale, t } = useI18n()
   if (mode === 'site') {
     return (
       <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-4">
         <Link href="/" className="font-display text-xl font-bold text-[#3D2C29] focus-visible:outline-2 focus-visible:outline-[#FF6B9D]">
           Crittermino
         </Link>
-        <nav aria-label="Site" className="flex items-center gap-4">
+        <nav aria-label="Crittermino" className="flex items-center gap-4">
           <Link href="/how-to-play" className="text-sm font-medium text-[#8C7468] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-[#FF6B9D]">
-            How to play
+            {t.howToPlay}
           </Link>
           <Link href="/blog" className="text-sm font-medium text-[#8C7468] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-[#FF6B9D]">
-            Blog
+            {t.blog}
           </Link>
         </nav>
       </header>
@@ -36,7 +39,7 @@ export const Header = ({ mode = 'site', level, label, moves, homes, onMenu, hint
       <button
         type="button"
         onClick={onMenu}
-        aria-label="Open menu"
+        aria-label={t.openMenu}
         className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-[#3D2C29] shadow-sm ring-1 ring-[#E5D5C0] focus-visible:outline-2 focus-visible:outline-[#FF6B9D]"
       >
         <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true">
@@ -44,9 +47,9 @@ export const Header = ({ mode = 'site', level, label, moves, homes, onMenu, hint
         </svg>
       </button>
       <div className="text-center">
-        <p className="font-display text-lg leading-none font-bold">{label ?? `Level ${level}`}</p>
+        <p className="font-display text-lg leading-none font-bold">{label ?? fill(t.levelName, { n: level ?? 1 })}</p>
         <p className="mt-1 text-xs text-[#8C7468] tabular-nums">
-          {moves} {moves === 1 ? 'move' : 'moves'}
+          {moves} {pluralWord(locale, moves ?? 0, 'move')}
           {homes ? ` · ${homes}` : ''}
         </p>
       </div>

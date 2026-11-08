@@ -1,20 +1,27 @@
 import type { ReactNode } from 'react'
 import type { Metadata, Viewport } from 'next'
-import { Fredoka, Inter } from 'next/font/google'
+import { Fredoka, Inter, Nunito } from 'next/font/google'
 import Script from 'next/script'
+import { LocaleProvider } from '@/components/Locale/LocaleProvider'
 import { PwaRegister } from '@/components/PwaRegister'
+import { copy } from '@/lib/i18n'
+import { getLocale } from '@/lib/locale-server'
 import { SITE } from '@/lib/site'
 import './globals.css'
 
-const fredoka = Fredoka({ subsets: ['latin'], variable: '--font-fredoka' })
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const fredoka = Fredoka({ subsets: ['latin', 'latin-ext'], variable: '--font-fredoka' })
+const nunito = Nunito({ subsets: ['latin', 'cyrillic'], variable: '--font-nunito' })
+const inter = Inter({ subsets: ['latin', 'latin-ext', 'cyrillic'], variable: '--font-inter' })
 
 const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION ?? 'ME_z96Lpp2-19c7gS86OGz5VsS8jQzyni37dDuvBlCg'
 
-export const metadata: Metadata = {
+export const generateMetadata = async (): Promise<Metadata> => {
+  const locale = await getLocale()
+  const text = copy[locale]
+  return {
   metadataBase: new URL(SITE.url),
-  title: { default: SITE.title, template: '%s · Crittermino' },
-  description: SITE.description,
+  title: { default: text.metaTitle, template: '%s · Crittermino' },
+  description: text.metaDescription,
   keywords: [...SITE.keywords],
   applicationName: SITE.name,
   manifest: '/manifest.json',
@@ -35,6 +42,7 @@ export const metadata: Metadata = {
     description: SITE.description,
     images: ['/og-image.png'],
   },
+  }
 }
 
 export const viewport: Viewport = {
@@ -44,15 +52,16 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 }
 
-export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+  const locale = await getLocale()
   return (
-    <html lang="en" className={`${fredoka.variable} ${inter.variable}`}>
+    <html lang={locale} className={`${fredoka.variable} ${nunito.variable} ${inter.variable}`} suppressHydrationWarning>
       <body className="font-sans antialiased">
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${SITE.analyticsId}`} strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','${SITE.analyticsId}');`}
         </Script>
-        {children}
+        <LocaleProvider initialLocale={locale}>{children}</LocaleProvider>
         <PwaRegister />
       </body>
     </html>

@@ -6,6 +6,7 @@ import { getLevel } from '@/lib/levels'
 import type { Animal } from '@/types/game'
 import { AnimalSelector } from '@/components/Game/AnimalSelector'
 import { Grid } from '@/components/Game/Grid'
+import { useI18n } from '@/components/Locale/LocaleProvider'
 
 const demoLevel = getLevel(1)
 
@@ -13,6 +14,7 @@ export const DemoPuzzle = () => {
   const [grid, setGrid] = useState(() => createGrid(demoLevel))
   const [selected, setSelected] = useState<Animal | null>('🐭')
   const solved = isSolvedGrid(grid)
+  const { t } = useI18n()
   const onPress = (row: number, col: number): void => {
     const cell = grid[row]?.[col]
     if (!cell || cell.isHint || !selected || solved) return
@@ -32,7 +34,7 @@ export const DemoPuzzle = () => {
         onPress={onPress}
       />
       <AnimalSelector level={demoLevel} grid={grid} selected={selected} onSelect={setSelected} />
-      {solved ? <p className="mt-3 text-center font-display text-lg font-bold text-[#1B7A45]">Mouse has a home.</p> : null}
+      {solved ? <p className="mt-3 text-center font-display text-lg font-bold text-[#1B7A45]">{t.howToSolved}</p> : null}
     </div>
   )
 }

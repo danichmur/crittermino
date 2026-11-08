@@ -61,5 +61,5 @@ export interface Burst {
 }
 
 export type Coach =
-  | { kind: 'cell'; row: number; col: number; note: string }
-  | { kind: 'region'; cells: Array<{ row: number; col: number }>; animal: Animal; note: string }
+  | { kind: 'cell'; row: number; col: number; note: 'only-one' | 'look' }
+  | { kind: 'region'; cells: Array<{ row: number; col: number }>; animal: Animal; note: 'outlined' }

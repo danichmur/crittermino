@@ -1,5 +1,7 @@
 import { LEVEL_CAP } from '@/lib/campaign'
 import { formatTime } from '@/lib/format'
+import { copy, fill, pluralWord } from '@/lib/i18n'
+import type { Locale } from '@/lib/locale'
 import { SITE } from '@/lib/site'
 
 /** Level, move count, and whole seconds packed into a share link. */
@@ -114,14 +116,17 @@ export const decodeShareCode = (code: string): ShareScore | null => {
   return { level, moves, seconds }
 }
 
-export const shareSentence = (score: ShareScore): string => {
-  const moveWord = score.moves === 1 ? 'move' : 'moves'
-  return `I cleared Crittermino level ${score.level} in ${score.moves} ${moveWord} · ${formatTime(score.seconds * 1000)}!`
-}
+export const shareSentence = (score: ShareScore, locale: Locale = 'en'): string =>
+  fill(copy[locale].shareSentence, {
+    level: score.level,
+    moves: score.moves,
+    moveWord: pluralWord(locale, score.moves, 'move'),
+    time: formatTime(score.seconds * 1000),
+  })
 
 /** The link a player sends. Score text stays in the message; the URL is the game. */
 export const shareHomeUrl = `${SITE.url}/`
 
 export const sharePageUrl = (code: string): string => `${SITE.url}/share/${code}`
 
-export const shareLine = (score: ShareScore): string => `${shareSentence(score)} ${shareHomeUrl}`
+export const shareLine = (score: ShareScore, locale: Locale = 'en'): string => `${shareSentence(score, locale)} ${shareHomeUrl}`

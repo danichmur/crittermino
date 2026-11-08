@@ -1,4 +1,5 @@
 import { LEVEL_CAP } from '@/lib/campaign'
+import { INTL_LOCALE, type Locale } from '@/lib/locale'
 
 const MS_PER_DAY = 86_400_000
 const EPOCH_UTC = Date.UTC(2026, 0, 1)
@@ -23,8 +24,8 @@ export const dailyLevelNumber = (date: Date = new Date()): number => {
 }
 
 /** Long UTC date, safe to render on the server and the client. */
-export const formatDailyDate = (date: Date = new Date()): string =>
-  new Intl.DateTimeFormat('en-US', {
+export const formatDailyDate = (date: Date = new Date(), locale: Locale = 'en'): string =>
+  new Intl.DateTimeFormat(INTL_LOCALE[locale], {
     weekday: 'long',
     year: 'numeric',
     month: 'long',

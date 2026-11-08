@@ -10,6 +10,8 @@ import { HintButton } from '@/components/Game/HintButton'
 import { MenuSheet, SettingsDialog } from '@/components/Game/MenuSheet'
 import { WinModal } from '@/components/Game/WinModal'
 import { InteractiveTutorial } from '@/components/Tutorial/InteractiveTutorial'
+import { useI18n } from '@/components/Locale/LocaleProvider'
+import { fill, homeCountLabel, translateBoardLine } from '@/lib/i18n'
 import { useGame } from '@/hooks/useGame'
 
 export const GameScreen = () => {
@@ -32,6 +34,7 @@ export const GameScreen = () => {
   const requestHint = useGame((state) => state.requestHint)
   const dismissIntro = useGame((state) => state.dismissIntro)
   const closeMenu = useGame((state) => state.closeMenu)
+  const { locale, t } = useI18n()
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent): void => {
       if (menuOpen || settingsOpen || isComplete || !level) return
@@ -53,7 +56,7 @@ export const GameScreen = () => {
         <p className="text-5xl" aria-hidden="true">
           🐭
         </p>
-        <p className="font-display text-xl font-bold">Folding the next puzzle…</p>
+        <p className="font-display text-xl font-bold">{t.folding}</p>
       </div>
     )
   }
@@ -67,8 +70,13 @@ export const GameScreen = () => {
     if (!level.tutorial || isComplete) return null
     if (level.tutorial.spotlight.length === 0 && moves > 0) return null
     if (level.tutorial.spotlight.length > 0 && !spotlight) return null
-    if (spotlightCell?.hasError) return 'Those homes are the same size and share a wall. Try a different animal.'
-    return level.tutorial.message
+    if (spotlightCell?.hasError) return t.sameSizeError
+    return translateBoardLine(locale, level.tutorial.message)
+  })()
+  const coachText = (() => {
+    if (!coach) return null
+    if (coach.kind === 'region') return fill(t.outlined, { name: t.animals[coach.animal] })
+    return coach.note === 'only-one' ? t.onlyOne : t.lookHere
   })()
   const ghostCells = coach?.kind === 'region' ? coach.cells : []
   const ghostAnimal = coach?.kind === 'region' ? coach.animal : null
@@ -78,9 +86,9 @@ export const GameScreen = () => {
       <Header
         mode="game"
         level={level.number}
-        label={playMode === 'daily' ? 'Daily' : undefined}
+        label={playMode === 'daily' ? t.dailyLabel : undefined}
         moves={moves}
-        homes={`${done}/${needed} homes`}
+        homes={homeCountLabel(locale, done, needed)}
         onMenu={openMenu}
         hint={<HintButton onHint={requestHint} />}
       />
@@ -91,13 +99,13 @@ export const GameScreen = () => {
             onClick={dismissIntro}
             className="mb-2 shrink-0 rounded-2xl bg-white px-4 py-3 text-left text-sm font-medium shadow-sm ring-1 ring-[#E5D5C0]"
           >
-            {level.intro}
-            <span className="mt-1 block text-xs text-[#8C7468]">Tap to dismiss</span>
+            {translateBoardLine(locale, level.intro)}
+            <span className="mt-1 block text-xs text-[#8C7468]">{t.tapToDismiss}</span>
           </button>
         ) : null}
         {coach ? (
           <p className="mb-2 shrink-0 text-center text-sm font-medium text-[#8C7468]" role="status">
-            {coach.note}
+            {coachText}
           </p>
         ) : null}
         <InteractiveTutorial message={tutorialMessage} fill>

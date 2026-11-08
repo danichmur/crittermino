@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { useI18n } from '@/components/Locale/LocaleProvider'
 import { cn } from '@/lib/cn'
 
 interface ModalProps {
@@ -15,6 +16,7 @@ interface ModalProps {
 }
 
 export const Modal = ({ open, title, onClose, children, dismissable = true, placement = 'sheet' }: ModalProps) => {
+  const { t } = useI18n()
   const dialogRef = useRef<HTMLDivElement>(null)
   const reduceMotion = useReducedMotion()
   useEffect(() => {
@@ -73,7 +75,7 @@ export const Modal = ({ open, title, onClose, children, dismissable = true, plac
         >
           <button
             type="button"
-            aria-label={dismissable ? 'Close dialog' : undefined}
+            aria-label={dismissable ? t.closeDialog : undefined}
             className="absolute inset-0 bg-[#3D2C29]/40"
             onClick={dismissable ? onClose : undefined}
             tabIndex={dismissable ? 0 : -1}

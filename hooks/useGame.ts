@@ -2,6 +2,8 @@
 
 import { create } from 'zustand'
 import { animalFromSize, getAnimalByEmoji } from '@/lib/animals'
+import { copy } from '@/lib/i18n'
+import { getActiveLocale } from '@/lib/locale'
 import { track } from '@/lib/analytics'
 import { completeSignatures, createGrid, isSolvedGrid, replaceAnimal } from '@/lib/board'
 import { generateLevel } from '@/lib/generator'
@@ -203,7 +205,7 @@ const applyHint = (): void => {
         kind: 'cell',
         row: target.row,
         col: target.col,
-        note: logicalOk ? 'Only one animal fits here.' : 'Look at this cell.',
+        note: logicalOk ? 'only-one' : 'look',
       },
       hintsUsed: hintNumber,
     })
@@ -235,7 +237,7 @@ const applyHint = (): void => {
         kind: 'region',
         cells: region.cells,
         animal: region.animal,
-        note: `${getAnimalByEmoji(region.animal).name}'s home is outlined.`,
+        note: 'outlined',
       },
       hintsUsed: hintNumber,
     })
@@ -327,7 +329,7 @@ export const useGame = create<GameStore>((set, get) => ({
         beginLevel(generateLevel(levelNumber))
       } catch {
         set({ isGenerating: false, view: 'home' })
-        get().showToast('That puzzle could not be built.')
+        get().showToast(copy[getActiveLocale()].puzzleFailed)
       }
     }, 40)
   },
@@ -365,7 +367,7 @@ export const useGame = create<GameStore>((set, get) => ({
         set({ selectedAnimal: current.animal, coach: null })
         return
       }
-      get().showToast('Pick an animal first')
+      get().showToast(copy[getActiveLocale()].pickAnimal)
       return
     }
     const isErase = current.animal === state.selectedAnimal
