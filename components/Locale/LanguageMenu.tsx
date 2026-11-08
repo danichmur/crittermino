@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from 'react'
 import { useI18n } from '@/components/Locale/LocaleProvider'
-import { LOCALE_LABEL, LOCALES, type Locale } from '@/lib/locale'
+import { LOCALE_FLAG, LOCALE_LABEL, LOCALES, type Locale } from '@/lib/locale'
 import { cn } from '@/lib/cn'
 
 interface LanguageChoicesProps {
@@ -32,7 +32,10 @@ export const LanguageChoices = ({ onChoose }: LanguageChoicesProps) => {
               selected ? 'bg-[#FFE5EC] ring-2 ring-[#FF6B9D]' : 'bg-white ring-1 ring-[#E5D5C0]',
             )}
           >
-            <span>{LOCALE_LABEL[item]}</span>
+            <span className="flex items-center gap-2">
+              <span aria-hidden="true">{LOCALE_FLAG[item]}</span>
+              {LOCALE_LABEL[item]}
+            </span>
             {selected ? <span aria-hidden="true">✓</span> : null}
           </button>
         )
@@ -73,7 +76,7 @@ export const LanguageMenu = () => {
         onClick={handleToggle}
         className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-4 font-display text-sm font-semibold text-[#3D2C29] shadow-sm ring-1 ring-[#E5D5C0] focus-visible:outline-2 focus-visible:outline-[#FF6B9D]"
       >
-        <span aria-hidden="true">🌐</span>
+        <span aria-hidden="true">{LOCALE_FLAG[locale]}</span>
         {LOCALE_LABEL[locale]}
       </button>
       {open ? (

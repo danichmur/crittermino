@@ -12,6 +12,12 @@ export const LOCALE_LABEL: Record<Locale, string> = {
   ru: 'Русский',
 }
 
+export const LOCALE_FLAG: Record<Locale, string> = {
+  en: '🇺🇸',
+  es: '🇪🇸',
+  ru: '🇷🇺',
+}
+
 export const INTL_LOCALE: Record<Locale, string> = {
   en: 'en-US',
   es: 'es-419',
