@@ -87,41 +87,6 @@ const roundRect = (pixels, width, x, y, w, h, radius, color) => {
   fillCircle(pixels, width, x + w - radius, y + h - radius, radius, color)
 }
 
-const FONT = {
-  A: ['01110', '10001', '10001', '11111', '10001', '10001', '10001'],
-  B: ['11110', '10001', '10001', '11110', '10001', '10001', '11110'],
-  C: ['01111', '10000', '10000', '10000', '10000', '10000', '01111'],
-  E: ['11111', '10000', '10000', '11110', '10000', '10000', '11111'],
-  G: ['01111', '10000', '10000', '10111', '10001', '10001', '01110'],
-  I: ['11111', '00100', '00100', '00100', '00100', '00100', '11111'],
-  L: ['10000', '10000', '10000', '10000', '10000', '10000', '11111'],
-  M: ['10001', '11011', '10101', '10101', '10001', '10001', '10001'],
-  N: ['10001', '11001', '10101', '10011', '10001', '10001', '10001'],
-  O: ['01110', '10001', '10001', '10001', '10001', '10001', '01110'],
-  P: ['11110', '10001', '10001', '11110', '10000', '10000', '10000'],
-  R: ['11110', '10001', '10001', '11110', '10100', '10010', '10001'],
-  T: ['11111', '00100', '00100', '00100', '00100', '00100', '00100'],
-  U: ['10001', '10001', '10001', '10001', '10001', '10001', '01110'],
-  Z: ['11111', '00001', '00010', '00100', '01000', '10000', '11111'],
-  ' ': ['00000', '00000', '00000', '00000', '00000', '00000', '00000'],
-}
-
-const drawText = (pixels, width, text, x, y, scale, color) => {
-  let cursor = x
-  for (const character of text) {
-    const glyph = FONT[character] ?? FONT[' ']
-    glyph.forEach((row, rowIndex) => {
-      ;[...row].forEach((bit, colIndex) => {
-        if (bit === '1') fillRect(pixels, width, cursor + colIndex * scale, y + rowIndex * scale, scale, scale, color)
-      })
-    })
-    cursor += 6 * scale
-  }
-  return cursor
-}
-
-const textWidth = (text, scale) => text.length * 6 * scale - scale
-
 const drawCritter = (pixels, width, size) => {
   const pink = [255, 107, 157, 255]
   const cream = [255, 249, 240, 255]
@@ -150,35 +115,4 @@ const icon512 = createCanvas(512, 512, [255, 255, 255, 255])
 drawCritter(icon512.pixels, 512, 512)
 save('icon-512.png', icon512)
 
-const og = createCanvas(1200, 630, [255, 249, 240, 255])
-roundRect(og.pixels, 1200, 70, 70, 280, 280, 64, [255, 107, 157, 255])
-const badge = createCanvas(280, 280, [0, 0, 0, 0])
-drawCritter(badge.pixels, 280, 280)
-for (let y = 0; y < 280; y += 1) {
-  for (let x = 0; x < 280; x += 1) {
-    const source = (y * 280 + x) * 4
-    if (badge.pixels[source + 3] === 0) continue
-    setPixel(og.pixels, 1200, 70 + x, 150 + y, [
-      badge.pixels[source],
-      badge.pixels[source + 1],
-      badge.pixels[source + 2],
-      badge.pixels[source + 3],
-    ])
-  }
-}
-const title = 'CRITTERMINO'
-const subtitle = 'BRAIN LOGIC PUZZLE'
-drawText(og.pixels, 1200, title, 400, 190, 10, [61, 44, 41, 255])
-drawText(og.pixels, 1200, subtitle, 400, 290, 5, [140, 116, 104, 255])
-void textWidth
-const colors = [
-  [255, 229, 236, 255],
-  [255, 244, 204, 255],
-  [229, 244, 255, 255],
-  [232, 245, 232, 255],
-  [255, 229, 217, 255],
-]
-colors.forEach((color, index) => fillCircle(og.pixels, 1200, 460 + index * 90, 460, 28, color))
-save('og-image.png', og)
-
-console.log('Wrote icon-192.png, icon-512.png, and og-image.png')
+console.log('Wrote icon-192.png and icon-512.png')
