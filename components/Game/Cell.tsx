@@ -59,7 +59,7 @@ export const Cell = ({ cell, shake, showHand, highlighted, ghost, onPress }: Cel
       aria-label={label}
       onClick={() => onPress(cell.row, cell.col)}
       className={cn(
-        'relative flex h-full w-full items-center justify-center rounded-xl border-2 touch-manipulation',
+        'relative flex h-full w-full items-center justify-center rounded-2xl border touch-manipulation',
         'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF6B9D]',
         highlighted && !reduceMotion && 'animate-pulse',
         ghost && !animal && 'border-dashed',
@@ -76,11 +76,13 @@ export const Cell = ({ cell, shake, showHand, highlighted, ghost, onPress }: Cel
         </span>
       ) : null}
       {animal ? (
-        <span className="absolute right-1 bottom-0.5 text-[10px] font-bold tabular-nums" style={{ color: animal.ink }}>
+        <span className="absolute right-3 bottom-2.5 text-[10px] font-bold tabular-nums" style={{ color: animal.ink }}>
           {animal.size}
         </span>
       ) : null}
-      {cell.isHint ? <span className="absolute top-1 left-1 h-1.5 w-1.5 rounded-full bg-[#3D2C29]/30" aria-hidden="true" /> : null}
+      {cell.isHint ? (
+        <span className="absolute top-3 left-3 h-2 w-2 rounded-full" style={{ background: animal ? animal.accent : outline }} aria-hidden="true" />
+      ) : null}
       {showHand ? <TutorialHand /> : null}
     </motion.button>
   )

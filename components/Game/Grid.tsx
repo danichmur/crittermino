@@ -22,7 +22,7 @@ export const Grid = ({ grid, shakes, bursts, spotlight, highlight, ghostCells, g
   return (
     <div className="relative aspect-square w-full">
       <div
-        className="@container grid h-full w-full gap-1 rounded-[1.6rem] bg-[#E5D5C0] p-1.5 shadow-[0_10px_30px_rgba(61,44,41,0.08)] sm:gap-1.5 sm:p-2"
+        className="@container grid h-full w-full gap-1.5 sm:gap-2"
         style={{
           gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))`,
           gridTemplateRows: `repeat(${size}, minmax(0, 1fr))`,
@@ -46,7 +46,7 @@ export const Grid = ({ grid, shakes, bursts, spotlight, highlight, ghostCells, g
           }),
         )}
       </div>
-      <div className="pointer-events-none absolute inset-2">
+      <div className="pointer-events-none absolute inset-0">
         {bursts.map((burst) => (
           <span key={burst.id} className="absolute" style={{ left: `${((burst.col + 0.5) / size) * 100}%`, top: `${((burst.row + 0.5) / size) * 100}%` }}>
             {Array.from({ length: 8 }, (_, index) => (
