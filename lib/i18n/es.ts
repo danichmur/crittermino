@@ -1,9 +1,9 @@
 import type { Copy } from '@/lib/i18n/types'
 
 export const es: Copy = {
-  metaTitle: 'Crittermino — puzzle de lógica gratis',
+  metaTitle: 'Fillomino online gratis · Crittermino',
   metaDescription:
-    'Puzzle de lógica gratis. Juega un Fillomino en el navegador, sin descarga. Dale a cada animal una casa del tamaño justo.',
+    'Juega a Fillomino online gratis, sin descarga y sin registro. Un puzzle de lógica en el navegador: cada animal tiene una casa del tamaño justo.',
   language: 'Idioma',
   howToPlay: 'Cómo jugar',
   blog: 'Blog',
@@ -23,9 +23,9 @@ export const es: Copy = {
   clearedSummary: '{cleared} completados · {moves} {move}',
   streakToday: 'Racha de {n} {day}',
   streakKeep: 'Juega hoy para mantener la racha de {n} {day}',
-  seoTitle: 'Un puzzle de lógica gratis',
+  seoTitle: 'Fillomino online gratis',
   seoBody:
-    'Crittermino es un Fillomino y un puzzle de animales en el mismo tablero. Se juega en el navegador. No hay descarga ni cuenta. Cada casilla pasa a ser parte de una casa, y cada nivel tiene una sola solución.',
+    'Crittermino es un Fillomino y un puzzle de animales en el mismo tablero. Se juega en el navegador. No hay descarga ni registro. Cada casilla pasa a ser parte de una casa, y cada nivel tiene una sola solución.',
   homesTitle: 'Las casas',
   homesNote:
     'Una casa puede doblarse. Tiene que seguir unida lado con lado. Dos casas del mismo tamaño no pueden compartir pared. Las esquinas sí pueden tocarse.',
@@ -156,7 +156,7 @@ export const es: Copy = {
   animals: { '🐭': 'Ratón', '🐱': 'Gato', '🐶': 'Perro', '🐼': 'Panda', '🦁': 'León' },
   howToMetaTitle: 'Cómo jugar Fillomino',
   howToMetaDescription:
-    'Cómo jugar Fillomino en Crittermino: casas de animales, tamaños y por qué las regiones del mismo tamaño no pueden tocarse. Incluye dos ejemplos.',
+    'Reglas del Fillomino y cómo jugar: tamaño de la casa, unión por el lado y por qué las del mismo tamaño no se tocan. Dos ejemplos.',
   howToLead:
     'Crittermino es un puzzle Fillomino. Las pistas son las casillas que ya tienen un animal. No se pueden cambiar. El resto lo colocas tú, y la solución es única.',
   howToRules: [
@@ -197,10 +197,9 @@ export const es: Copy = {
   howToLegalName: 'Compara un toque legal y una pared ilegal',
   howToLegalText:
     'Dos casas de ratón pueden tocarse en una esquina. No pueden compartir un lado. Tres ratones en fila son una región de tres, demasiado grande para un ratón.',
-  aboutMetaTitle: 'Acerca de Crittermino',
+  aboutMetaTitle: 'Qué es Fillomino',
   aboutMetaDescription:
-    'Crittermino es un Fillomino en el navegador. El puzzle lo publicó Nikoli en 1994. Aquí los tamaños de región son casas de animales.',
-  aboutHeading: 'Sobre el juego',
+    'Qué es un puzzle Fillomino. Nikoli lo publicó en 1994. Aquí los tamaños son casas de animales que juegas en el navegador.',
   aboutLead:
     'Crittermino es Fillomino jugado con casas de animales. Las reglas son más viejas que este sitio. Los animales hacen que los tamaños sean fáciles de recordar.',
   aboutHistoryTitle: 'De dónde sale Fillomino',
@@ -260,9 +259,9 @@ export const es: Copy = {
       body: 'Si esta política cambia, la nueva versión estará en esta página con una fecha nueva. La fecha de arriba es la versión actual.',
     },
   ],
-  dailyMetaTitle: 'Puzzle de lógica diario',
+  dailyMetaTitle: 'Puzzle de lógica diario online',
   dailyMetaDescription:
-    'El diario de Crittermino del {date}. Una cuadrícula de Fillomino para todos, gratis en el navegador. El tablero cambia a medianoche UTC.',
+    'Puzzle de lógica diario gratis del {date}. Una cuadrícula de Fillomino online para todos. El tablero cambia a medianoche UTC.',
   dailyEyebrow: 'La misma cuadrícula para todos',
   dailyHeading: 'Desafío diario',
   dailyLead: 'Un tablero de Fillomino para el {date}. Cambia a medianoche UTC. Se juega en el navegador, sin descarga y sin cuenta.',
@@ -279,10 +278,9 @@ export const es: Copy = {
   dailyHowLink: 'página de cómo jugar',
   dailyRulesAfter: ' tiene ejemplos si los quieres primero.',
   dailyPlay: 'Jugar el puzzle de hoy',
-  blogMetaTitle: 'Estrategias de puzzle',
+  blogMetaTitle: 'Consejos de Fillomino',
   blogMetaDescription:
     'Una guía de Fillomino, en qué se diferencia del Sudoku y juegos de lógica gratis para jugar en el navegador.',
-  blogHeading: 'Estrategias',
   blogLead: 'Cómo resolver Fillomino, en qué se diferencia del Sudoku y qué puzzles de lógica puedes terminar en el navegador.',
   blogEnglishNote: 'Estos textos están en inglés.',
   blogName: 'Blog de Crittermino',

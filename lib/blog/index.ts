@@ -2,7 +2,12 @@ import { bestFreeLogicPuzzles2026 } from '@/lib/blog/posts/best-free-logic-puzzl
 import { critterminoTips } from '@/lib/blog/posts/crittermino-tips-and-strategies'
 import { fillominoVsSudoku } from '@/lib/blog/posts/fillomino-vs-sudoku'
 import { howToSolveFillomino } from '@/lib/blog/posts/how-to-solve-fillomino-puzzles'
+import { japaneseCrossword } from '@/lib/blog/posts/japanese-crossword'
+import { kakuroRules } from '@/lib/blog/posts/kakuro-rules'
+import { kenkenRules } from '@/lib/blog/posts/kenken-rules'
+import { killerSudoku } from '@/lib/blog/posts/killer-sudoku'
 import { logicPuzzleBenefits } from '@/lib/blog/posts/logic-puzzle-benefits'
+import { sudokuRules } from '@/lib/blog/posts/sudoku-rules'
 import { ES_POSTS } from '@/lib/blog/translations/es'
 import { RU_POSTS } from '@/lib/blog/translations/ru'
 import type { BlogCopy, BlogPost } from '@/lib/blog/types'
@@ -11,6 +16,11 @@ import { INTL_LOCALE, type Locale } from '@/lib/locale'
 export type { ArticleBlock, ArticleFaq, ArticleSection, BlogCopy, BlogPost, ExampleCell } from '@/lib/blog/types'
 
 export const BLOG_POSTS: readonly BlogPost[] = [
+  sudokuRules,
+  kakuroRules,
+  japaneseCrossword,
+  killerSudoku,
+  kenkenRules,
   howToSolveFillomino,
   fillominoVsSudoku,
   bestFreeLogicPuzzles2026,

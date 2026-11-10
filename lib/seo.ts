@@ -3,6 +3,42 @@ import { copy } from '@/lib/i18n'
 import { localizeHref, type Locale } from '@/lib/locale'
 import { SITE } from '@/lib/site'
 
+/** Queries people type, mapped onto pages that already answer them. */
+export const pageQueryKeywords: Record<'home' | 'howTo' | 'daily' | 'about', Record<Locale, readonly string[]>> = {
+  home: {
+    en: SITE.keywords,
+    ru: [
+      'филломино онлайн',
+      'филломино как играть',
+      'логические головоломки онлайн',
+      'логические игры онлайн бесплатно',
+      'без регистрации',
+    ],
+    es: [
+      'fillomino online',
+      'fillomino online gratis',
+      'juegos de logica online',
+      'juegos de logica online gratis',
+      'puzzle de logica',
+    ],
+  },
+  howTo: {
+    en: ['fillomino rules', 'fillomino puzzle rules', 'how to play fillomino'],
+    ru: ['филломино как играть', 'правила филломино', 'как играть в филломино'],
+    es: ['cómo jugar fillomino', 'reglas del fillomino', 'fillomino reglas'],
+  },
+  daily: {
+    en: ['daily logic puzzle', 'daily logic puzzle online', 'daily logic puzzle online free'],
+    ru: ['логическая головоломка на сегодня', 'головоломка дня', 'филломино'],
+    es: ['puzzle de logica diario', 'puzzle logico diario', 'fillomino diario'],
+  },
+  about: {
+    en: ['what is fillomino', 'fillomino meaning', 'what is a fillomino puzzle'],
+    ru: ['что такое филломино', 'филломино'],
+    es: ['qué es fillomino', 'fillomino significado'],
+  },
+}
+
 interface PageMetaInput {
   title: string
   description: string

@@ -4,7 +4,7 @@ import { board, list, paragraph, type BlogCopy } from '@/lib/blog/types'
 const empty = blank()
 
 export const howToEs: BlogCopy = {
-  title: 'Cómo resolver puzzles de Fillomino',
+  title: 'Cómo resolver un puzzle de Fillomino',
   description:
     'Un tutorial de cómo resolver Fillomino: qué significa el número, cómo crecen las regiones y un 4×4 que puedes terminar a mano.',
   keywords: ['cómo resolver fillomino', 'tutorial de fillomino', 'reglas del fillomino', 'puzzle fillomino'],

@@ -5,12 +5,12 @@ const empty = blank()
 
 export const howToSolveFillomino: BlogPost = {
   slug: 'how-to-solve-fillomino-puzzles',
-  title: 'How to solve Fillomino puzzles',
+  title: 'How to solve a Fillomino puzzle',
   description:
-    'A Fillomino tutorial for how to solve Fillomino: what the number means, how regions grow, and a 4×4 you can finish by hand.',
+    'How to solve a Fillomino puzzle: what the number means, how regions grow, and a 4×4 you can finish by hand.',
   published: '2026-11-07',
-  updated: '2026-11-08',
-  keywords: ['fillomino tutorial', 'how to solve fillomino', 'fillomino rules', 'fillomino puzzle'],
+  updated: '2026-11-10',
+  keywords: ['how to solve a fillomino puzzle', 'fillomino tutorial', 'how to solve fillomino', 'fillomino puzzle'],
   sections: [
     {
       heading: 'What the number is asking',

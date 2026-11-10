@@ -1,9 +1,9 @@
 import { paragraph, type BlogCopy } from '@/lib/blog/types'
 
 export const tipsEs: BlogCopy = {
-  title: 'Consejos y estrategias de Crittermino',
-  description: 'Cómo se portan las cinco casas, qué significa el temblor y cómo usar una pista sin regalar el tablero.',
-  keywords: ['consejos crittermino', 'estrategia fillomino', 'puzzle de animales'],
+  title: 'Consejos de Fillomino',
+  description: 'Consejos de Fillomino: cómo se portan las cinco casas, qué significa el temblor y cómo usar una pista sin regalar el tablero.',
+  keywords: ['consejos de fillomino', 'estrategia fillomino', 'consejos crittermino'],
   sections: [
     {
       heading: 'Cinco tamaños, cinco personajes',

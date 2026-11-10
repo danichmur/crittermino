@@ -1,9 +1,9 @@
 import type { Copy } from '@/lib/i18n/types'
 
 export const en: Copy = {
-  metaTitle: 'Crittermino - Free Logic Puzzle Online',
+  metaTitle: 'Fillomino online free · Crittermino',
   metaDescription:
-    'Free logic puzzle online. Play a Fillomino brain puzzle in the browser, no download needed. Give each animal a home of the right size.',
+    'Play a Fillomino puzzle online, free in the browser. No download and no account. Give each animal a home of the right size.',
   language: 'Language',
   howToPlay: 'How to play',
   blog: 'Blog',
@@ -23,7 +23,7 @@ export const en: Copy = {
   clearedSummary: '{cleared} cleared · {moves} {move}',
   streakToday: '{n}-day streak',
   streakKeep: 'Play today to keep a {n}-day streak',
-  seoTitle: 'A free logic puzzle online',
+  seoTitle: 'Play Fillomino online',
   seoBody:
     'Crittermino is a Fillomino game and an animal puzzle game in the same board. You play in the browser. There is no download and no account. Every cell becomes part of a home, and the solution on each level is unique.',
   homesTitle: 'The homes',
@@ -154,9 +154,9 @@ export const en: Copy = {
     'Lion needs a roomy home of exactly 6 cells.': 'Lion needs a roomy home of exactly 6 cells.',
   },
   animals: { '🐭': 'Mouse', '🐱': 'Cat', '🐶': 'Dog', '🐼': 'Panda', '🦁': 'Lion' },
-  howToMetaTitle: 'How to play Fillomino',
+  howToMetaTitle: 'Fillomino rules',
   howToMetaDescription:
-    'How to play Fillomino in Crittermino: animal homes, region sizes, and why same-size regions cannot touch. Includes two shape examples.',
+    'Fillomino rules: fill every cell, match the region size, and keep same-size regions apart. How to play, with two shape examples.',
   howToLead:
     'Crittermino is a Fillomino puzzle. The givens are the cells that already have an animal. They cannot be changed. Everything else is yours to place, and the solution is unique.',
   howToRules: [
@@ -197,10 +197,9 @@ export const en: Copy = {
   howToLegalName: 'Compare a legal touch and an illegal wall',
   howToLegalText:
     'Two mouse homes may touch at a corner. They cannot share a side. Three mice in a row are one region of three, which is too big for a mouse.',
-  aboutMetaTitle: 'About Crittermino',
+  aboutMetaTitle: 'What is Fillomino',
   aboutMetaDescription:
-    'Crittermino is a browser Fillomino. The puzzle was published by Nikoli in 1994. Here the region sizes are animal homes.',
-  aboutHeading: 'About the game',
+    'What a Fillomino puzzle is. Nikoli published it in 1994. Here the numbers are animal homes you play in the browser.',
   aboutLead:
     'Crittermino is Fillomino played with animal homes. The rules are older than this site. The animals are how the sizes stay easy to remember.',
   aboutHistoryTitle: 'Where Fillomino comes from',
@@ -260,9 +259,9 @@ export const en: Copy = {
       body: 'If this policy changes, the new version will be on this page with a new date. The date at the top of this page is the current version.',
     },
   ],
-  dailyMetaTitle: 'Daily logic puzzle',
+  dailyMetaTitle: 'Daily logic puzzle online',
   dailyMetaDescription:
-    'The Crittermino daily for {date}. One Fillomino grid for every player, free in the browser. The board changes at midnight UTC.',
+    'Free daily logic puzzle for {date}. One Fillomino grid online for every player. The board changes at midnight UTC.',
   dailyEyebrow: 'Same grid for everyone',
   dailyHeading: 'Daily challenge',
   dailyLead: 'One Fillomino board for {date}. It changes at midnight UTC. You play it in the browser, with no download and no account.',
@@ -279,10 +278,9 @@ export const en: Copy = {
   dailyHowLink: 'how to play page',
   dailyRulesAfter: ' has examples if you want them first.',
   dailyPlay: 'Play today’s puzzle',
-  blogMetaTitle: 'Puzzle strategies',
+  blogMetaTitle: 'Fillomino tips',
   blogMetaDescription:
     'A Fillomino tutorial, the difference between Fillomino and Sudoku, and free logic puzzle games you can play in the browser.',
-  blogHeading: 'Strategies',
   blogLead: 'How to solve Fillomino, how it differs from Sudoku, and free logic puzzles you can finish in the browser.',
   blogEnglishNote: '',
   blogName: 'Crittermino blog',

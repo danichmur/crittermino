@@ -159,7 +159,6 @@ export interface Copy {
   readonly howToLegalText: string
   readonly aboutMetaTitle: string
   readonly aboutMetaDescription: string
-  readonly aboutHeading: string
   readonly aboutLead: string
   readonly aboutHistoryTitle: string
   readonly aboutHistory: readonly string[]
@@ -194,7 +193,6 @@ export interface Copy {
   readonly dailyPlay: string
   readonly blogMetaTitle: string
   readonly blogMetaDescription: string
-  readonly blogHeading: string
   readonly blogLead: string
   readonly blogEnglishNote: string
   readonly blogName: string

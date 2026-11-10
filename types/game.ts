@@ -2,6 +2,8 @@ export type Animal = '🐭' | '🐱' | '🐶' | '🐼' | '🦁'
 
 export type Difficulty = 'tutorial' | 'easy' | 'medium' | 'hard'
 
+export type PlayMode = 'campaign' | 'daily'
+
 export interface TutorialCue {
   message: string
   spotlight: Array<{ row: number; col: number }>

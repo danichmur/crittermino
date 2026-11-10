@@ -35,7 +35,7 @@ const blogEntries = (latestPost: string): MetadataRoute.Sitemap => {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const contentUpdated = publishedOn('2026-11-07')
+  const contentUpdated = publishedOn('2026-11-10')
   const latestPost = BLOG_POSTS.reduce((latest, post) => {
     const stamp = post.updated ?? post.published
     return stamp > latest ? stamp : latest

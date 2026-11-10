@@ -6,6 +6,7 @@ import { LocaleProvider } from '@/components/Locale/LocaleProvider'
 import { PwaRegister } from '@/components/PwaRegister'
 import { copy } from '@/lib/i18n'
 import { getLocale, getPathLocale } from '@/lib/locale-server'
+import { pageQueryKeywords } from '@/lib/seo'
 import { SITE } from '@/lib/site'
 import './globals.css'
 
@@ -22,15 +23,15 @@ export const generateMetadata = async (): Promise<Metadata> => {
   metadataBase: new URL(SITE.url),
   title: { default: text.metaTitle, template: '%s · Crittermino' },
   description: text.metaDescription,
-  keywords: [...SITE.keywords],
+  keywords: [...pageQueryKeywords.home[locale]],
   applicationName: SITE.name,
   manifest: '/manifest.json',
   alternates: { canonical: '/' },
   appleWebApp: { capable: true, title: SITE.name, statusBarStyle: 'default' },
   ...(googleSiteVerification ? { verification: { google: googleSiteVerification } } : {}),
   openGraph: {
-    title: SITE.title,
-    description: SITE.description,
+    title: text.metaTitle,
+    description: text.metaDescription,
     images: ['/og-image.png'],
     type: 'website',
     url: SITE.url,
@@ -38,8 +39,8 @@ export const generateMetadata = async (): Promise<Metadata> => {
   },
   twitter: {
     card: 'summary_large_image',
-    title: SITE.title,
-    description: SITE.description,
+    title: text.metaTitle,
+    description: text.metaDescription,
     images: ['/og-image.png'],
   },
   }

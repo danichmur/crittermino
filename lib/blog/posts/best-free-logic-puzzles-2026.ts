@@ -2,17 +2,28 @@ import { list, paragraph, type BlogPost } from '@/lib/blog/types'
 
 export const bestFreeLogicPuzzles2026: BlogPost = {
   slug: 'best-free-logic-puzzles-2026',
-  title: 'Best free logic puzzle games for 2026',
+  title: 'Free logic puzzles online',
   description:
-    'Free logic puzzle games you can finish in a browser: Fillomino, Sudoku, nonograms, bridges, light-up, galaxies, and logic grids.',
+    'Free logic puzzles online, with no download: Fillomino, Sudoku, nonograms, bridges, light-up, galaxies, and logic grids.',
   published: '2026-11-08',
-  keywords: ['free logic puzzle games', 'best free logic puzzles 2026', 'browser puzzle games'],
+  updated: '2026-11-10',
+  keywords: [
+    'free logic puzzles online',
+    'japanese logic puzzles',
+    'nikoli puzzles online',
+    'nonogram puzzle',
+    'picross online',
+    'bridges puzzle',
+    'light up puzzle',
+    'galaxies puzzle',
+    'logic grid puzzles',
+  ],
   sections: [
     {
       heading: 'What earned a place on this list',
       blocks: [
         paragraph(
-          'These are free logic puzzle games you can open in a browser in 2026. Each one teaches a rule in about a minute, then asks you to finish a grid in one sitting. No store install. No account required to start. The list is not a ranking, and nobody paid for a place on it. It is eight ways of deducing, plus one daily word for the evening you want language instead of shape.',
+          'These are free logic puzzle games you can open in a browser in 2026. Each one teaches a rule in about a minute, then asks you to finish a grid in one sitting. No store install. No account required to start. The list is not a ranking, and nobody paid for a place on it. It is eight ways of deducing, plus one daily word for the evening you want language instead of shape. The neighbors of Fillomino on this page are Nikoli puzzles: Bridges, Light Up, and Galaxies, plus nonograms and logic grids. Rules for [[/blog/sudoku-rules|Sudoku]], [[/blog/kakuro-rules|Kakuro]], [[/blog/killer-sudoku|killer sudoku]], [[/blog/kenken-rules|KenKen]], and the [[/blog/japanese-crossword|Japanese crossword]] each have their own page.',
         ),
         paragraph(
           'Crittermino is on the list because this site is that game. The other entries are other people’s puzzles. They are here because they are good to play, and because a person who likes one quiet grid often wants a second kind on a different day. If a link below ever stops being free, it stops belonging here.',
@@ -53,7 +64,7 @@ export const bestFreeLogicPuzzles2026: BlogPost = {
       ],
     },
     {
-      heading: 'Hashiwokakero, as Bridges',
+      heading: 'Bridges puzzle',
       blocks: [
         paragraph(
           'Bridges gives you islands in open water. Each island has a number. You draw bridges between islands, horizontally or vertically, until every island has exactly that many bridge ends and every island is connected to the rest. Bridges do not cross. At most two bridges run between the same pair of islands. [[https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/bridges.html|Tatham’s Bridges]] is a clean free version.',
@@ -64,7 +75,7 @@ export const bestFreeLogicPuzzles2026: BlogPost = {
       ],
     },
     {
-      heading: 'Akari, as Light Up',
+      heading: 'Light Up puzzle',
       blocks: [
         paragraph(
           'Light Up, also called Akari, is a grid of white cells and black walls. You place bulbs on white cells. A bulb lights its row and column until a wall. Every white cell must be lit. Two bulbs cannot see each other. Some black cells carry a number, and that number is how many bulbs sit against their sides. [[https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/lightup.html|Tatham’s Light Up]] is free in the browser.',
@@ -75,10 +86,10 @@ export const bestFreeLogicPuzzles2026: BlogPost = {
       ],
     },
     {
-      heading: 'Nonograms',
+      heading: 'Nonogram puzzle',
       blocks: [
         paragraph(
-          'A nonogram fills a picture from counts on the edges. Each row and column lists the lengths of the filled runs, in order, with at least one empty cell between runs. You deduce which cells are ink and which stay empty. There is no region size in the Fillomino sense. You are reading runs. [[https://webpbn.com/|Web Paint-by-Number]] is the long-running free set. [[https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/pattern.html|Tatham’s Pattern]] is the same genre when you already have his collection open.',
+          'A nonogram, also called picross or a Japanese crossword, fills a picture from counts on the edges. Each row and column lists the lengths of the filled runs, in order, with at least one empty cell between runs. You deduce which cells are ink and which stay empty. There is no region size in the Fillomino sense. You are reading runs. [[https://webpbn.com/|Web Paint-by-Number]] is the long-running free set. [[https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/pattern.html|Tatham’s Pattern]] is the same genre when you already have his collection open.',
         ),
         paragraph(
           'The last ten cells of a nonogram and the last ten cells of a Crittermino board collapse for the same reason. Once the board is tight, a single filled cell removes a run that no longer fits, and the rest of the line follows. People who like that click tend to like both. The picture at the end is a bonus. The logic is the point.',
@@ -86,7 +97,7 @@ export const bestFreeLogicPuzzles2026: BlogPost = {
       ],
     },
     {
-      heading: 'Spiral Galaxies',
+      heading: 'Galaxies puzzle',
       blocks: [
         paragraph(
           'Galaxies, also called Spiral Galaxies or Tentai Show, partitions the grid into regions that have rotational symmetry. Each galaxy has a center mark, on a cell, an edge, or a corner, and the region looks the same after a half turn around that mark. You are not matching a number to a size. You are making every cell obey a center. [[https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/galaxies.html|Tatham’s Galaxies]] is a good free set.',
@@ -97,7 +108,7 @@ export const bestFreeLogicPuzzles2026: BlogPost = {
       ],
     },
     {
-      heading: 'Puzzle Baron logic grids',
+      heading: 'Logic grid puzzles',
       blocks: [
         paragraph(
           'A logic grid is a different genre, and it still belongs on a list of free logic puzzle games. You match people, places, and objects from clues such as "the baker is not next to the violin." You fill a crosshatch of yes and no until each category lines up. [[https://logic.puzzlebaron.com/|Puzzle Baron]] is a large free set of those grids.',

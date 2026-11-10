@@ -1,16 +1,16 @@
 export const SITE = {
   name: 'Crittermino',
   url: 'https://crittermino.vercel.app',
-  title: 'Crittermino - Free Logic Puzzle Online',
+  title: 'Fillomino online free · Crittermino',
   description:
-    'Free logic puzzle online. Play a Fillomino brain puzzle in the browser, no download needed. Give each animal a home of the right size.',
+    'Play a Fillomino puzzle online, free in the browser. No download and no account. Give each animal a home of the right size.',
   keywords: [
-    'free logic puzzle online',
+    'fillomino online',
+    'fillomino puzzle',
     'fillomino game',
-    'brain puzzle no download',
-    'animal puzzle game',
-    'how to play fillomino',
-    'sudoku alternative',
+    'play fillomino online',
+    'free logic puzzle online',
+    'puzzles like sudoku',
   ],
   themeColor: '#FF6B9D',
   background: '#FFF9F0',

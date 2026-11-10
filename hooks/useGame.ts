@@ -12,7 +12,7 @@ import { dailyLevelNumber } from '@/lib/daily'
 import { getLevel, hasLevel } from '@/lib/levels'
 import { buzz, playComplete, playError, playTap, playWin } from '@/lib/sound'
 import { findForcedMove, neighborsOf } from '@/lib/solver'
-import type { Animal, Burst, Cell, Coach, Level } from '@/types/game'
+import type { Animal, Burst, Cell, Coach, Level, PlayMode } from '@/types/game'
 import { useProgress } from '@/hooks/useProgress'
 
 interface WinSnapshot {
@@ -24,7 +24,7 @@ interface WinSnapshot {
 
 interface GameStore {
   view: 'home' | 'play' | 'levels' | 'soon'
-  playMode: 'campaign' | 'daily'
+  playMode: PlayMode
   level: Level | null
   grid: Cell[][]
   selectedAnimal: Animal | null
@@ -165,14 +165,14 @@ const finishIfSolved = (level: Level, grid: Cell[][], moves: number, startedAt: 
   const previousBest = progress.bestMoves[level.number]
   if (useGame.getState().playMode === 'daily') {
     useProgress.getState().completeDaily()
-    track({ name: 'level_completed', level: level.number, moves, timeMs: elapsedMs })
+    track({ name: 'level_completed', level: level.number, mode: 'daily', moves, timeMs: elapsedMs })
     playWin()
     buzz([24, 40, 24, 40, 70])
     return { isComplete: true, elapsedMs, isNewBest: false, tutorialCelebration: false }
   }
   const tutorialCelebration = level.number === 5 && !progress.tutorialCompleted
   useProgress.getState().completeLevel(level.number, moves)
-  track({ name: 'level_completed', level: level.number, moves, timeMs: elapsedMs })
+  track({ name: 'level_completed', level: level.number, mode: 'campaign', moves, timeMs: elapsedMs })
   if (tutorialCelebration) track({ name: 'tutorial_completed' })
   playWin()
   buzz([24, 40, 24, 40, 70])
@@ -243,7 +243,7 @@ const applyHint = (): void => {
     })
   }
   useProgress.getState().recordHint()
-  track({ name: 'hint_used', level: level.number, hintNumber })
+  track({ name: 'hint_used', level: level.number, mode: useGame.getState().playMode, hintNumber })
 }
 
 const beginLevel = (level: Level): void => {
@@ -269,7 +269,7 @@ const beginLevel = (level: Level): void => {
     isNewBest: false,
     tutorialCelebration: false,
   })
-  track({ name: 'level_started', level: level.number })
+  track({ name: 'level_started', level: level.number, mode: useGame.getState().playMode })
   useProgress.getState().touchStreak()
 }
 

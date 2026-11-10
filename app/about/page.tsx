@@ -4,18 +4,19 @@ import { PlayLink } from '@/components/Layout/PlayLink'
 import { JsonLd } from '@/components/Seo/JsonLd'
 import { copy } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale-server'
-import { breadcrumbJsonLd, pageMeta } from '@/lib/seo'
+import { breadcrumbJsonLd, pageMeta, pageQueryKeywords } from '@/lib/seo'
 import { SITE } from '@/lib/site'
 
 const linkClass = 'font-semibold text-[#3D2C29] underline-offset-4 hover:underline'
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const text = copy[await getLocale()]
+  const locale = await getLocale()
+  const text = copy[locale]
   return pageMeta({
     title: text.aboutMetaTitle,
     description: text.aboutMetaDescription,
     path: '/about',
-    keywords: ['fillomino game', 'crittermino', 'nikoli fillomino'],
+    keywords: pageQueryKeywords.about[locale],
   })
 }
 
@@ -38,7 +39,7 @@ export default async function AboutPage() {
           isPartOf: { '@type': 'WebSite', name: SITE.name, url: SITE.url },
         }}
       />
-      <h1 className="font-display text-4xl font-bold">{text.aboutHeading}</h1>
+      <h1 className="font-display text-4xl font-bold">{text.aboutMetaTitle}</h1>
       <p className="mt-3 leading-relaxed text-[#8C7468]">{text.aboutLead}</p>
       <section className="mt-8" aria-labelledby="fillomino-history">
         <h2 id="fillomino-history" className="font-display text-2xl font-bold">

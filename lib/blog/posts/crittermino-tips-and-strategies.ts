@@ -2,11 +2,12 @@ import { paragraph, type BlogPost } from '@/lib/blog/types'
 
 export const critterminoTips: BlogPost = {
   slug: 'crittermino-tips-and-strategies',
-  title: 'Crittermino tips and strategies',
+  title: 'Fillomino tips and strategies',
   description:
-    'How the five animal homes behave, what the shake means, and how to use a hint without giving the grid away.',
+    'Fillomino tips: how the five animal homes behave, what the shake means, and how to use a hint without giving the grid away.',
   published: '2026-11-07',
-  keywords: ['crittermino tips', 'fillomino strategy', 'animal puzzle'],
+  updated: '2026-11-10',
+  keywords: ['fillomino tips', 'fillomino strategy', 'crittermino tips'],
   sections: [
     {
       heading: 'Learn the five sizes as characters',

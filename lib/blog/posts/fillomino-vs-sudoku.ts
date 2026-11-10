@@ -3,11 +3,12 @@ import { board, list, paragraph, type BlogPost } from '@/lib/blog/types'
 
 export const fillominoVsSudoku: BlogPost = {
   slug: 'fillomino-vs-sudoku',
-  title: 'Fillomino vs Sudoku',
+  title: 'Fillomino, a Sudoku alternative',
   description:
-    'The Fillomino Sudoku difference, in plain rules. If you like Sudoku, try Fillomino: the grid stays quiet, and the number changes jobs.',
+    'A puzzle like Sudoku, with different rules. Fillomino keeps the quiet grid. The number is a region size, not a digit that must stay unique.',
   published: '2026-11-08',
-  keywords: ['fillomino sudoku difference', 'fillomino vs sudoku', 'sudoku alternative puzzle'],
+  updated: '2026-11-10',
+  keywords: ['sudoku alternative', 'puzzles like sudoku', 'games like sudoku', 'fillomino vs sudoku'],
   sections: [
     {
       heading: 'If you like Sudoku, try Fillomino',

@@ -2,10 +2,10 @@ import { dog } from '@/lib/blog/cells'
 import { board, list, paragraph, type BlogCopy } from '@/lib/blog/types'
 
 export const vsEs: BlogCopy = {
-  title: 'Fillomino y Sudoku',
+  title: 'Fillomino, una alternativa al Sudoku',
   description:
-    'La diferencia entre Fillomino y Sudoku, en reglas claras. Si te gusta el Sudoku, prueba Fillomino: la cuadrícula sigue quieta y el número cambia de trabajo.',
-  keywords: ['diferencia entre fillomino y sudoku', 'fillomino vs sudoku', 'puzzle alternativo al sudoku'],
+    'Una alternativa al Sudoku, con otras reglas. Fillomino mantiene la cuadrícula quieta. El número es el tamaño de la región, no un dígito que deba ser único.',
+  keywords: ['alternativa al sudoku', 'fillomino vs sudoku', 'juegos como sudoku'],
   sections: [
     {
       heading: 'Si te gusta el Sudoku, prueba Fillomino',

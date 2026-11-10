@@ -1,16 +1,22 @@
 import { list, paragraph, type BlogCopy } from '@/lib/blog/types'
 
 export const listEs: BlogCopy = {
-  title: 'Mejores juegos de lógica gratis en 2026',
+  title: 'Juegos de lógica online gratis',
   description:
-    'Juegos de lógica gratis que puedes terminar en el navegador: Fillomino, Sudoku, nonogramas, puentes, luz, galaxias y cuadrículas lógicas.',
-  keywords: ['juegos de lógica gratis', 'mejores puzzles de lógica 2026', 'puzzles en el navegador'],
+    'Juegos de lógica online gratis, sin descarga: Fillomino, Sudoku, nonogramas, puentes, luz, galaxias y cuadrículas lógicas.',
+  keywords: [
+    'juegos de logica online gratis',
+    'puzzles japoneses',
+    'nonograma',
+    'picross',
+    'juegos de logica online',
+  ],
   sections: [
     {
       heading: 'Qué se ganó un sitio en esta lista',
       blocks: [
         paragraph(
-          'Estos son juegos de lógica gratis que puedes abrir en un navegador en 2026. Cada uno enseña una regla en cerca de un minuto y luego te pide terminar una cuadrícula en una sentada. Sin instalar nada desde una tienda. Sin cuenta para empezar. La lista no es un ranking, y nadie pagó por un puesto. Son ocho maneras de deducir, más una palabra diaria para la noche en que quieras idioma en vez de forma.',
+          'Estos son juegos de lógica gratis que puedes abrir en un navegador en 2026. Cada uno enseña una regla en cerca de un minuto y luego te pide terminar una cuadrícula en una sentada. Sin instalar nada desde una tienda. Sin cuenta para empezar. La lista no es un ranking, y nadie pagó por un puesto. Son ocho maneras de deducir, más una palabra diaria para la noche en que quieras idioma en vez de forma. Al lado de Fillomino están otros puzzles Nikoli: Bridges, Light Up y Galaxies, más nonogramas y cuadrículas lógicas. Las reglas del [[/blog/sudoku-rules|Sudoku]], el [[/blog/kakuro-rules|Kakuro]], el [[/blog/killer-sudoku|sudoku killer]], el [[/blog/kenken-rules|KenKen]] y el [[/blog/japanese-crossword|crucigrama japonés]] tienen página propia.',
         ),
         paragraph(
           'Crittermino está en la lista porque este sitio es ese juego. Las otras entradas son puzzles de otras personas. Están aquí porque se juegan bien y porque a quien le gusta una cuadrícula quieta a menudo le apetece un segundo tipo otro día. Si un enlace de abajo deja de ser gratis, deja de pertenecer aquí.',
@@ -51,7 +57,7 @@ export const listEs: BlogCopy = {
       ],
     },
     {
-      heading: 'Hashiwokakero, como Bridges',
+      heading: 'Puzzle Bridges',
       blocks: [
         paragraph(
           'Bridges te da islas en agua abierta. Cada isla tiene un número. Dibujas puentes entre islas, en horizontal o en vertical, hasta que cada isla tenga exactamente ese número de extremos de puente y todas las islas queden conectadas. Los puentes no se cruzan. Como mucho dos puentes unen la misma pareja de islas. [[https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/bridges.html|Bridges de Tatham]] es una versión gratis limpia.',
@@ -62,7 +68,7 @@ export const listEs: BlogCopy = {
       ],
     },
     {
-      heading: 'Akari, como Light Up',
+      heading: 'Puzzle Light Up',
       blocks: [
         paragraph(
           'Light Up, también llamado Akari, es una cuadrícula de casillas blancas y paredes negras. Colocas bombillas en casillas blancas. Una bombilla ilumina su fila y su columna hasta una pared. Cada casilla blanca tiene que estar iluminada. Dos bombillas no pueden verse. Algunas casillas negras llevan un número, y ese número es cuántas bombillas se sientan contra sus lados. [[https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/lightup.html|Light Up de Tatham]] es gratis en el navegador.',
@@ -73,10 +79,10 @@ export const listEs: BlogCopy = {
       ],
     },
     {
-      heading: 'Nonogramas',
+      heading: 'Nonograma',
       blocks: [
         paragraph(
-          'Un nonograma llena un dibujo a partir de cuentas en los bordes. Cada fila y cada columna lista las longitudes de los tramos pintados, en orden, con al menos una casilla vacía entre tramos. Deduces qué casillas son tinta y cuáles se quedan vacías. No hay un tamaño de región al estilo Fillomino. Estás leyendo tramos. [[https://webpbn.com/|Web Paint-by-Number]] es el conjunto gratis de toda la vida. [[https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/pattern.html|Pattern de Tatham]] es el mismo género cuando ya tienes abierta su colección.',
+          'Un nonograma, también llamado picross, llena un dibujo a partir de cuentas en los bordes. Cada fila y cada columna lista las longitudes de los tramos pintados, en orden, con al menos una casilla vacía entre tramos. Deduces qué casillas son tinta y cuáles se quedan vacías. No hay un tamaño de región al estilo Fillomino. Estás leyendo tramos. [[https://webpbn.com/|Web Paint-by-Number]] es el conjunto gratis de toda la vida. [[https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/pattern.html|Pattern de Tatham]] es el mismo género cuando ya tienes abierta su colección.',
         ),
         paragraph(
           'Las últimas diez casillas de un nonograma y las últimas diez de un tablero de Crittermino se desploman por la misma razón. Cuando el tablero está apretado, una casilla pintada quita un tramo que ya no cabe, y el resto de la línea sigue. A quien le gusta ese clic suelen gustarle los dos. El dibujo del final es un extra. La lógica es el punto.',
@@ -84,7 +90,7 @@ export const listEs: BlogCopy = {
       ],
     },
     {
-      heading: 'Galaxias espirales',
+      heading: 'Puzzle Galaxies',
       blocks: [
         paragraph(
           'Galaxies, también llamado Spiral Galaxies o Tentai Show, parte la cuadrícula en regiones con simetría rotacional. Cada galaxia tiene una marca de centro, en una casilla, un borde o una esquina, y la región se ve igual después de un medio giro alrededor de esa marca. No estás emparejando un número con un tamaño. Estás haciendo que cada casilla obedezca a un centro. [[https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/galaxies.html|Galaxies de Tatham]] es un buen conjunto gratis.',
@@ -95,7 +101,7 @@ export const listEs: BlogCopy = {
       ],
     },
     {
-      heading: 'Cuadrículas lógicas de Puzzle Baron',
+      heading: 'Cuadrículas lógicas',
       blocks: [
         paragraph(
           'Una cuadrícula lógica es otro género, y aun así cabe en una lista de juegos de lógica gratis. Emparejas personas, lugares y objetos con pistas como «el panadero no está junto al violín». Llenas un cruce de sí y no hasta que cada categoría encaja. [[https://logic.puzzlebaron.com/|Puzzle Baron]] es un conjunto grande y gratis de esas cuadrículas.',

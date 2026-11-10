@@ -11,9 +11,9 @@ import { breadcrumbJsonLd, pageMeta } from '@/lib/seo'
 import { SITE } from '@/lib/site'
 
 const INDEX_KEYWORDS: Record<Locale, readonly string[]> = {
-  en: ['fillomino tutorial', 'how to solve fillomino', 'free logic puzzle games', 'crittermino'],
-  ru: ['как решать филломино', 'филломино и судоку', 'бесплатные логические игры', 'crittermino'],
-  es: ['cómo resolver fillomino', 'fillomino y sudoku', 'juegos de lógica gratis', 'crittermino'],
+  en: ['fillomino tips', 'how to solve a fillomino puzzle', 'free logic puzzles online', 'puzzles like sudoku'],
+  ru: ['советы по филломино', 'как решать филломино', 'логические игры онлайн бесплатно', 'головоломки как судоку'],
+  es: ['consejos de fillomino', 'cómo resolver fillomino', 'juegos de logica online gratis', 'alternativa al sudoku'],
 }
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -59,7 +59,7 @@ export default async function BlogIndexPage() {
           })),
         }}
       />
-      <h1 className="font-display text-4xl font-bold">{text.blogHeading}</h1>
+      <h1 className="font-display text-4xl font-bold">{text.blogMetaTitle}</h1>
       <p className="mt-3 leading-relaxed text-[#8C7468]">{text.blogLead}</p>
       {articleLocale === 'en' && ui.blogEnglishNote ? (
         <p className="mt-2 text-sm font-medium text-[#E84B7F]">{ui.blogEnglishNote}</p>

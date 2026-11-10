@@ -43,7 +43,7 @@ export const WinModal = () => {
     const seconds = Math.min(65_535, Math.max(0, Math.round(elapsedMs / 1000)))
     const score = { level: level.number, moves: Math.min(65_535, Math.max(0, moves)), seconds }
     const { text, url, line } = shareMessage(score, locale)
-    track({ name: 'share_clicked', level: level.number })
+    track({ name: 'share_clicked', level: level.number, mode: playMode })
     if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
       try {
         await navigator.share({ title: 'Crittermino', text, url })
