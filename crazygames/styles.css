@@ -1,0 +1,20 @@
+@import '@fontsource-variable/fredoka';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/nunito';
+@import '../app/globals.css';
+
+@source '../components';
+@source '../hooks';
+@source '../lib';
+
+:root {
+  --font-fredoka: 'Fredoka Variable';
+  --font-inter: 'Inter Variable';
+  --font-nunito: 'Nunito Variable';
+}
+
+/* CrazyGames asks for this so long presses on tablets do not open the selection menu. */
+body {
+  -webkit-user-select: none;
+  user-select: none;
+}

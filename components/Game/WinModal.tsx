@@ -6,6 +6,7 @@ import { ANIMALS } from '@/lib/animals'
 import { LEVEL_CAP } from '@/lib/campaign'
 import { formatTime } from '@/lib/format'
 import { fill, pluralWord } from '@/lib/i18n'
+import { IS_PORTAL_BUILD } from '@/lib/platform'
 import { shareMessage } from '@/lib/share-code'
 import { useI18n } from '@/components/Locale/LocaleProvider'
 import { track } from '@/lib/analytics'
@@ -36,7 +37,7 @@ export const WinModal = () => {
   const isLast = level.number >= LEVEL_CAP
   const handleDailyDone = (): void => {
     showHome()
-    router.push('/daily-challenge')
+    if (!IS_PORTAL_BUILD) router.push('/daily-challenge')
   }
   const animals = ANIMALS.filter((animal) => level.palette.includes(animal.size))
   const share = async (): Promise<void> => {
@@ -119,10 +120,12 @@ export const WinModal = () => {
               {tutorial ? t.playLevel6 : isLast ? t.comingSoon : t.nextLevel}
             </Button>
           )}
-          <div className="grid grid-cols-2 gap-3">
-            <Button variant="secondary" onClick={() => void share()}>
-              {t.share}
-            </Button>
+          <div className={IS_PORTAL_BUILD ? 'grid gap-3' : 'grid grid-cols-2 gap-3'}>
+            {IS_PORTAL_BUILD ? null : (
+              <Button variant="secondary" onClick={() => void share()}>
+                {t.share}
+              </Button>
+            )}
             <Button variant="secondary" onClick={restart}>
               {t.replay}
             </Button>

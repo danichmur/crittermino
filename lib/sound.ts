@@ -1,6 +1,7 @@
 let audio: AudioContext | null = null
 let keeper: AudioBufferSourceNode | null = null
 let soundEnabled = true
+let platformMuted = false
 let hapticsEnabled = true
 
 type AudioCtor = typeof AudioContext
@@ -94,7 +95,7 @@ const tone = (
   delay = 0,
   slide?: number,
 ): void => {
-  if (!soundEnabled) return
+  if (!soundEnabled || platformMuted) return
   const ctx = context()
   if (!ctx) return
   // Start the node in the same turn as the tap. Waiting on resume() runs after
@@ -110,6 +111,11 @@ const tone = (
 export const setSoundEnabled = (enabled: boolean): void => {
   soundEnabled = enabled
   if (enabled) unlock()
+}
+
+/** A host-level mute, such as the CrazyGames audio toggle, overrides the in-game sound setting. */
+export const setPlatformMuted = (muted: boolean): void => {
+  platformMuted = muted
 }
 
 export const setHapticsEnabled = (enabled: boolean): void => {

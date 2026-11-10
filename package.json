@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:crazygames": "vite build --config vite.crazygames.config.mts",
+    "preview:crazygames": "vite preview --config vite.crazygames.config.mts --port 4173",
     "start": "next start",
     "lint": "eslint",
     "generate": "tsx scripts/generate-levels.ts",
@@ -23,15 +25,21 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@fontsource-variable/fredoka": "^5.3.0",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/nunito": "^5.3.0",
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/vite": "^4.3.5",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.7.0",
     "eslint": "^9",
     "eslint-config-next": "15.5.29",
     "playwright": "^1.65.0",
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite": "^6.4.6"
   }
 }

@@ -7,6 +7,7 @@ import { ANIMALS } from '@/lib/animals'
 import { LEVEL_CAP } from '@/lib/campaign'
 import { utcDateString } from '@/lib/daily'
 import { fill, pluralWord } from '@/lib/i18n'
+import { IS_PORTAL_BUILD } from '@/lib/platform'
 import { streakLabel } from '@/lib/storage'
 import { Button } from '@/components/UI/Button'
 import { HomeSeo } from '@/components/Game/HomeSeo'
@@ -71,8 +72,8 @@ export const HomeScreen = () => {
       <main className="relative z-10 flex flex-1 flex-col items-center justify-center text-center">
         <p className="text-sm font-semibold tracking-wide text-[#E84B7F] uppercase">{t.logicPuzzle}</p>
         <h1 className="mt-2 font-display text-5xl font-bold text-[#3D2C29]">Crittermino</h1>
-        <p className="mt-3 max-w-xs text-base text-[#8C7468]">{t.tagline}</p>
-        <div className="mt-5 flex gap-2 text-3xl" aria-hidden="true">
+        <p className="mt-3 max-w-xs text-base text-[#8C7468] [@media(max-height:600px)]:hidden">{t.tagline}</p>
+        <div className="mt-5 flex gap-2 text-3xl [@media(max-height:600px)]:mt-3" aria-hidden="true">
           {ANIMALS.map((animal) => (
             <span key={animal.emoji} title={`${t.animals[animal.emoji]} ${animal.size}`}>
               {animal.emoji}
@@ -80,7 +81,7 @@ export const HomeScreen = () => {
           ))}
         </div>
         {streak ? <p className="mt-4 rounded-full bg-white px-3 py-1 text-sm font-medium ring-1 ring-[#E5D5C0]">{streak}</p> : null}
-        <div className="mt-6 flex w-full max-w-xs flex-col gap-3">
+        <div className="mt-6 flex w-full max-w-xs flex-col gap-3 [@media(max-height:600px)]:mt-4">
           <Button size="lg" onClick={() => (caughtUp ? showSoon() : startLevel(nextLevel))}>
             {caughtUp ? t.comingSoon : continueLabel ? fill(t.continueLevel, { n: nextLevel }) : t.play}
           </Button>
@@ -95,13 +96,15 @@ export const HomeScreen = () => {
           <Button variant="secondary" onClick={showLevels}>
             {t.levelSelect}
           </Button>
-          <Link
-            href="/how-to-play"
-            className="inline-flex min-h-11 items-center justify-center rounded-full px-4 font-display font-semibold text-[#3D2C29] underline-offset-4 hover:underline"
-          >
-            {t.howToPlay}
-          </Link>
-          {canInstall ? (
+          {IS_PORTAL_BUILD ? null : (
+            <Link
+              href="/how-to-play"
+              className="inline-flex min-h-11 items-center justify-center rounded-full px-4 font-display font-semibold text-[#3D2C29] underline-offset-4 hover:underline"
+            >
+              {t.howToPlay}
+            </Link>
+          )}
+          {canInstall && !IS_PORTAL_BUILD ? (
             <Button variant="secondary" onClick={() => void install()}>
               {t.installApp}
             </Button>
@@ -118,8 +121,12 @@ export const HomeScreen = () => {
         ) : null}
       </main>
     </div>
-      <HomeSeo />
-      <Footer />
+      {IS_PORTAL_BUILD ? null : (
+        <>
+          <HomeSeo />
+          <Footer />
+        </>
+      )}
     </div>
   )
 }

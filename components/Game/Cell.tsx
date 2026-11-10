@@ -76,12 +76,19 @@ export const Cell = ({ cell, shake, showHand, highlighted, ghost, onPress }: Cel
         </span>
       ) : null}
       {animal ? (
-        <span className="absolute right-3 bottom-2.5 text-[10px] font-bold tabular-nums" style={{ color: animal.ink }}>
+        <span
+          className="absolute text-[10px] leading-none font-bold tabular-nums"
+          style={{ color: animal.ink, right: 'clamp(3px, 12cqi, 12px)', bottom: 'clamp(3px, 11cqi, 10px)' }}
+        >
           {animal.size}
         </span>
       ) : null}
       {cell.isHint ? (
-        <span className="absolute top-3 left-3 h-2 w-2 rounded-full" style={{ background: animal ? animal.accent : outline }} aria-hidden="true" />
+        <span
+          className="absolute h-2 w-2 rounded-full"
+          style={{ background: animal ? animal.accent : outline, top: 'clamp(3px, 12cqi, 12px)', left: 'clamp(3px, 12cqi, 12px)' }}
+          aria-hidden="true"
+        />
       ) : null}
       {showHand ? <TutorialHand /> : null}
     </motion.button>

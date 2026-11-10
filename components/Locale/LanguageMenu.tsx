@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useI18n } from '@/components/Locale/LocaleProvider'
 import { LOCALE_FLAG, LOCALE_LABEL, LOCALES, localizeHref, type Locale } from '@/lib/locale'
 import { cn } from '@/lib/cn'
+import { IS_PORTAL_BUILD } from '@/lib/platform'
 
 interface LanguageChoicesProps {
   onChoose?: () => void
@@ -17,7 +18,7 @@ export const LanguageChoices = ({ onChoose }: LanguageChoicesProps) => {
     setLocale(next)
     const current = window.location.pathname
     const bare = current.replace(/^\/(ru|es)(?=\/|$)/, '') || '/'
-    if (bare !== '/') {
+    if (bare !== '/' && !IS_PORTAL_BUILD) {
       const target = localizeHref(next, bare)
       if (target !== current) router.push(target)
     }

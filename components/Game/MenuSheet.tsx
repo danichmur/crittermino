@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { LanguageChoices } from '@/components/Locale/LanguageMenu'
 import { useI18n } from '@/components/Locale/LocaleProvider'
 import { Button } from '@/components/UI/Button'
+import { IS_PORTAL_BUILD } from '@/lib/platform'
 import { Modal } from '@/components/UI/Modal'
 import { useGame } from '@/hooks/useGame'
 import { useProgress } from '@/hooks/useProgress'
@@ -25,21 +26,25 @@ export const MenuSheet = () => {
         <Button variant="secondary" onClick={showLevels}>
           {t.levelSelect}
         </Button>
-        <Link href="/how-to-play" onClick={closeMenu} className={linkClass}>
-          {t.howToPlay}
-        </Link>
-        <Link href="/daily-challenge" onClick={closeMenu} className={linkClass}>
-          {t.dailyPuzzle}
-        </Link>
-        <Link href="/blog" onClick={closeMenu} className={linkClass}>
-          {t.blog}
-        </Link>
-        <Link href="/about" onClick={closeMenu} className={linkClass}>
-          {t.about}
-        </Link>
-        <Link href="/privacy" onClick={closeMenu} className={linkClass}>
-          {t.privacy}
-        </Link>
+        {IS_PORTAL_BUILD ? null : (
+          <>
+            <Link href="/how-to-play" onClick={closeMenu} className={linkClass}>
+              {t.howToPlay}
+            </Link>
+            <Link href="/daily-challenge" onClick={closeMenu} className={linkClass}>
+              {t.dailyPuzzle}
+            </Link>
+            <Link href="/blog" onClick={closeMenu} className={linkClass}>
+              {t.blog}
+            </Link>
+            <Link href="/about" onClick={closeMenu} className={linkClass}>
+              {t.about}
+            </Link>
+            <Link href="/privacy" onClick={closeMenu} className={linkClass}>
+              {t.privacy}
+            </Link>
+          </>
+        )}
         <Button variant="secondary" onClick={openSettings}>
           {t.settings}
         </Button>
