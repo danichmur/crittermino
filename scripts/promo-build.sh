@@ -22,8 +22,8 @@ XF=$(python3 -c "print(${GPLEN}-0.6)")
 ENC=(-c:v libx264 -preset slow -crf 19 -pix_fmt yuv420p -r 30 -movflags +faststart -c:a aac -b:a 160k -ac 2 -shortest)
 echo "level=${LEVEL} dur=${DUR}s gameplay=${GPLEN}s"
 
-# 1) Vertical 9:16 (TikTok / Reels / Shorts) in EN and RU
-for LANG in en ru; do
+# 1) Vertical 9:16 (TikTok / Reels / Shorts) in EN, RU and ES
+for LANG in en ru es; do
   HOOK="promo/cards/${LANG}/hook.png"
   END="promo/cards/${LANG}/endcard.png"
   ffmpeg -y -hide_banner -loglevel error \

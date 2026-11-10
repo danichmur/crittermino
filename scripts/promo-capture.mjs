@@ -11,6 +11,7 @@ const STEP = Number(process.env.STEP ?? 230)
 const REGION_PAUSE = Number(process.env.REGION_PAUSE ?? 360)
 const VW = Number(process.env.VW ?? 720)
 const VH = Number(process.env.VH ?? 1280)
+const EMOJI_FONT = process.env.EMOJI_FONT === 'noto'
 
 const EMOJI_BY_SIZE = { 2: '🐭', 3: '🐱', 4: '🐶', 5: '🐼', 6: '🦁' }
 const NAME_BY_SIZE = { 2: 'Mouse', 3: 'Cat', 4: 'Dog', 5: 'Panda', 6: 'Lion' }
@@ -111,6 +112,21 @@ const run = async () => {
       }),
     )
   }, LEVEL)
+  if (EMOJI_FONT) {
+    await context.addInitScript(() => {
+      document.addEventListener('DOMContentLoaded', () => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = 'https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=block'
+        const style = document.createElement('style')
+        style.textContent = `:root {
+          --font-fredoka: 'Fredoka Variable', 'Noto Color Emoji' !important;
+          --font-inter: 'Inter Variable', 'Noto Color Emoji' !important;
+        }`
+        document.head.append(link, style)
+      })
+    })
+  }
 
   const page = await context.newPage()
   const t0 = Date.now()

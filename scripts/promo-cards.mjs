@@ -24,7 +24,14 @@ const COPY = {
     tag: 'Уютный логический пазл (филомино)',
     bullets: ['🧠 Чистая логика · одно решение', '🆓 Бесплатно · без рекламы · без входа', '📱 Мобильный PWA · испытание дня'],
   },
+  es: {
+    hookTitle: 'Cada animal necesita',
+    hookAccent: 'su casa',
+    tag: 'Un puzzle de lógica Fillomino',
+    bullets: ['🧠 Pura lógica · una sola solución', '🆓 Gratis · sin anuncios · sin registro', '📱 Móvil · puzzle diario'],
+  },
 }
+const LANGS = (process.env.LANGS ?? Object.keys(COPY).join(',')).split(',')
 
 const hookHtml = (copy) => `<!doctype html><html><head><meta charset="utf-8">${FONT}
 <style>
@@ -70,7 +77,9 @@ const run = async () => {
   const browser = await chromium.launch()
   const context = await browser.newContext({ deviceScaleFactor: 2 })
   const page = await context.newPage()
-  for (const [lang, copy] of Object.entries(COPY)) {
+  for (const lang of LANGS) {
+    const copy = COPY[lang]
+    if (!copy) throw new Error(`No promo copy for ${lang}`)
     const out = path.resolve(ROOT, 'promo/cards', lang)
     fs.mkdirSync(out, { recursive: true })
     await page.setViewportSize({ width: 1080, height: 360 })

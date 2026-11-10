@@ -107,7 +107,7 @@ const buildSquare = () => {
   console.log('teaser square')
 }
 
-buildVertical('en')
-buildVertical('ru')
-buildSquare()
+const LANGS = (process.env.LANGS ?? 'en,ru,es').split(',')
+LANGS.forEach(buildVertical)
+if (LANGS.includes('en')) buildSquare()
 console.log('done. total', TOTAL.toFixed(2), 's')
