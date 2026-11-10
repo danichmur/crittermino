@@ -27,6 +27,22 @@ export const Footer = () => {
         ))}
       </nav>
       <p className="mt-3 text-center">{t.freeInBrowser}</p>
+      <div className="mt-4 flex justify-center">
+        <a
+          href="https://www.makerhunt.space/projects/crittermino?ref=featured-badge"
+          title="crittermino on MakerHunt"
+          className="inline-flex rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF6B9D]"
+        >
+          {/* Raw img so MakerHunt's crawler sees this exact badge URL. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://www.makerhunt.space/badges/featured-on-light.svg"
+            alt="Featured on MakerHunt"
+            width={240}
+            height={48}
+          />
+        </a>
+      </div>
     </footer>
   )
 }
