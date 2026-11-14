@@ -29,6 +29,7 @@ export interface Copy {
   readonly freeInBrowser: string
   readonly logicPuzzle: string
   readonly tagline: string
+  readonly shellTagline: string
   readonly play: string
   readonly continueLevel: string
   readonly comingSoon: string
@@ -84,6 +85,7 @@ export interface Copy {
   readonly tutorialComplete: string
   readonly levelClear: string
   readonly tutorialDone: string
+  readonly skipLesson: string
   readonly homesFound: string
   readonly moveOne: string
   readonly moveFew: string

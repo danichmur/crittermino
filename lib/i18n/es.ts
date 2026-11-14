@@ -15,6 +15,8 @@ export const es: Copy = {
   logicPuzzle: 'Puzzle de lógica',
   tagline:
     'Un Fillomino gratis en el navegador. Sin descarga. Llena la cuadrícula con casas de animales. Cada animal necesita una región del tamaño exacto, y las casas del mismo tamaño no pueden tocarse.',
+  shellTagline:
+    'Llena la cuadrícula con casas de animales. Cada animal necesita una región del tamaño exacto, y las casas del mismo tamaño no pueden tocarse.',
   play: 'Jugar',
   continueLevel: 'Seguir · Nivel {n}',
   comingSoon: 'Pronto',
@@ -94,6 +96,7 @@ export const es: Copy = {
   tutorialComplete: 'Tutorial listo',
   levelClear: 'Nivel {n} superado',
   tutorialDone: '¡Tutorial listo!',
+  skipLesson: 'Saltar la lección',
   homesFound: '¡Casas listas!',
   moveOne: 'movimiento',
   moveFew: 'movimientos',

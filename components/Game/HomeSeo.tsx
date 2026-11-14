@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { ANIMALS } from '@/lib/animals'
 import { cellCountLabel } from '@/lib/i18n'
+import { Mascot } from '@/components/Brand/Mascot'
 import { useI18n } from '@/components/Locale/LocaleProvider'
 import { localizeHref } from '@/lib/locale'
 
@@ -17,9 +18,12 @@ export const HomeSeo = () => {
   return (
     <div className="mx-auto w-full max-w-lg px-5 pb-2">
       <section aria-labelledby="what-it-is">
-        <h2 id="what-it-is" className="font-display text-3xl font-bold">
-          {t.seoTitle}
-        </h2>
+        <div className="flex items-center gap-3">
+          <Mascot className="h-14 w-14" />
+          <h2 id="what-it-is" className="font-display text-3xl font-bold">
+            {t.seoTitle}
+          </h2>
+        </div>
         <p className="mt-3 leading-relaxed text-[#3D2C29]">{t.seoBody}</p>
       </section>
       <section className="mt-8" aria-labelledby="animal-homes">

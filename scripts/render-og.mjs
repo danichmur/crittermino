@@ -1,9 +1,11 @@
 import { chromium } from 'playwright'
+import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const OUT = path.resolve(ROOT, 'public/og-image.png')
+const ICON = fs.readFileSync(path.resolve(ROOT, 'app/icon.png')).toString('base64')
 
 const FONT = `<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,27 +24,15 @@ const html = `<!doctype html><html><head><meta charset="utf-8">${FONT}
     font-family:'Fredoka',sans-serif;
   }
   .mark {
-    width:340px; height:340px; border-radius:76px; overflow:hidden; flex:none;
+    width:340px; height:340px; border-radius:76px; object-fit:cover; flex:none;
     box-shadow:0 18px 40px rgba(61,44,41,0.14);
   }
-  .grid {
-    width:340px; height:340px; background:#FF8FB8; padding:20px;
-    display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:14px;
-  }
-  .cell { border-radius:46px; display:flex; align-items:center; justify-content:center; position:relative; }
-  .cell span { font-size:100px; line-height:1; }
-  .cell b { position:absolute; right:12px; bottom:6px; font-size:28px; font-weight:700; }
   .name {
     font-size:92px; font-weight:700; line-height:0.95; letter-spacing:-1.5px; color:#3D2C29;
   }
 </style></head>
 <body>
-  <div class="mark"><div class="grid">
-    <div class="cell" style="background:#D2D8E2;"><span>🐭</span><b style="color:#3E4856">2</b></div>
-    <div class="cell" style="background:#FFE58A;"><span>🐱</span><b style="color:#8A6A00">3</b></div>
-    <div class="cell" style="background:#E8CDB0;"><span>🐶</span><b style="color:#6B4124">4</b></div>
-    <div class="cell" style="background:#C8EBC8;"><span>🐼</span><b style="color:#1B7A45">5</b></div>
-  </div></div>
+  <img class="mark" alt="" src="data:image/png;base64,${ICON}" />
   <div class="name">Crittermino</div>
 </body></html>`
 

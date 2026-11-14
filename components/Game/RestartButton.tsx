@@ -13,7 +13,7 @@ export const RestartButton = ({ onRestart }: RestartButtonProps) => {
       type="button"
       onClick={onRestart}
       aria-label={t.restartLevel}
-      className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-[#3D2C29] shadow-sm ring-1 ring-[#E5D5C0] focus-visible:outline-2 focus-visible:outline-[#FF6B9D] touch-manipulation"
+      className="relative flex h-9 w-9 items-center justify-center rounded-2xl bg-white text-[#3D2C29] shadow-sm ring-1 ring-[#E5D5C0] focus-visible:outline-2 focus-visible:outline-[#FF6B9D] touch-manipulation [@media(min-height:760px)]:h-11 [@media(min-height:760px)]:w-11"
     >
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path

@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { animalFromSize } from '@/lib/animals'
 import { finishedRegions, neededRegions } from '@/lib/board'
+import { Mascot } from '@/components/Brand/Mascot'
 import { Header } from '@/components/Layout/Header'
 import { AnimalSelector } from '@/components/Game/AnimalSelector'
 import { Grid } from '@/components/Game/Grid'
@@ -12,8 +13,9 @@ import { MenuSheet, SettingsDialog } from '@/components/Game/MenuSheet'
 import { WinModal } from '@/components/Game/WinModal'
 import { InteractiveTutorial } from '@/components/Tutorial/InteractiveTutorial'
 import { useI18n } from '@/components/Locale/LocaleProvider'
-import { fill, homeCountLabel, translateBoardLine } from '@/lib/i18n'
+import { fill, homeCountLabel } from '@/lib/i18n'
 import { useGame } from '@/hooks/useGame'
+import { useProgress } from '@/hooks/useProgress'
 
 export const GameScreen = () => {
   const level = useGame((state) => state.level)
@@ -24,7 +26,6 @@ export const GameScreen = () => {
   const shakes = useGame((state) => state.shakes)
   const bursts = useGame((state) => state.bursts)
   const coach = useGame((state) => state.coach)
-  const introVisible = useGame((state) => state.introVisible)
   const isGenerating = useGame((state) => state.isGenerating)
   const isComplete = useGame((state) => state.isComplete)
   const menuOpen = useGame((state) => state.menuOpen)
@@ -34,9 +35,15 @@ export const GameScreen = () => {
   const selectAnimal = useGame((state) => state.selectAnimal)
   const tapCell = useGame((state) => state.tapCell)
   const requestHint = useGame((state) => state.requestHint)
-  const dismissIntro = useGame((state) => state.dismissIntro)
+  const startLevel = useGame((state) => state.startLevel)
   const closeMenu = useGame((state) => state.closeMenu)
+  const tutorialCompleted = useProgress((state) => state.progress.tutorialCompleted)
+  const skipTutorial = useProgress((state) => state.skipTutorial)
   const { locale, t } = useI18n()
+  const handleSkipLesson = (): void => {
+    skipTutorial()
+    startLevel(6)
+  }
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent): void => {
       if (menuOpen || settingsOpen || isComplete || !level) return
@@ -55,9 +62,7 @@ export const GameScreen = () => {
   if (isGenerating || !level) {
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
-        <p className="text-5xl" aria-hidden="true">
-          🐭
-        </p>
+        <Mascot className="h-28 w-28" />
         <p className="font-display text-xl font-bold">{t.folding}</p>
       </div>
     )
@@ -67,14 +72,7 @@ export const GameScreen = () => {
   const spotlight =
     level.tutorial?.spotlight.find((spot) => grid[spot.row]?.[spot.col]?.animal !== animalFromSize(level.solution[spot.row]?.[spot.col] ?? 0)) ??
     null
-  const spotlightCell = spotlight ? grid[spotlight.row]?.[spotlight.col] : null
-  const tutorialMessage = (() => {
-    if (!level.tutorial || isComplete) return null
-    if (level.tutorial.spotlight.length === 0 && moves > 0) return null
-    if (level.tutorial.spotlight.length > 0 && !spotlight) return null
-    if (spotlightCell?.hasError) return t.sameSizeError
-    return translateBoardLine(locale, level.tutorial.message)
-  })()
+  const showSkip = playMode === 'campaign' && level.number <= 5 && !tutorialCompleted && !isComplete
   const coachText = (() => {
     if (!coach) return null
     if (coach.kind === 'region') return fill(t.outlined, { name: t.animals[coach.animal] })
@@ -84,7 +82,7 @@ export const GameScreen = () => {
   const ghostAnimal = coach?.kind === 'region' ? coach.animal : null
   const highlight = coach?.kind === 'cell' ? { row: coach.row, col: coach.col } : null
   return (
-    <div className="fixed inset-x-0 top-0 mx-auto flex h-dvh max-h-dvh w-full max-w-3xl flex-col overflow-hidden px-2 pt-[max(0.5rem,env(safe-area-inset-top))] pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:px-3">
+    <div className="fixed inset-x-0 top-0 mx-auto flex h-dvh max-h-dvh w-full max-w-3xl flex-col overflow-hidden px-2 pt-[max(0.5rem,env(safe-area-inset-top))] pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:px-3 [@media(max-height:700px)]:px-1.5 [@media(max-height:700px)]:pt-[max(0.25rem,env(safe-area-inset-top))] [@media(max-height:700px)]:pb-[max(0.25rem,env(safe-area-inset-bottom))]">
       <Header
         mode="game"
         level={level.number}
@@ -95,23 +93,22 @@ export const GameScreen = () => {
         restart={<RestartButton onRestart={restart} />}
         hint={<HintButton onHint={requestHint} />}
       />
-      <div className="flex min-h-0 flex-1 flex-col py-2">
-        {introVisible && level.intro ? (
-          <button
-            type="button"
-            onClick={dismissIntro}
-            className="mb-2 shrink-0 rounded-2xl bg-white px-4 py-3 text-left text-sm font-medium shadow-sm ring-1 ring-[#E5D5C0]"
-          >
-            {translateBoardLine(locale, level.intro)}
-            <span className="mt-1 block text-xs text-[#8C7468]">{t.tapToDismiss}</span>
-          </button>
-        ) : null}
+      {showSkip ? (
+        <button
+          type="button"
+          onClick={handleSkipLesson}
+          className="mt-1 shrink-0 self-center rounded-full px-3 py-0.5 text-xs font-semibold text-[#8C7468] underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-[#FF6B9D]"
+        >
+          {t.skipLesson}
+        </button>
+      ) : null}
+      <div className="flex min-h-0 flex-1 flex-col py-2 [@media(max-height:700px)]:py-1">
         {coach ? (
           <p className="mb-2 shrink-0 text-center text-sm font-medium text-[#8C7468]" role="status">
             {coachText}
           </p>
         ) : null}
-        <InteractiveTutorial message={tutorialMessage} fill>
+        <InteractiveTutorial message={null} fill>
           <Grid
             grid={grid}
             shakes={shakes}

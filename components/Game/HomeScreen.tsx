@@ -7,8 +7,9 @@ import { ANIMALS } from '@/lib/animals'
 import { LEVEL_CAP } from '@/lib/campaign'
 import { utcDateString } from '@/lib/daily'
 import { fill, pluralWord } from '@/lib/i18n'
-import { IS_PORTAL_BUILD } from '@/lib/platform'
+import { IS_APP_SHELL } from '@/lib/platform'
 import { streakLabel } from '@/lib/storage'
+import { Mascot } from '@/components/Brand/Mascot'
 import { Button } from '@/components/UI/Button'
 import { HomeSeo } from '@/components/Game/HomeSeo'
 import { LanguageMenu } from '@/components/Locale/LanguageMenu'
@@ -19,7 +20,6 @@ import { useGame } from '@/hooks/useGame'
 import { useProgress } from '@/hooks/useProgress'
 
 const FLOATERS = [
-  { emoji: '🐭', className: 'left-[6%] top-[18%]', delay: 0 },
   { emoji: '🐱', className: 'right-[8%] top-[22%]', delay: 0.4 },
   { emoji: '🐶', className: 'left-[10%] bottom-[18%]', delay: 0.8 },
   { emoji: '🐼', className: 'right-[12%] bottom-[22%]', delay: 0.2 },
@@ -70,9 +70,10 @@ export const HomeScreen = () => {
         ))}
       </div>
       <main className="relative z-10 flex flex-1 flex-col items-center justify-center text-center">
-        <p className="text-sm font-semibold tracking-wide text-[#E84B7F] uppercase">{t.logicPuzzle}</p>
+        <Mascot className="h-36 w-36 [@media(max-height:600px)]:h-20 [@media(max-height:600px)]:w-20" />
+        <p className="mt-3 text-sm font-semibold tracking-wide text-[#E84B7F] uppercase [@media(max-height:600px)]:mt-2">{t.logicPuzzle}</p>
         <h1 className="mt-2 font-display text-5xl font-bold text-[#3D2C29]">Crittermino</h1>
-        <p className="mt-3 max-w-xs text-base text-[#8C7468] [@media(max-height:600px)]:hidden">{t.tagline}</p>
+        <p className="mt-3 max-w-xs text-base text-[#8C7468] [@media(max-height:600px)]:hidden">{IS_APP_SHELL ? t.shellTagline : t.tagline}</p>
         <div className="mt-5 flex gap-2 text-3xl [@media(max-height:600px)]:mt-3" aria-hidden="true">
           {ANIMALS.map((animal) => (
             <span key={animal.emoji} title={`${t.animals[animal.emoji]} ${animal.size}`}>
@@ -96,7 +97,7 @@ export const HomeScreen = () => {
           <Button variant="secondary" onClick={showLevels}>
             {t.levelSelect}
           </Button>
-          {IS_PORTAL_BUILD ? null : (
+          {IS_APP_SHELL ? null : (
             <Link
               href="/how-to-play"
               className="inline-flex min-h-11 items-center justify-center rounded-full px-4 font-display font-semibold text-[#3D2C29] underline-offset-4 hover:underline"
@@ -104,7 +105,7 @@ export const HomeScreen = () => {
               {t.howToPlay}
             </Link>
           )}
-          {canInstall && !IS_PORTAL_BUILD ? (
+          {canInstall && !IS_APP_SHELL ? (
             <Button variant="secondary" onClick={() => void install()}>
               {t.installApp}
             </Button>
@@ -121,7 +122,7 @@ export const HomeScreen = () => {
         ) : null}
       </main>
     </div>
-      {IS_PORTAL_BUILD ? null : (
+      {IS_APP_SHELL ? null : (
         <>
           <HomeSeo />
           <Footer />

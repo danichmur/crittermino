@@ -32,7 +32,7 @@ Node 20.14 cannot `require()` the ESM-only `magic-string` that current Tailwind 
 | `npm run build` | Production build |
 | `npm run generate` | Rebuild `data/levels.json` (pass a count, e.g. `npm run generate -- 60`) |
 | `npm run verify` | Check every banked level is uniquely solvable and matches the generator |
-| `npm run assets` | Redraw the PWA icons and Open Graph image |
+| `npm run assets` | App icons are the authored files in `app/` and `public/` |
 
 `npm run verify` regenerates each puzzle, so a 60-level check takes a couple of minutes.
 

@@ -4,8 +4,10 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { LanguageChoices } from '@/components/Locale/LanguageMenu'
 import { useI18n } from '@/components/Locale/LocaleProvider'
+import { Mascot } from '@/components/Brand/Mascot'
 import { Button } from '@/components/UI/Button'
-import { IS_PORTAL_BUILD } from '@/lib/platform'
+import { utcDateString } from '@/lib/daily'
+import { IS_APP_SHELL, IS_PORTAL_BUILD } from '@/lib/platform'
 import { Modal } from '@/components/UI/Modal'
 import { useGame } from '@/hooks/useGame'
 import { useProgress } from '@/hooks/useProgress'
@@ -15,18 +17,37 @@ export const MenuSheet = () => {
   const closeMenu = useGame((state) => state.closeMenu)
   const showLevels = useGame((state) => state.showLevels)
   const showHome = useGame((state) => state.showHome)
+  const startDaily = useGame((state) => state.startDaily)
+  const showToast = useGame((state) => state.showToast)
   const openSettings = useGame((state) => state.openSettings)
   const { t } = useI18n()
+  const handleDaily = (): void => {
+    const finishedToday = useProgress.getState().progress.lastDaily === utcDateString()
+    if (finishedToday) {
+      closeMenu()
+      showToast(t.dailyDoneToday)
+      return
+    }
+    startDaily()
+  }
   const linkClass = 'inline-flex min-h-11 items-center justify-center rounded-full bg-white px-4 font-display font-semibold text-[#3D2C29] ring-1 ring-[#E5D5C0]'
   return (
     <Modal open={open} title={t.menu} onClose={closeMenu}>
-      <h2 className="font-display text-2xl font-bold">{t.menu}</h2>
+      <div className="flex items-center gap-3">
+        <Mascot className="h-11 w-11" />
+        <h2 className="font-display text-2xl font-bold">{t.menu}</h2>
+      </div>
       <div className="mt-4 flex flex-col gap-2">
         <Button onClick={closeMenu}>{t.continue}</Button>
+        {IS_APP_SHELL ? (
+          <Button variant="secondary" onClick={handleDaily}>
+            {t.dailyPuzzle}
+          </Button>
+        ) : null}
         <Button variant="secondary" onClick={showLevels}>
           {t.levelSelect}
         </Button>
-        {IS_PORTAL_BUILD ? null : (
+        {IS_APP_SHELL ? null : (
           <>
             <Link href="/how-to-play" onClick={closeMenu} className={linkClass}>
               {t.howToPlay}
@@ -72,11 +93,15 @@ export const SettingsDialog = () => {
   const setHaptics = useProgress((state) => state.setHaptics)
   const reset = useProgress((state) => state.reset)
   const showHome = useGame((state) => state.showHome)
+  const startLevel = useGame((state) => state.startLevel)
   const [confirmReset, setConfirmReset] = useState(false)
   const { t } = useI18n()
   return (
     <Modal open={open} title={t.settings} onClose={closeSettings}>
-      <h2 className="font-display text-2xl font-bold">{t.settings}</h2>
+      <div className="flex items-center gap-3">
+        <Mascot className="h-11 w-11" />
+        <h2 className="font-display text-2xl font-bold">{t.settings}</h2>
+      </div>
       <div className="mt-4">
         <p className="mb-2 font-display font-semibold">{t.language}</p>
         <LanguageChoices />
@@ -110,6 +135,10 @@ export const SettingsDialog = () => {
               onClick={() => {
                 reset()
                 setConfirmReset(false)
+                if (IS_PORTAL_BUILD) {
+                  startLevel(1)
+                  return
+                }
                 showHome()
               }}
             >

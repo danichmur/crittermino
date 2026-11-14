@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import type { ReactNode } from 'react'
+import { Mascot } from '@/components/Brand/Mascot'
 import { useI18n } from '@/components/Locale/LocaleProvider'
 import { fill, pluralWord } from '@/lib/i18n'
 import { localizeHref } from '@/lib/locale'
@@ -22,7 +23,8 @@ export const Header = ({ mode = 'site', level, label, moves, homes, onMenu, rest
   if (mode === 'site') {
     return (
       <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-4">
-        <Link href={localizeHref(locale, '/')} className="font-display text-xl font-bold text-[#3D2C29] focus-visible:outline-2 focus-visible:outline-[#FF6B9D]">
+        <Link href={localizeHref(locale, '/')} className="flex items-center gap-2 font-display text-xl font-bold text-[#3D2C29] focus-visible:outline-2 focus-visible:outline-[#FF6B9D]">
+          <Mascot className="h-9 w-9" />
           Crittermino
         </Link>
         <nav aria-label="Crittermino" className="flex items-center gap-4">
@@ -42,18 +44,21 @@ export const Header = ({ mode = 'site', level, label, moves, homes, onMenu, rest
         type="button"
         onClick={onMenu}
         aria-label={t.openMenu}
-        className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-[#3D2C29] shadow-sm ring-1 ring-[#E5D5C0] focus-visible:outline-2 focus-visible:outline-[#FF6B9D]"
+        className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white text-[#3D2C29] shadow-sm ring-1 ring-[#E5D5C0] focus-visible:outline-2 focus-visible:outline-[#FF6B9D] [@media(min-height:760px)]:h-11 [@media(min-height:760px)]:w-11"
       >
         <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true">
           <path d="M3 5h14M3 10h14M3 15h14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         </svg>
       </button>
-      <div className="text-center">
-        <p className="font-display text-lg leading-none font-bold">{label ?? fill(t.levelName, { n: level ?? 1 })}</p>
-        <p className="mt-1 text-xs text-[#8C7468] tabular-nums">
-          {moves} {pluralWord(locale, moves ?? 0, 'move')}
-          {homes ? ` · ${homes}` : ''}
-        </p>
+      <div className="flex items-center justify-center gap-2">
+        <Mascot className="h-8 w-8 [@media(max-height:700px)]:hidden" />
+        <div className="text-center">
+          <p className="font-display text-base leading-none font-bold [@media(min-height:760px)]:text-lg">{label ?? fill(t.levelName, { n: level ?? 1 })}</p>
+          <p className="mt-0.5 text-xs text-[#8C7468] tabular-nums [@media(min-height:760px)]:mt-1">
+            {moves} {pluralWord(locale, moves ?? 0, 'move')}
+            {homes ? ` · ${homes}` : ''}
+          </p>
+        </div>
       </div>
       <div className="flex items-center gap-2">
         {restart}

@@ -4,6 +4,7 @@ import { ANIMALS } from '@/lib/animals'
 import { LEVEL_CAP } from '@/lib/campaign'
 import { useI18n } from '@/components/Locale/LocaleProvider'
 import { fill } from '@/lib/i18n'
+import { Mascot } from '@/components/Brand/Mascot'
 import { Button } from '@/components/UI/Button'
 import { useGame } from '@/hooks/useGame'
 
@@ -13,7 +14,8 @@ export const ComingSoon = () => {
   const { t } = useI18n()
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center px-5 pt-[max(1.5rem,env(safe-area-inset-top))] pb-8 text-center">
-      <div className="flex gap-2 text-4xl" aria-hidden="true">
+      <Mascot className="h-32 w-32" />
+      <div className="mt-4 flex gap-2 text-4xl" aria-hidden="true">
         {ANIMALS.map((animal) => (
           <span key={animal.emoji}>{animal.emoji}</span>
         ))}

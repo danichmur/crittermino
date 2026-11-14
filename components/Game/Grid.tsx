@@ -22,7 +22,7 @@ export const Grid = ({ grid, shakes, bursts, spotlight, highlight, ghostCells, g
   return (
     <div className="relative aspect-square w-full">
       <div
-        className="@container grid h-full w-full gap-1.5 sm:gap-2"
+        className="@container grid h-full w-full gap-1 [@media(min-height:760px)]:gap-2"
         style={{
           gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))`,
           gridTemplateRows: `repeat(${size}, minmax(0, 1fr))`,

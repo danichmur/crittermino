@@ -19,6 +19,7 @@ interface ProgressStore {
   completeDaily: () => void
   setSound: (enabled: boolean) => void
   setHaptics: (enabled: boolean) => void
+  skipTutorial: () => void
   reset: () => void
 }
 
@@ -83,6 +84,15 @@ export const useProgress = create<ProgressStore>((set, get) => ({
   setHaptics: (enabled) => {
     setHapticsEnabled(enabled)
     const progress = persist({ ...get().progress, hapticsEnabled: enabled })
+    set({ progress })
+  },
+  skipTutorial: () => {
+    const current = get().progress
+    const progress = persist({
+      ...current,
+      tutorialCompleted: true,
+      currentLevel: Math.min(LEVEL_CAP, Math.max(current.currentLevel, 6)),
+    })
     set({ progress })
   },
   reset: () => {

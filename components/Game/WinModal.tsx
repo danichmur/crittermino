@@ -6,10 +6,11 @@ import { ANIMALS } from '@/lib/animals'
 import { LEVEL_CAP } from '@/lib/campaign'
 import { formatTime } from '@/lib/format'
 import { fill, pluralWord } from '@/lib/i18n'
-import { IS_PORTAL_BUILD } from '@/lib/platform'
+import { IS_APP_SHELL, IS_PORTAL_BUILD } from '@/lib/platform'
 import { shareMessage } from '@/lib/share-code'
 import { useI18n } from '@/components/Locale/LocaleProvider'
 import { track } from '@/lib/analytics'
+import { Mascot } from '@/components/Brand/Mascot'
 import { Button } from '@/components/UI/Button'
 import { Modal } from '@/components/UI/Modal'
 import { useGame } from '@/hooks/useGame'
@@ -37,7 +38,7 @@ export const WinModal = () => {
   const isLast = level.number >= LEVEL_CAP
   const handleDailyDone = (): void => {
     showHome()
-    if (!IS_PORTAL_BUILD) router.push('/daily-challenge')
+    if (!IS_APP_SHELL) router.push('/daily-challenge')
   }
   const animals = ANIMALS.filter((animal) => level.palette.includes(animal.size))
   const share = async (): Promise<void> => {
@@ -78,6 +79,9 @@ export const WinModal = () => {
               />
             ))
           : null}
+        <div className="mb-3 flex justify-center">
+          <Mascot className="h-20 w-20" />
+        </div>
         <div className="mb-4 flex justify-center gap-2 text-4xl">
           {animals.map((animal, index) => (
             <span
@@ -113,7 +117,7 @@ export const WinModal = () => {
         <div className="mt-5 flex flex-col gap-3">
           {isDaily ? (
             <Button size="lg" onClick={handleDailyDone}>
-              {t.todaysPage}
+              {IS_APP_SHELL ? t.home : t.todaysPage}
             </Button>
           ) : (
             <Button size="lg" onClick={() => (isLast ? showSoon() : startLevel(level.number + 1))}>

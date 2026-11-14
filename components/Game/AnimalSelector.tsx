@@ -33,7 +33,8 @@ export const AnimalSelector = ({ level, grid, selected, onSelect }: AnimalSelect
             aria-label={fill(t.animalButton, { name: t.animals[animal.emoji], size: animal.size, finished, total })}
             onClick={() => onSelect(animal.emoji)}
             className={cn(
-              'flex min-h-16 flex-col items-center justify-center gap-1.5 rounded-2xl px-3 py-3 text-[#3D2C29] touch-manipulation sm:min-h-[4.5rem] sm:py-3.5',
+              'flex min-h-0 flex-col items-center justify-center gap-0.5 rounded-2xl px-1 py-1 text-[#3D2C29] touch-manipulation',
+              '[@media(min-height:760px)]:min-h-[4.5rem] [@media(min-height:760px)]:gap-1.5 [@media(min-height:760px)]:px-3 [@media(min-height:760px)]:py-3.5',
               'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF6B9D]',
               isSelected && 'scale-[1.04]',
             )}
@@ -42,10 +43,10 @@ export const AnimalSelector = ({ level, grid, selected, onSelect }: AnimalSelect
               boxShadow: isSelected ? `0 0 0 3px ${animal.accent}` : 'inset 0 0 0 1px #E5D5C0',
             }}
           >
-            <span className="text-2xl leading-none" aria-hidden="true">
+            <span className="text-2xl leading-none [@media(max-height:700px)]:text-xl" aria-hidden="true">
               {animal.emoji}
             </span>
-            <span className="hidden text-[11px] font-semibold [@media(min-height:520px)]:block">{t.animals[animal.emoji]}</span>
+            <span className="hidden text-[11px] font-semibold [@media(min-height:760px)]:block">{t.animals[animal.emoji]}</span>
             <span className="text-xs font-bold tabular-nums" style={{ color: animal.ink }}>
               {animal.size} · {finished}/{total}
             </span>

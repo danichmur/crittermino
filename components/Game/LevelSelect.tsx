@@ -5,6 +5,7 @@ import { LEVEL_CAP } from '@/lib/campaign'
 import { cn } from '@/lib/cn'
 import { useI18n } from '@/components/Locale/LocaleProvider'
 import { moveCountLabel } from '@/lib/i18n'
+import { Mascot } from '@/components/Brand/Mascot'
 import { Button } from '@/components/UI/Button'
 import { useGame } from '@/hooks/useGame'
 import { useProgress } from '@/hooks/useProgress'
@@ -26,7 +27,10 @@ export const LevelSelect = () => {
   return (
     <div className="flex min-h-dvh flex-col px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-3xl font-bold">{t.levels}</h1>
+        <div className="flex items-center gap-3">
+          <Mascot className="h-12 w-12" />
+          <h1 className="font-display text-3xl font-bold">{t.levels}</h1>
+        </div>
         <Button variant="ghost" onClick={showHome}>
           {t.home}
         </Button>

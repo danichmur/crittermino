@@ -1,12 +1,15 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { Mascot } from '@/components/Brand/Mascot'
 import { ComingSoon } from '@/components/Game/ComingSoon'
 import { GameScreen } from '@/components/Game/GameScreen'
 import { HomeScreen } from '@/components/Game/HomeScreen'
 import { LevelSelect } from '@/components/Game/LevelSelect'
+import { useI18n } from '@/components/Locale/LocaleProvider'
 import { LEVEL_CAP } from '@/lib/campaign'
+import { IS_PORTAL_BUILD } from '@/lib/platform'
 import { useGame } from '@/hooks/useGame'
 import { useProgress } from '@/hooks/useProgress'
 
@@ -18,7 +21,9 @@ export const GameApp = () => {
   const startLevel = useGame((state) => state.startLevel)
   const startDaily = useGame((state) => state.startDaily)
   const showSoon = useGame((state) => state.showSoon)
+  const { t } = useI18n()
   const claimedLaunch = useRef(false)
+  const [booted, setBooted] = useState(!IS_PORTAL_BUILD)
   useEffect(() => {
     hydrate()
   }, [hydrate])
@@ -26,23 +31,36 @@ export const GameApp = () => {
     if (!ready || claimedLaunch.current) return
     const params = new URLSearchParams(window.location.search)
     const play = params.get('play')
-    if (play !== 'next' && play !== 'daily') return
+    const openSavedLevel = (): void => {
+      const progress = useProgress.getState().progress
+      if (progress.completedLevels.includes(LEVEL_CAP)) {
+        showSoon()
+        return
+      }
+      startLevel(Math.min(LEVEL_CAP, Math.max(1, progress.currentLevel)))
+    }
+    if (play === 'next' || play === 'daily') {
+      claimedLaunch.current = true
+      window.history.replaceState(null, '', '/')
+      if (play === 'daily') startDaily()
+      else openSavedLevel()
+      setBooted(true)
+      return
+    }
+    if (!IS_PORTAL_BUILD) return
     claimedLaunch.current = true
-    window.history.replaceState(null, '', '/')
-    if (play === 'daily') {
-      startDaily()
-      return
-    }
-    const progress = useProgress.getState().progress
-    if (progress.completedLevels.includes(LEVEL_CAP)) {
-      showSoon()
-      return
-    }
-    startLevel(Math.min(LEVEL_CAP, Math.max(1, progress.currentLevel)))
+    openSavedLevel()
+    setBooted(true)
   }, [ready, showSoon, startDaily, startLevel])
   return (
     <>
-      {view === 'home' ? <HomeScreen /> : null}
+      {IS_PORTAL_BUILD && !booted ? (
+        <div className="flex h-dvh flex-col items-center justify-center gap-3">
+          <Mascot className="h-28 w-28" />
+          <p className="font-display text-xl font-bold">{t.folding}</p>
+        </div>
+      ) : null}
+      {view === 'home' && booted ? <HomeScreen /> : null}
       {view === 'levels' ? <LevelSelect /> : null}
       {view === 'play' ? <GameScreen /> : null}
       {view === 'soon' ? <ComingSoon /> : null}

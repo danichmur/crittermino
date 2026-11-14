@@ -8,6 +8,7 @@ import { formatTime } from '@/lib/format'
 import { fill, pluralWord } from '@/lib/i18n'
 import { defaultProgress, loadProgress } from '@/lib/storage'
 import type { ShareScore } from '@/lib/share-code'
+import { Mascot } from '@/components/Brand/Mascot'
 import { useI18n } from '@/components/Locale/LocaleProvider'
 
 interface ShareScreenProps {
@@ -27,7 +28,8 @@ export const ShareScreen = ({ score }: ShareScreenProps) => {
   const note = caughtUp ? t.everyCleared : t.opensNext
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col items-center justify-center px-5 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] text-center">
-      <Link href="/" className="font-display text-sm font-semibold tracking-wide text-[#E84B7F] uppercase">
+      <Mascot className="h-28 w-28" />
+      <Link href="/" className="mt-3 font-display text-sm font-semibold tracking-wide text-[#E84B7F] uppercase">
         Crittermino
       </Link>
       <div className="mt-4 flex gap-2 text-4xl" aria-hidden="true">

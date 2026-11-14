@@ -15,6 +15,8 @@ export const en: Copy = {
   logicPuzzle: 'Logic puzzle',
   tagline:
     'A free Fillomino puzzle in the browser. No download. Fill the grid with animal homes. Each critter needs a region of exactly the right size, and same-size homes cannot touch.',
+  shellTagline:
+    'Fill the grid with animal homes. Each critter needs a region of exactly the right size, and same-size homes cannot touch.',
   play: 'Play',
   continueLevel: 'Continue · Level {n}',
   comingSoon: 'Coming soon',
@@ -94,6 +96,7 @@ export const en: Copy = {
   tutorialComplete: 'Tutorial complete',
   levelClear: 'Level {n} clear',
   tutorialDone: 'Tutorial complete!',
+  skipLesson: 'Skip lesson',
   homesFound: 'Homes found!',
   moveOne: 'move',
   moveFew: 'moves',
