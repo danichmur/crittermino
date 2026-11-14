@@ -27,7 +27,7 @@ export const Footer = () => {
         ))}
       </nav>
       <p className="mt-3 text-center">{t.freeInBrowser}</p>
-      <div className="mt-4 flex justify-center">
+      <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
         <a
           href="https://www.makerhunt.space/projects/crittermino?ref=featured-badge"
           title="crittermino on MakerHunt"
@@ -40,6 +40,22 @@ export const Footer = () => {
             alt="Featured on MakerHunt"
             width={240}
             height={48}
+          />
+        </a>
+        <a
+          href="https://postyourbuildideas.com/launches/for/crittermino.vercel.app?ref=badge"
+          target="_blank"
+          rel="noopener"
+          title="Featured on Post Your Build Ideas"
+          className="inline-flex rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF6B9D]"
+        >
+          {/* Raw img so the launch board reads this exact badge URL in the page HTML. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://postyourbuildideas.com/badge/for/crittermino.vercel.app.svg?theme=light"
+            alt="Featured on Post Your Build Ideas"
+            width={258}
+            height={54}
           />
         </a>
       </div>
