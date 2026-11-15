@@ -12,6 +12,7 @@ export const Footer = () => {
     { href: localizeHref(locale, '/blog'), label: t.blog },
     { href: localizeHref(locale, '/about'), label: t.about },
     { href: localizeHref(locale, '/privacy'), label: t.privacy },
+    { href: localizeHref(locale, '/terms'), label: t.termsHeading },
   ] as const
   return (
     <footer className="mt-auto px-4 py-6 text-sm text-[#8C7468]">

@@ -9,7 +9,8 @@ import { HomeScreen } from '@/components/Game/HomeScreen'
 import { LevelSelect } from '@/components/Game/LevelSelect'
 import { useI18n } from '@/components/Locale/LocaleProvider'
 import { LEVEL_CAP } from '@/lib/campaign'
-import { IS_PORTAL_BUILD } from '@/lib/platform'
+import { noteSession } from '@/lib/monetization'
+import { IS_IOS_APP, IS_PORTAL_BUILD } from '@/lib/platform'
 import { useGame } from '@/hooks/useGame'
 import { useProgress } from '@/hooks/useProgress'
 
@@ -26,6 +27,7 @@ export const GameApp = () => {
   const [booted, setBooted] = useState(!IS_PORTAL_BUILD)
   useEffect(() => {
     hydrate()
+    if (IS_IOS_APP) noteSession()
   }, [hydrate])
   useEffect(() => {
     if (!ready || claimedLaunch.current) return

@@ -7,10 +7,12 @@ import { useI18n } from '@/components/Locale/LocaleProvider'
 import { Mascot } from '@/components/Brand/Mascot'
 import { Button } from '@/components/UI/Button'
 import { utcDateString } from '@/lib/daily'
-import { IS_APP_SHELL, IS_PORTAL_BUILD } from '@/lib/platform'
+import { IS_APP_SHELL, IS_IOS_APP, IS_PORTAL_BUILD } from '@/lib/platform'
 import { Modal } from '@/components/UI/Modal'
 import { useGame } from '@/hooks/useGame'
+import { usePlus } from '@/hooks/usePlus'
 import { useProgress } from '@/hooks/useProgress'
+import { LegalLinks } from '@/components/Game/LegalLinks'
 
 export const MenuSheet = () => {
   const open = useGame((state) => state.menuOpen)
@@ -95,6 +97,8 @@ export const SettingsDialog = () => {
   const showHome = useGame((state) => state.showHome)
   const startLevel = useGame((state) => state.startLevel)
   const [confirmReset, setConfirmReset] = useState(false)
+  const plus = usePlus()
+  const openPlus = useGame((state) => state.openPlus)
   const { t } = useI18n()
   return (
     <Modal open={open} title={t.settings} onClose={closeSettings}>
@@ -106,6 +110,20 @@ export const SettingsDialog = () => {
         <p className="mb-2 font-display font-semibold">{t.language}</p>
         <LanguageChoices />
       </div>
+      {IS_IOS_APP ? (
+        <button
+          type="button"
+          onClick={() => {
+            closeSettings()
+            openPlus()
+          }}
+          className="mt-4 flex min-h-11 w-full items-center justify-between rounded-2xl bg-white px-4 text-left ring-1 ring-[#E5D5C0] focus-visible:outline-2 focus-visible:outline-[#FF6B9D]"
+        >
+          <span className="font-display font-semibold">{t.plusName}</span>
+          <span className="text-sm font-semibold text-[#E84B7F]">{plus ? t.plusActive : t.plusTrial}</span>
+        </button>
+      ) : null}
+      {IS_IOS_APP ? <LegalLinks className="mt-3 text-center text-sm text-[#8C7468]" /> : null}
       <div className="mt-4 flex flex-col gap-2">
         <button
           type="button"

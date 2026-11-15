@@ -5,3 +5,6 @@ export const IS_PORTAL_BUILD = buildTarget === 'crazygames'
 
 /** A packaged shell (CrazyGames or the iOS app) with no website routes inside it. */
 export const IS_APP_SHELL = buildTarget === 'crazygames' || buildTarget === 'ios'
+
+/** The iOS app is the only build that shows ads or sells Plus. */
+export const IS_IOS_APP = buildTarget === 'ios'

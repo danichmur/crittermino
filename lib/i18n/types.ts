@@ -60,6 +60,34 @@ export interface Copy {
   readonly cellError: string
   readonly animalButton: string
   readonly hint: string
+  readonly hintAdTitle: string
+  readonly hintAdBody: string
+  readonly hintWatch: string
+  readonly hintNotNow: string
+  readonly plusName: string
+  readonly plusBody: string
+  readonly plusYearly: string
+  readonly plusMonthly: string
+  readonly plusWeekly: string
+  readonly plusYearlyPrice: string
+  readonly plusMonthlyPrice: string
+  readonly plusWeeklyPrice: string
+  readonly plusTrial: string
+  readonly plusBestValue: string
+  readonly plusContinue: string
+  readonly plusStartTrial: string
+  readonly plusRestore: string
+  readonly plusRenews: string
+  readonly plusPrivacy: string
+  readonly plusTerms: string
+  readonly plusRestored: string
+  readonly plusActive: string
+  readonly plusNudge: string
+  readonly plusAdFailed: string
+  readonly plusPurchaseFailed: string
+  readonly plusPending: string
+  readonly plusWorking: string
+  readonly plusDismiss: string
   readonly closeDialog: string
   readonly onlyOne: string
   readonly lookHere: string
@@ -181,6 +209,14 @@ export interface Copy {
   readonly privacyQuestions: string
   readonly privacyPlay: string
   readonly privacySections: readonly NamedBlock[]
+  readonly termsMetaTitle: string
+  readonly termsMetaDescription: string
+  readonly termsHeading: string
+  readonly termsIntro: string
+  readonly termsQuestions: string
+  readonly termsPlay: string
+  readonly termsApple: string
+  readonly termsSections: readonly NamedBlock[]
   readonly dailyMetaTitle: string
   readonly dailyMetaDescription: string
   readonly dailyEyebrow: string

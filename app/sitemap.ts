@@ -47,5 +47,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE.url}/about`, lastModified: contentUpdated, changeFrequency: 'monthly', priority: 0.5 },
     ...blogEntries(latestPost),
     { url: `${SITE.url}/privacy`, lastModified: contentUpdated, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${SITE.url}/terms`, lastModified: publishedOn('2026-11-15'), changeFrequency: 'yearly', priority: 0.3 },
   ]
 }

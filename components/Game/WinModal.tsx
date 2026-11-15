@@ -1,11 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { ANIMALS } from '@/lib/animals'
 import { LEVEL_CAP } from '@/lib/campaign'
 import { formatTime } from '@/lib/format'
 import { fill, pluralWord } from '@/lib/i18n'
+import { markInterstitialShown, planInterstitial, showInterstitialAd } from '@/lib/monetization'
 import { IS_APP_SHELL, IS_PORTAL_BUILD } from '@/lib/platform'
 import { shareMessage } from '@/lib/share-code'
 import { useI18n } from '@/components/Locale/LocaleProvider'
@@ -33,9 +35,23 @@ export const WinModal = () => {
   const showToast = useGame((state) => state.showToast)
   const reduceMotion = useReducedMotion()
   const { locale, t } = useI18n()
+  const [leaving, setLeaving] = useState(false)
   if (!level) return null
   const isDaily = playMode === 'daily'
   const isLast = level.number >= LEVEL_CAP
+  const handleNext = async (): Promise<void> => {
+    if (leaving) return
+    setLeaving(true)
+    const now = Date.now()
+    const plan = planInterstitial({ level: level.number, mode: playMode, now })
+    if (plan.show) {
+      const shown = await showInterstitialAd()
+      markInterstitialShown(Date.now(), shown && plan.nudge)
+      if (shown && plan.nudge) useGame.setState({ plusNudge: true })
+    }
+    if (isLast) showSoon()
+    else startLevel(level.number + 1)
+  }
   const handleDailyDone = (): void => {
     showHome()
     if (!IS_APP_SHELL) router.push('/daily-challenge')
@@ -120,7 +136,7 @@ export const WinModal = () => {
               {IS_APP_SHELL ? t.home : t.todaysPage}
             </Button>
           ) : (
-            <Button size="lg" onClick={() => (isLast ? showSoon() : startLevel(level.number + 1))}>
+            <Button size="lg" disabled={leaving} onClick={() => void handleNext()}>
               {tutorial ? t.playLevel6 : isLast ? t.comingSoon : t.nextLevel}
             </Button>
           )}

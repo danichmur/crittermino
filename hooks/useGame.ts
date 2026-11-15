@@ -14,6 +14,7 @@ import { buzz, playComplete, playError, playTap, playWin } from '@/lib/sound'
 import { findForcedMove, neighborsOf } from '@/lib/solver'
 import type { Animal, Burst, Cell, Coach, Level, PlayMode } from '@/types/game'
 import { useProgress } from '@/hooks/useProgress'
+import { needsRewardedHint } from '@/lib/monetization'
 
 interface WinSnapshot {
   isComplete: boolean
@@ -39,6 +40,8 @@ interface GameStore {
   menuOpen: boolean
   settingsOpen: boolean
   hintAdOpen: boolean
+  plusOpen: boolean
+  plusNudge: boolean
   toast: string | null
   isGenerating: boolean
   introVisible: boolean
@@ -59,6 +62,9 @@ interface GameStore {
   openSettings: () => void
   closeSettings: () => void
   closeHintAd: () => void
+  openPlus: () => void
+  closePlus: () => void
+  dismissPlusNudge: () => void
   dismissIntro: () => void
   showToast: (message: string) => void
 }
@@ -264,6 +270,7 @@ const beginLevel = (level: Level): void => {
     menuOpen: false,
     settingsOpen: false,
     hintAdOpen: false,
+    plusOpen: false,
     isGenerating: false,
     introVisible: Boolean(level.intro),
     isNewBest: false,
@@ -290,6 +297,8 @@ export const useGame = create<GameStore>((set, get) => ({
   menuOpen: false,
   settingsOpen: false,
   hintAdOpen: false,
+  plusOpen: false,
+  plusNudge: false,
   toast: null,
   isGenerating: false,
   introVisible: false,
@@ -308,6 +317,9 @@ export const useGame = create<GameStore>((set, get) => ({
   openSettings: () => set({ settingsOpen: true, menuOpen: false }),
   closeSettings: () => set({ settingsOpen: false }),
   closeHintAd: () => set({ hintAdOpen: false }),
+  openPlus: () => set({ plusOpen: true }),
+  closePlus: () => set({ plusOpen: false }),
+  dismissPlusNudge: () => set({ plusNudge: false }),
   dismissIntro: () => set({ introVisible: false }),
   selectAnimal: (animal) => set({ selectedAnimal: get().selectedAnimal === animal ? null : animal }),
   startDaily: () => {
@@ -403,6 +415,10 @@ export const useGame = create<GameStore>((set, get) => ({
   requestHint: () => {
     const state = get()
     if (!state.level || state.isComplete) return
+    if (needsRewardedHint(state.hintsUsed)) {
+      set({ hintAdOpen: true })
+      return
+    }
     applyHint()
   },
   grantHintFromAd: () => {

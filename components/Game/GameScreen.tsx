@@ -10,11 +10,15 @@ import { Grid } from '@/components/Game/Grid'
 import { HintButton } from '@/components/Game/HintButton'
 import { RestartButton } from '@/components/Game/RestartButton'
 import { MenuSheet, SettingsDialog } from '@/components/Game/MenuSheet'
+import { HintAdModal } from '@/components/Game/HintAdModal'
+import { PlusSheet } from '@/components/Game/PlusSheet'
 import { WinModal } from '@/components/Game/WinModal'
 import { InteractiveTutorial } from '@/components/Tutorial/InteractiveTutorial'
 import { useI18n } from '@/components/Locale/LocaleProvider'
 import { fill, homeCountLabel } from '@/lib/i18n'
+import { IS_IOS_APP } from '@/lib/platform'
 import { useGame } from '@/hooks/useGame'
+import { usePlus } from '@/hooks/usePlus'
 import { useProgress } from '@/hooks/useProgress'
 
 export const GameScreen = () => {
@@ -39,6 +43,10 @@ export const GameScreen = () => {
   const closeMenu = useGame((state) => state.closeMenu)
   const tutorialCompleted = useProgress((state) => state.progress.tutorialCompleted)
   const skipTutorial = useProgress((state) => state.skipTutorial)
+  const plusNudge = useGame((state) => state.plusNudge)
+  const openPlus = useGame((state) => state.openPlus)
+  const dismissPlusNudge = useGame((state) => state.dismissPlusNudge)
+  const plus = usePlus()
   const { locale, t } = useI18n()
   const handleSkipLesson = (): void => {
     skipTutorial()
@@ -121,12 +129,33 @@ export const GameScreen = () => {
           />
         </InteractiveTutorial>
       </div>
+      {IS_IOS_APP && plusNudge && !plus ? (
+        <div className="mb-2 flex shrink-0 items-center gap-2">
+          <button
+            type="button"
+            onClick={openPlus}
+            className="flex min-h-11 flex-1 items-center justify-center rounded-full bg-white px-4 text-sm font-semibold text-[#3D2C29] ring-1 ring-[#E5D5C0] focus-visible:outline-2 focus-visible:outline-[#FF6B9D]"
+          >
+            {t.plusNudge}
+          </button>
+          <button
+            type="button"
+            aria-label={t.plusDismiss}
+            onClick={dismissPlusNudge}
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-lg text-[#8C7468] ring-1 ring-[#E5D5C0] focus-visible:outline-2 focus-visible:outline-[#FF6B9D]"
+          >
+            ×
+          </button>
+        </div>
+      ) : null}
       <div className="shrink-0">
         <AnimalSelector level={level} grid={grid} selected={selectedAnimal} onSelect={selectAnimal} />
       </div>
       <MenuSheet />
       <SettingsDialog />
       <WinModal />
+      <HintAdModal />
+      <PlusSheet />
     </div>
   )
 }
