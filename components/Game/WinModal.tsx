@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { ANIMALS } from '@/lib/animals'
@@ -36,21 +36,33 @@ export const WinModal = () => {
   const reduceMotion = useReducedMotion()
   const { locale, t } = useI18n()
   const [leaving, setLeaving] = useState(false)
+  const leavingRef = useRef(false)
+  useEffect(() => {
+    if (open) return
+    leavingRef.current = false
+    setLeaving(false)
+  }, [open])
   if (!level) return null
   const isDaily = playMode === 'daily'
   const isLast = level.number >= LEVEL_CAP
   const handleNext = async (): Promise<void> => {
-    if (leaving) return
+    if (leavingRef.current) return
+    leavingRef.current = true
     setLeaving(true)
-    const now = Date.now()
-    const plan = planInterstitial({ level: level.number, mode: playMode, now })
-    if (plan.show) {
-      const shown = await showInterstitialAd()
-      markInterstitialShown(Date.now(), shown && plan.nudge)
-      if (shown && plan.nudge) useGame.setState({ plusNudge: true })
+    try {
+      const now = Date.now()
+      const plan = planInterstitial({ level: level.number, mode: playMode, now })
+      if (plan.show) {
+        const shown = await showInterstitialAd()
+        markInterstitialShown(Date.now(), shown && plan.nudge)
+        if (shown && plan.nudge) useGame.setState({ plusNudge: true })
+      }
+      if (isLast) showSoon()
+      else startLevel(level.number + 1)
+    } finally {
+      leavingRef.current = false
+      setLeaving(false)
     }
-    if (isLast) showSoon()
-    else startLevel(level.number + 1)
   }
   const handleDailyDone = (): void => {
     showHome()
