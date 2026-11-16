@@ -111,11 +111,9 @@ export const GameScreen = () => {
         </button>
       ) : null}
       <div className="flex min-h-0 flex-1 flex-col py-2 [@media(max-height:700px)]:py-1">
-        {coach ? (
-          <p className="mb-2 shrink-0 text-center text-sm font-medium text-[#8C7468]" role="status">
-            {coachText}
-          </p>
-        ) : null}
+        <p className="mb-2 flex h-5 shrink-0 items-center justify-center text-center text-sm font-medium leading-5 text-[#8C7468]" role="status">
+          {coachText}
+        </p>
         <InteractiveTutorial message={null} fill>
           <Grid
             grid={grid}
