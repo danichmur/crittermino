@@ -47,3 +47,58 @@ a {
     opacity: 0;
   }
 }
+
+@keyframes critter-hand {
+  from,
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+  50% {
+    transform: translate3d(-50%, 5px, 0);
+  }
+}
+
+@keyframes critter-cell-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes critter-cell-shake {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  20% {
+    transform: translate3d(-6px, 0, 0);
+  }
+  40% {
+    transform: translate3d(6px, 0, 0);
+  }
+  60% {
+    transform: translate3d(-3px, 0, 0);
+  }
+  80% {
+    transform: translate3d(3px, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .critter-hand {
+    animation: critter-hand 1s ease-out infinite;
+  }
+
+  .critter-cell-pop {
+    animation: critter-cell-pop 0.26s ease-out;
+  }
+
+  .critter-cell-shake {
+    animation: critter-cell-shake 0.28s ease-out;
+  }
+}

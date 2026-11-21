@@ -32,7 +32,7 @@ export const Grid = ({ grid, shakes, bursts, spotlight, highlight, ghostCells, g
           row.map((cell) => {
             const ghost = ghostCells.some((item) => item.row === cell.row && item.col === cell.col)
             return (
-              <div key={`${cell.row}-${cell.col}`} className="@container">
+              <div key={`${cell.row}-${cell.col}`} className="@container h-full min-h-0 min-w-0">
                 <Cell
                   cell={cell}
                   shake={shakes[`${cell.row}:${cell.col}`] ?? 0}

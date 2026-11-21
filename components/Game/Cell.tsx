@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { motion, useAnimationControls, useReducedMotion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
 import { getAnimalByEmoji } from '@/lib/animals'
 import { fill } from '@/lib/i18n'
 import { useI18n } from '@/components/Locale/LocaleProvider'
@@ -19,26 +18,26 @@ interface CellProps {
 }
 
 export const Cell = ({ cell, shake, showHand, highlighted, ghost, onPress }: CellProps) => {
-  const controls = useAnimationControls()
-  const reduceMotion = useReducedMotion()
-  const wasComplete = useRef(cell.isComplete)
   const { t } = useI18n()
   const animal = cell.animal ? getAnimalByEmoji(cell.animal) : null
   const ghostAnimal = ghost ? getAnimalByEmoji(ghost) : null
+  const [motion, setMotion] = useState<'shake' | 'pop' | null>(null)
+  const lastAnimal = useRef(cell.animal)
+  const lastShake = useRef(0)
   useEffect(() => {
-    if (!shake || reduceMotion) return
-    void controls.start({ x: [0, -7, 7, -4, 4, 0], transition: { duration: 0.28, ease: 'easeOut' } })
-  }, [shake, reduceMotion, controls])
+    if (!shake || shake === lastShake.current) return
+    lastShake.current = shake
+    setMotion('shake')
+  }, [shake])
   useEffect(() => {
-    if (!cell.animal || cell.isHint || cell.hasError || reduceMotion) return
-    void controls.start({ scale: [1, 1.12, 0.98, 1], transition: { duration: 0.26, ease: 'easeOut' } })
-  }, [cell.animal, cell.isHint, cell.hasError, reduceMotion, controls])
-  useEffect(() => {
-    if (cell.isComplete && !wasComplete.current && !reduceMotion) {
-      void controls.start({ rotate: [0, -4, 4, -2, 0], transition: { duration: 0.4, ease: 'easeOut' } })
+    if (!cell.animal || cell.isHint || cell.hasError) {
+      lastAnimal.current = cell.animal
+      return
     }
-    wasComplete.current = cell.isComplete
-  }, [cell.isComplete, reduceMotion, controls])
+    if (cell.animal === lastAnimal.current) return
+    lastAnimal.current = cell.animal
+    setMotion('pop')
+  }, [cell.animal, cell.isHint, cell.hasError])
   const label = [
     fill(t.cellWhere, { row: cell.row + 1, column: cell.col + 1 }),
     animal ? t.animals[animal.emoji] : t.cellEmpty,
@@ -49,22 +48,35 @@ export const Cell = ({ cell, shake, showHand, highlighted, ghost, onPress }: Cel
     .filter(Boolean)
     .join(', ')
   const background = cell.hasError ? '#FECDD3' : animal ? (cell.isComplete ? animal.complete : animal.fill) : '#FFFFFF'
-  const outline = cell.hasError ? '#E11D48' : highlighted ? '#FF6B9D' : cell.isComplete && animal ? animal.accent : ghostAnimal ? ghostAnimal.accent : '#E5D5C0'
+  const outline = cell.hasError
+    ? '#E11D48'
+    : highlighted || showHand
+      ? '#FF6B9D'
+      : cell.isComplete && animal
+        ? animal.accent
+        : ghostAnimal
+          ? ghostAnimal.accent
+          : '#E5D5C0'
   return (
-    <motion.button
+    <button
       type="button"
-      animate={controls}
       data-row={cell.row}
       data-col={cell.col}
       aria-label={label}
       onClick={() => onPress(cell.row, cell.col)}
+      onAnimationEnd={() => setMotion(null)}
       className={cn(
         'relative flex h-full w-full items-center justify-center rounded-2xl border touch-manipulation',
         'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF6B9D]',
-        highlighted && !reduceMotion && 'animate-pulse',
         ghost && !animal && 'border-dashed',
+        motion === 'shake' && 'critter-cell-shake',
+        motion === 'pop' && 'critter-cell-pop',
       )}
-      style={{ background, borderColor: outline }}
+      style={{
+        background,
+        borderColor: outline,
+        boxShadow: showHand ? '0 0 0 3px rgba(255, 107, 157, 0.45)' : undefined,
+      }}
     >
       {animal ? (
         <span className="text-2xl leading-none" style={{ fontSize: 'clamp(1.15rem, 50cqi, 2.15rem)' }} aria-hidden="true">
@@ -91,6 +103,6 @@ export const Cell = ({ cell, shake, showHand, highlighted, ghost, onPress }: Cel
         />
       ) : null}
       {showHand ? <TutorialHand /> : null}
-    </motion.button>
+    </button>
   )
 }
