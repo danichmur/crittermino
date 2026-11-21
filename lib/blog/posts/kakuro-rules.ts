@@ -15,7 +15,7 @@ export const kakuroRules: BlogPost = {
           'Kakuro looks like a crossword drawn with digits. White cells form runs, across and down. A black cell carries a small sum, and that sum is the total of the run it points at. Across-clues sit in the bottom of the black cell and point right. Down-clues sit in the top and point down. You write digits 1 through 9. A run adds up to its clue. No digit repeats inside one run.',
         ),
         paragraph(
-          'Crittermino is not Kakuro. There is no sum on this board. If you want Kakuro itself, [[https://kakuro.com/|Kakuro.com]] deals free puzzles in the browser. This page is the rules, then the fork: stay with sums, or play the region puzzle on [[/|this site]].',
+          'Crittermino is not Kakuro. There is no sum on this board. If you want Kakuro itself, [[https://kakuro.com/|Kakuro.com]] deals free puzzles in the browser. Which habit transfers, and which one stalls, is [[/blog/fillomino-vs-kakuro|Fillomino versus Kakuro]]. This page is the rules, then the fork: stay with sums, or play the region puzzle on [[/|this site]].',
         ),
       ],
     },

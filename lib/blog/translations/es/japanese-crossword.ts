@@ -13,7 +13,7 @@ export const crosswordEs: BlogCopy = {
           'Un crucigrama japonés es un nonograma. En inglés también se llama picross o griddlers. No es un crucigrama de palabras y no está escrito en japonés. Las pistas son tramos de casillas pintadas. Cada fila y cada columna lista esos tramos en orden. Pintas casillas y dejas otras vacías hasta que el dibujo coincide con todas las pistas.',
         ),
         paragraph(
-          'Crittermino no pinta un dibujo. Si la búsqueda era ese puzzle, juega uno en [[https://webpbn.com/|Web Paint-by-Number]]. Las reglas están aquí. La cuadrícula de este sitio es Fillomino, enlazada desde [[/how-to-play|cómo jugar]].',
+          'Crittermino no pinta un dibujo. Si la búsqueda era ese puzzle, juega uno en [[https://webpbn.com/|Web Paint-by-Number]]. La diferencia, con un tablero, está en [[/blog/fillomino-vs-nonogram|Fillomino y un nonograma]]. Las reglas del puzzle del dibujo están abajo. La cuadrícula de este sitio es Fillomino, enlazada desde [[/how-to-play|cómo jugar]].',
         ),
       ],
     },

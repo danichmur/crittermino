@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { ContentPage } from '@/components/Layout/ContentPage'
 import { PlayLink } from '@/components/Layout/PlayLink'
+import { playNextHref } from '@/lib/locale'
 import { JsonLd } from '@/components/Seo/JsonLd'
 import { copy } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale-server'
@@ -21,7 +22,8 @@ export const generateMetadata = async (): Promise<Metadata> => {
 }
 
 export default async function AboutPage() {
-  const text = copy[await getLocale()]
+  const locale = await getLocale()
+  const text = copy[locale]
   const crumbs = [
     { name: text.home, path: '/' },
     { name: text.about, path: '/about' },
@@ -80,7 +82,7 @@ export default async function AboutPage() {
         </p>
       </section>
       <div className="mt-8">
-        <PlayLink>{text.aboutPlay}</PlayLink>
+        <PlayLink href={playNextHref(locale)}>{text.aboutPlay}</PlayLink>
       </div>
     </ContentPage>
   )

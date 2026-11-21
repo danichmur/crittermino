@@ -2,8 +2,14 @@ import { utcDateString } from '@/lib/daily'
 import { IS_IOS_APP } from '@/lib/platform'
 import type { PlayMode } from '@/types/game'
 
-/** The look and the placed animal are free. The outline, and anything after it, is not. */
-export const FREE_HINTS_PER_LEVEL = 2
+/**
+ * Look, place, and outline are free. The fourth hint on a level stops.
+ * Plus and ads stay out of this store build. The review binary has no purchase screen.
+ */
+export const STORE_MONETIZATION = false
+
+/** Hints given before the level says there are none left. */
+export const FREE_HINTS_PER_LEVEL = 3
 
 /** No full-screen ad until the player has reached this campaign level. */
 export const INTERSTITIAL_MIN_LEVEL = 11
@@ -27,6 +33,8 @@ export interface PlusProduct {
 export type PurchaseResult = 'active' | 'cancelled' | 'pending' | 'failed'
 
 export interface MonetizationBridge {
+  /** False when this build has no ad network wired up. */
+  adsEnabled: boolean
   showRewarded: () => Promise<boolean>
   showInterstitial: () => Promise<boolean>
   loadProducts: () => Promise<PlusProduct[]>
@@ -99,6 +107,9 @@ const bridge = (): MonetizationBridge | null => {
   return window.critterminoMonetization ?? null
 }
 
+/** True once the iOS shell has registered a live ad network and this build is allowed to show it. */
+export const adsAreEnabled = (): boolean => STORE_MONETIZATION && bridge()?.adsEnabled === true
+
 /** Minimum quiet time between full-screen ads. It shrinks the longer the app has been installed. */
 export const tenureGapMs = (installedAt: number, now: number): number => {
   const days = installedAt > 0 ? Math.floor((now - installedAt) / DAY_MS) : 0
@@ -154,7 +165,7 @@ export const needsRewardedHint = (hintsUsed: number): boolean => {
 }
 
 export const planInterstitial = (input: { level: number; mode: PlayMode; now: number }): { show: boolean; nudge: boolean } => {
-  if (!IS_IOS_APP) return { show: false, nudge: false }
+  if (!IS_IOS_APP || !adsAreEnabled()) return { show: false, nudge: false }
   ensure()
   const show = canInterrupt({ ...state, ...input })
   if (!show) return { show: false, nudge: false }

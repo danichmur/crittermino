@@ -9,7 +9,7 @@ import { PlayLink } from '@/components/Layout/PlayLink'
 import { JsonLd } from '@/components/Seo/JsonLd'
 import { BLOG_POSTS, formatPublished, getLocalizedPost, localizePosts } from '@/lib/blog'
 import { copy } from '@/lib/i18n'
-import { localizeHref } from '@/lib/locale'
+import { localizeHref, playNextHref } from '@/lib/locale'
 import { getLocale, getPathLocale } from '@/lib/locale-server'
 import { breadcrumbJsonLd, pageMeta } from '@/lib/seo'
 import { SITE } from '@/lib/site'
@@ -114,7 +114,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         </section>
       ) : null}
       <div className="mt-10">
-        <PlayLink href={homePath}>{text.playALevel}</PlayLink>
+        <PlayLink href={playNextHref(articleLocale)}>{text.playALevel}</PlayLink>
         <Link
           href={localizeHref(articleLocale, '/daily-challenge')}
           className="mt-3 inline-flex min-h-11 w-full items-center justify-center font-display font-semibold text-[#3D2C29] underline-offset-4 hover:underline"

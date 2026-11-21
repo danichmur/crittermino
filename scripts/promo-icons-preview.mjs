@@ -4,7 +4,8 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const ICONS = path.resolve(ROOT, 'promo/icons')
+const PROMO = path.resolve(ROOT, '../crittermino-growth/promo')
+const ICONS = path.resolve(PROMO, 'icons')
 const names = ['A', 'B', 'C', 'D']
 const toUrl = (p) => 'data:image/png;base64,' + fs.readFileSync(p).toString('base64')
 

@@ -4,7 +4,8 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const OUT = path.resolve(ROOT, 'promo/crazygames')
+const PROMO = path.resolve(ROOT, '../crittermino-growth/promo')
+const OUT = path.resolve(PROMO, 'crazygames')
 
 // Noto Color Emoji is OFL-licensed, unlike platform emoji sets, so it is safe on store artwork.
 const FONT = `

@@ -17,6 +17,7 @@ export const es: Copy = {
     'Un Fillomino gratis en el navegador. Sin descarga. Llena la cuadrícula con casas de animales. Cada animal necesita una región del tamaño exacto, y las casas del mismo tamaño no pueden tocarse.',
   shellTagline:
     'Llena la cuadrícula con casas de animales. Cada animal necesita una región del tamaño exacto, y las casas del mismo tamaño no pueden tocarse.',
+  shortTagline: 'Casas de animales. Tamaño exacto. Las del mismo tamaño no se tocan.',
   play: 'Jugar',
   continueLevel: 'Seguir · Nivel {n}',
   comingSoon: 'Pronto',
@@ -75,8 +76,9 @@ export const es: Copy = {
   hintAdBody: 'Las dos primeras pistas del nivel son gratis. Esta marca una casa entera.',
   hintWatch: 'Ver anuncio',
   hintNotNow: 'Ahora no',
+  hintsGone: 'No quedan pistas en este nivel.',
   plusName: 'Crittermino Plus',
-  plusBody: 'Sin pausas entre niveles, y todas las pistas sin anuncio. Los puzzles siguen siendo gratis.',
+  plusBody: 'Todas las pistas, sin límite y sin anuncios. Los puzzles siguen siendo gratis.',
   plusYearly: 'Anual',
   plusMonthly: 'Mensual',
   plusWeekly: 'Semanal',
@@ -108,6 +110,8 @@ export const es: Copy = {
   restartLevel: 'Reiniciar nivel',
   dailyPuzzle: 'Puzzle diario',
   dailyDoneToday: 'El puzzle de hoy ya está hecho. Vuelve mañana.',
+  dailyNeedsLesson: 'Primero cinco niveles cortos de la lección. Después se abre el puzzle diario.',
+  startLesson: 'Empezar la lección',
   settings: 'Ajustes',
   moreAnimals: 'Más animales',
   moreAnimalsBody: 'Los aspectos llegarán más adelante. El puzzle sigue siendo gratis.',
@@ -129,6 +133,9 @@ export const es: Copy = {
   moveOne: 'movimiento',
   moveFew: 'movimientos',
   moveMany: 'movimientos',
+  hintOne: 'pista',
+  hintFew: 'pistas',
+  hintMany: 'pistas',
   dayOne: 'día',
   dayFew: 'días',
   dayMany: 'días',
@@ -180,6 +187,7 @@ export const es: Copy = {
     'Cat needs more room than Mouse — exactly 3 cells.': 'El gato necesita más espacio que el ratón: exactamente 3 celdas.',
     "Same-size homes can't share a wall. Cat sits between these mice.":
       'Las casas del mismo tamaño no pueden compartir pared. El gato se sienta entre estos ratones.',
+    'Homes can bend. They stay in one piece.': 'Las casas pueden doblarse. Se quedan en una sola pieza.',
     'First real puzzle. The givens are all you need.': 'El primer puzzle de verdad. Con las pistas que ya están basta.',
     'Panda needs a connected home of exactly 5 cells.': 'El panda necesita una casa unida de exactamente 5 celdas.',
     'Lion needs a roomy home of exactly 6 cells.': 'El león necesita una casa amplia de exactamente 6 celdas.',
@@ -259,11 +267,11 @@ export const es: Copy = {
   privacySections: [
     {
       title: 'La versión corta',
-      body: 'Crittermino es un puzzle gratis. El sitio no tiene cuenta ni anuncios. La app de iOS muestra anuncios entre algunos niveles y ofrece Plus, una suscripción que quita esos anuncios y el límite de pistas. Tu progreso se queda en este dispositivo. Google Analytics cuenta las visitas al sitio. Puedes borrar la partida guardada tú mismo.',
+      body: 'Crittermino es un puzzle gratis. El sitio no tiene cuenta ni anuncios. La app de iOS muestra anuncios a través de Unity Ads. Plus es una suscripción que quita esos anuncios y el límite de pistas. Tu progreso se queda en este dispositivo. Google Analytics cuenta las visitas al sitio. Puedes borrar la partida guardada tú mismo.',
     },
     {
       title: 'Qué se queda en este dispositivo',
-      body: 'El juego guarda el progreso en el almacenamiento local de este navegador: el nivel actual, los niveles completados, las mejores marcas, las pistas usadas, el número de movimientos, la racha diaria, el último día que jugaste, el último puzzle diario que completaste, y si el sonido y la vibración están activos. El idioma que eliges también se guarda ahí, y en una cookie, para que la próxima visita abra en ese idioma. La app de iOS también recuerda si Plus está activo, cuándo la abriste por primera vez y cuándo salió el último anuncio a pantalla completa, para espaciar esos anuncios. Un mensaje para compartir incluye el número de nivel, los movimientos y el tiempo como texto, más un enlace al juego. No incluye tu nombre. Si instalas el juego, o visitas el sitio, el navegador puede guardar una copia de la app en el dispositivo para volver a abrirla. Esa copia es el juego, no un perfil tuyo.',
+      body: 'El juego guarda el progreso en el almacenamiento local de este navegador: el nivel actual, los niveles completados, las mejores marcas, las pistas usadas, el número de movimientos, la racha diaria, el último día que jugaste, el último puzzle diario que completaste, y si el sonido y la vibración están activos. El idioma que eliges también se guarda ahí, y en una cookie, para que la próxima visita abra en ese idioma. La app de iOS también recuerda si Plus está activo, cuándo la abriste por primera vez y cuándo se mostró el último anuncio a pantalla completa. Un mensaje para compartir incluye el número de nivel, los movimientos y el tiempo como texto, más un enlace al juego. No incluye tu nombre. Si instalas el juego, o visitas el sitio, el navegador puede guardar una copia de la app en el dispositivo para volver a abrirla. Esa copia es el juego, no un perfil tuyo.',
     },
     {
       title: 'Qué envía el juego',
@@ -275,7 +283,7 @@ export const es: Copy = {
     },
     {
       title: 'Publicidad y cookies',
-      body: 'El sitio no muestra anuncios y no usa una red publicitaria. La app de iOS muestra anuncios con Google AdMob: un vídeo corto y opcional cuando pides una pista después de las dos gratis, y un anuncio a pantalla completa entre algunos niveles de la campaña cuando ya llevas un rato jugando. Plus, comprado a través de Apple, quita los anuncios a pantalla completa y el límite de pistas. Si permites el rastreo, AdMob puede usar el identificador de publicidad. También recibe el tipo de dispositivo y una ubicación aproximada. No recibe tu nombre ni tu correo. En el sitio, Google Analytics pone una cookie en este navegador para contar una visita de regreso. Otra cookie recuerda el idioma que elegiste. Google recibe la dirección de la página, una ubicación aproximada, el tipo de dispositivo y de navegador, y la hora. No recibe tu nombre ni tu correo. La protección contra rastreo del navegador, o borrar los datos de este sitio, detiene esas cookies.',
+      body: 'El sitio no muestra anuncios y no usa una red publicitaria. La app de iOS muestra anuncios a través de Unity Ads: un video corto por una pista extra y un anuncio a pantalla completa entre algunos niveles. Si permites el rastreo, Unity puede usar el identificador del dispositivo para que esos anuncios sean más relevantes. Si lo rechazas, los anuncios no son personalizados. Plus, comprado a través de Apple, quita los anuncios y el límite de pistas. En el sitio, Google Analytics pone una cookie en este navegador para contar una visita de regreso. Otra cookie recuerda el idioma que elegiste. Google recibe la dirección de la página, una ubicación aproximada, el tipo de dispositivo y de navegador, y la hora. No recibe tu nombre ni tu correo. La protección contra rastreo del navegador, o borrar los datos de este sitio, detiene esas cookies.',
     },
     {
       title: 'Niños',
@@ -304,7 +312,7 @@ export const es: Copy = {
     },
     {
       title: 'Qué incluye Plus',
-      body: 'Plus quita los anuncios a pantalla completa entre niveles y el límite de pistas. Los planes son Semanal a $2.99, Mensual a $4.99 y Anual a $19.99. El plan anual incluye 7 días gratis. Cuando terminan, se cobra el precio anual. El precio que confirmas es el que aparece en la pantalla de Plus.',
+      body: 'Plus quita los anuncios y el límite de pistas. Los planes son Semanal a $2.99, Mensual a $4.99 y Anual a $19.99. El plan anual incluye 7 días gratis. Cuando terminan, se cobra el precio anual. El precio que confirmas es el que aparece en la pantalla de Plus.',
     },
     {
       title: 'Renovación y cancelación',

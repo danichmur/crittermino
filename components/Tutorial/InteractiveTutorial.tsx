@@ -19,7 +19,7 @@ export const InteractiveTutorial = ({ message, children, fill = false }: Interac
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -6 }}
-          className="mb-2 shrink-0 rounded-2xl bg-white px-4 py-2 text-center text-sm font-medium text-[#3D2C29] shadow-sm ring-1 ring-[#E5D5C0] sm:mb-3 sm:py-3"
+          className="mb-2 shrink-0 rounded-2xl bg-white px-3 py-2 text-center text-sm font-medium leading-snug text-[#3D2C29] shadow-sm ring-1 ring-[#E5D5C0] sm:mb-3 sm:px-4 sm:py-3 [@media(max-height:700px)]:mb-1 [@media(max-height:700px)]:px-2.5 [@media(max-height:700px)]:py-1.5 [@media(max-height:700px)]:text-xs"
         >
           {message}
         </motion.p>

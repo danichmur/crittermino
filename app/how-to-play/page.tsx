@@ -7,7 +7,7 @@ import { JsonLd } from '@/components/Seo/JsonLd'
 import { DemoPuzzle } from '@/components/Tutorial/DemoPuzzle'
 import { ANIMALS } from '@/lib/animals'
 import { cellCountLabel, copy } from '@/lib/i18n'
-import { localizeHref } from '@/lib/locale'
+import { localizeHref, playNextHref } from '@/lib/locale'
 import { getLocale } from '@/lib/locale-server'
 import { breadcrumbJsonLd, pageMeta, pageQueryKeywords } from '@/lib/seo'
 import { SITE } from '@/lib/site'
@@ -117,7 +117,7 @@ export default async function HowToPlayPage() {
         {text.howToLongerAfter}
       </p>
       <div className="mt-8">
-        <PlayLink>{text.howToPlayCta}</PlayLink>
+        <PlayLink href={playNextHref(locale)}>{text.howToPlayCta}</PlayLink>
       </div>
     </ContentPage>
   )

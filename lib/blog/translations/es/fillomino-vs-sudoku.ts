@@ -106,7 +106,7 @@ export const vsEs: BlogCopy = {
           'Pasa a Fillomino cuando las filas se sientan automáticas y quieras que el límite sea una forma. [[https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/filling.html|Filling de Simon Tatham]] es Fillomino con números de lápiz, y los tamaños no se limitan a los cinco animales. Crittermino es la misma forma con animales, una campaña de 300 niveles y una [[/daily-challenge|cuadrícula diaria]] igual para todos. Gratis, en el navegador, sin cuenta. Las [[/how-to-play|reglas]] llevan menos de un minuto si Fillomino es el que no has probado.',
         ),
         paragraph(
-          'Ninguno sustituye al otro. Una semana de solo uno de ellos es como averiguas qué silencio te gusta. Si después de esa semana quieres un estante más ancho, la [[/blog/best-free-logic-puzzles-2026|lista de 2026]] guarda Fillomino, Sudoku y unos puzzles que no usan ni filas ni regiones.',
+          'Ninguno sustituye al otro. Una semana de solo uno de ellos es como averiguas qué silencio te gusta. La misma traducción para un puzzle de dibujo es [[/blog/fillomino-vs-nonogram|Fillomino y un nonograma]]. Para las sumas, [[/blog/fillomino-vs-kakuro|Fillomino y Kakuro]]. Si después de esa semana quieres un estante más ancho, la [[/blog/best-free-logic-puzzles-2026|lista de 2026]] guarda Fillomino, Sudoku y unos puzzles que no usan ni filas ni regiones.',
         ),
       ],
     },

@@ -11,11 +11,12 @@ import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const RAW_ROOT = path.join(ROOT, 'promo/raw/compare')
-const OUT_ROOT = path.join(ROOT, 'promo/out/compare')
+const PROMO = path.resolve(ROOT, '../crittermino-growth/promo')
+const RAW_ROOT = path.join(PROMO, 'raw/compare')
+const OUT_ROOT = path.join(PROMO, 'out/compare')
 const VOICE_ROOT = path.join(RAW_ROOT, 'voice')
-const CHIP = path.join(ROOT, 'promo/social/cards/url-chip.png')
-const MUSIC = path.join(ROOT, 'promo/audio/social-music.wav')
+const CHIP = path.join(PROMO, 'social/cards/url-chip.png')
+const MUSIC = path.join(PROMO, 'audio/social-music.wav')
 const FONT = fs.readFileSync(
   path.join(ROOT, 'node_modules/@fontsource-variable/fredoka/files/fredoka-latin-wght-normal.woff2'),
 ).toString('base64')
@@ -146,7 +147,7 @@ const buildScript = (clip) => {
   ]
   const intro = placeLines(introItems, 0.45)
   const introDur = intro[intro.length - 1].start + intro[intro.length - 1].duration + 0.55
-  const events = JSON.parse(fs.readFileSync(path.join(ROOT, 'promo/raw/social', clip.rawId, 'events.json'), 'utf8'))
+  const events = JSON.parse(fs.readFileSync(path.join(PROMO, 'raw/social', clip.rawId, 'events.json'), 'utf8'))
   const first = events.events[0]
   const win = events.events.find((event) => event.type === 'win')
   const rawStart = Math.max(0.2, first.t - 0.65)
@@ -374,7 +375,7 @@ const compose = (clip, script, introFile, stills, mixFile) => {
   if (lead + introDur > recorded - 0.05) {
     throw new Error(`${clip.id} intro is short: lead ${lead.toFixed(2)} dur ${recorded.toFixed(2)} need ${introDur.toFixed(2)}`)
   }
-  const raw = path.join(ROOT, 'promo/raw/social', clip.rawId, 'gameplay.webm')
+  const raw = path.join(PROMO, 'raw/social', clip.rawId, 'gameplay.webm')
   const outfile = path.join(OUT_ROOT, `${clip.id}-${clip.slug}.mp4`)
   const cover = path.join(OUT_ROOT, `${clip.id}-${clip.slug}.jpg`)
   fs.mkdirSync(OUT_ROOT, { recursive: true })
@@ -451,8 +452,8 @@ const selectedClips = () => {
 }
 
 const main = async () => {
-  if (!fs.existsSync(CHIP)) throw new Error('Missing promo/social/cards/url-chip.png')
-  if (!fs.existsSync(MUSIC)) throw new Error('Missing promo/audio/social-music.wav')
+  if (!fs.existsSync(CHIP)) throw new Error(`Missing ${CHIP}`)
+  if (!fs.existsSync(MUSIC)) throw new Error(`Missing ${MUSIC}`)
   const clips = selectedClips()
   const plans = clips.map((clip) => ({ clip, script: buildScript(clip) }))
   const browser = await chromium.launch()

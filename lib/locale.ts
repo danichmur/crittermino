@@ -102,6 +102,12 @@ export const localizeHref = (locale: Locale, path: string): string => {
   return bare === '/' ? `/${locale}` : `/${locale}${bare}`
 }
 
+/** Deep link into the next campaign level (or level 1 for new players). */
+export const playNextHref = (locale: Locale): string => {
+  const home = localizeHref(locale, '/')
+  return home === '/' ? '/?play=next' : `${home}?play=next`
+}
+
 export const readStoredLocale = (): Locale | null => {
   try {
     const value = window.localStorage.getItem(LOCALE_COOKIE)

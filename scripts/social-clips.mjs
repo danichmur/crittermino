@@ -10,11 +10,12 @@ import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const PROMO = path.resolve(ROOT, '../crittermino-growth/promo')
 const BASE = process.env.BASE ?? 'http://localhost:3000'
-const RAW_ROOT = path.join(ROOT, 'promo/raw/social')
-const CARD_ROOT = path.join(ROOT, 'promo/social/cards')
-const OUT_ROOT = path.join(ROOT, 'promo/out/social')
-const AUDIO_DIR = path.join(ROOT, 'promo/audio')
+const RAW_ROOT = path.join(PROMO, 'raw/social')
+const CARD_ROOT = path.join(PROMO, 'social/cards')
+const OUT_ROOT = path.join(PROMO, 'out/social')
+const AUDIO_DIR = path.join(PROMO, 'audio')
 const VW = 1080
 const VH = 1920
 const OUT_W = 1080
@@ -439,7 +440,7 @@ const composeClip = (clip, musicFile) => {
   const cover = path.join(OUT_ROOT, `${clip.id}-${clip.slug}.jpg`)
   const hookLife = Math.min(3.15, gpDur - 1.4)
   const graph = [
-    `[0:v]trim=${start.toFixed(3)}:${end.toFixed(3)},setpts=(PTS-STARTPTS)/${speed},fps=30,scale=${OUT_W}:${OUT_H}:flags=lanczos,setsar=1,fade=t=in:st=0:d=0.12,format=yuv420p[gp]`,
+    `[0:v]trim=${start.toFixed(3)}:${end.toFixed(3)},setpts=(PTS-STARTPTS)/${speed},fps=30,scale=${OUT_W}:${OUT_H}:flags=lanczos,setsar=1,format=yuv420p[gp]`,
     `[1:v]format=rgba,fade=t=in:st=0:d=0.2:alpha=1[chip]`,
     `[2:v]format=rgba,fade=t=in:st=0.12:d=0.18:alpha=1,fade=t=out:st=${Math.max(0.4, hookLife - 0.35).toFixed(3)}:d=0.32:alpha=1[hook]`,
     `[gp][chip]overlay=x=(W-w)/2:y=128:format=auto:eof_action=pass[v1]`,

@@ -4,13 +4,14 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const PROMO = path.resolve(ROOT, '../crittermino-growth/promo')
 const LEVEL = Number(process.env.LEVEL ?? 53)
 const TOTAL = Number(process.env.TOTAL ?? 27)
 const SR = 48000
-const OUT = path.resolve(ROOT, 'promo/audio')
+const OUT = path.resolve(PROMO, 'audio')
 fs.mkdirSync(OUT, { recursive: true })
 
-const eventsPath = path.resolve(ROOT, `promo/raw/gameplay-${LEVEL}.events.json`)
+const eventsPath = path.resolve(PROMO, `raw/gameplay-${LEVEL}.events.json`)
 const { events } = JSON.parse(fs.readFileSync(eventsPath, 'utf8'))
 
 // Replicate the in-game Web Audio tones (lib/sound.ts).

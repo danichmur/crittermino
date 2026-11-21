@@ -9,11 +9,12 @@ import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const PROMO = path.resolve(ROOT, '../crittermino-growth/promo')
 const BASE = process.env.BASE ?? 'http://localhost:3000'
-const RAW_ROOT = path.join(ROOT, 'promo/raw/fails')
-const CARD_ROOT = path.join(ROOT, 'promo/fails/cards')
-const OUT_ROOT = path.join(ROOT, 'promo/out/fails')
-const AUDIO_DIR = path.join(ROOT, 'promo/audio')
+const RAW_ROOT = path.join(PROMO, 'raw/fails')
+const CARD_ROOT = path.join(PROMO, 'fails/cards')
+const OUT_ROOT = path.join(PROMO, 'out/fails')
+const AUDIO_DIR = path.join(PROMO, 'audio')
 const VW = 540
 const VH = 960
 const OUT_W = 1080
@@ -261,7 +262,7 @@ const probeDuration = (file) => Number(execFileSync('ffprobe', ['-v', 'error', '
 
 const musicFile = () => {
   const file = path.join(AUDIO_DIR, 'social-music.wav')
-  if (!fs.existsSync(file)) throw new Error('Missing promo/audio/social-music.wav')
+  if (!fs.existsSync(file)) throw new Error(`Missing ${file}`)
   return file
 }
 
@@ -328,7 +329,7 @@ const composeClip = (clip, bed) => {
   const outfile = path.join(OUT_ROOT, `${clip.id}-${clip.slug}.mp4`)
   const cover = path.join(OUT_ROOT, `${clip.id}-${clip.slug}.jpg`)
   const graph = [
-    `[0:v]trim=${start.toFixed(3)}:${end.toFixed(3)},setpts=(PTS-STARTPTS)/${speed},fps=30,scale=${OUT_W}:${OUT_H}:flags=lanczos,setsar=1,fade=t=in:st=0:d=0.12,format=yuv420p[gp]`,
+    `[0:v]trim=${start.toFixed(3)}:${end.toFixed(3)},setpts=(PTS-STARTPTS)/${speed},fps=30,scale=${OUT_W}:${OUT_H}:flags=lanczos,setsar=1,format=yuv420p[gp]`,
     `[1:v]format=rgba,fade=t=in:st=0:d=0.15:alpha=1[chip]`,
     `[2:v]format=rgba,fade=t=in:st=0.1:d=0.16:alpha=1,fade=t=out:st=${Math.max(0.4, hookLife - 0.28).toFixed(3)}:d=0.25:alpha=1[hook]`,
     `[3:v]format=rgba[nope]`,

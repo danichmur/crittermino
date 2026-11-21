@@ -4,7 +4,7 @@ import { ContentPage } from '@/components/Layout/ContentPage'
 import { PlayLink } from '@/components/Layout/PlayLink'
 import { copy, fill } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale-server'
-import { localizeHref } from '@/lib/locale'
+import { localizeHref, playNextHref } from '@/lib/locale'
 import { pageMeta } from '@/lib/seo'
 import { SITE } from '@/lib/site'
 
@@ -50,7 +50,7 @@ export default async function TermsPage() {
         </a>
       </p>
       <div className="mt-8">
-        <PlayLink>{text.termsPlay}</PlayLink>
+        <PlayLink href={playNextHref(locale)}>{text.termsPlay}</PlayLink>
       </div>
     </ContentPage>
   )

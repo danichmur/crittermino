@@ -4,8 +4,9 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const PROMO = path.resolve(ROOT, '../crittermino-growth/promo')
 const LEVEL = Number(process.env.LEVEL ?? 53)
-const OUT = path.resolve(ROOT, 'promo/crazygames')
+const OUT = path.resolve(PROMO, 'crazygames')
 const COVER_SECONDS = 1.0
 const FADE_SECONDS = 0.4
 const LEAD_IN = 0.4
@@ -26,7 +27,7 @@ const readWindow = (dir) => {
 }
 
 const buildVideo = (format) => {
-  const dir = path.resolve(ROOT, `promo/raw/crazygames-${format.name}`)
+  const dir = path.resolve(PROMO, `raw/crazygames-${format.name}`)
   const { start, length } = readWindow(dir)
   const size = `${format.width}:${format.height}`
   const graph = [

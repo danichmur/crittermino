@@ -4,10 +4,11 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const PROMO = path.resolve(ROOT, '../crittermino-growth/promo')
 const LEVEL = Number(process.env.LEVEL ?? 53)
-const RAW = path.resolve(ROOT, `promo/raw/gameplay-${LEVEL}.webm`)
-const OUT = path.resolve(ROOT, 'promo/out')
-const AUDIO_DIR = path.resolve(ROOT, 'promo/audio')
+const RAW = path.resolve(PROMO, `raw/gameplay-${LEVEL}.webm`)
+const OUT = path.resolve(PROMO, 'out')
+const AUDIO_DIR = path.resolve(PROMO, 'audio')
 const SR = 48000
 const CREAM = '0xfff9f0'
 
@@ -19,7 +20,7 @@ const ENDT = 2.8
 const XF = GPDUR - 0.5
 const TOTAL = GPDUR + ENDT - 0.5
 
-const { events } = JSON.parse(fs.readFileSync(path.join(ROOT, `promo/raw/gameplay-${LEVEL}.events.json`), 'utf8'))
+const { events } = JSON.parse(fs.readFileSync(path.join(PROMO, `raw/gameplay-${LEVEL}.events.json`), 'utf8'))
 
 const TAP = [{ f: 740, d: 0.11, g: 0.42 }]
 const COMPLETE = [
@@ -83,8 +84,8 @@ const ENC = ['-c:v', 'libx264', '-preset', 'slow', '-crf', '19', '-pix_fmt', 'yu
 const gpTrim = `trim=${START}:${START + GPWIN},setpts=(PTS-STARTPTS)/${SPEED}`
 
 const buildVertical = (lang) => {
-  const hook = path.resolve(ROOT, `promo/cards/${lang}/hook.png`)
-  const end = path.resolve(ROOT, `promo/cards/${lang}/endcard.png`)
+  const hook = path.resolve(PROMO, `cards/${lang}/hook.png`)
+  const end = path.resolve(PROMO, `cards/${lang}/endcard.png`)
   const graph = `\
 [0:v]${gpTrim},scale=1080:1920:flags=lanczos,fps=30,setsar=1[gp];\
 [2:v]scale=1080:-1:flags=lanczos,fps=30,format=rgba,fade=in:st=0.15:d=0.3:alpha=1,fade=out:st=${GPDUR - 0.5}:d=0.3:alpha=1[hk];\
@@ -96,7 +97,7 @@ const buildVertical = (lang) => {
 }
 
 const buildSquare = () => {
-  const end = path.resolve(ROOT, 'promo/cards/en/endcard.png')
+  const end = path.resolve(PROMO, 'cards/en/endcard.png')
   const graph = `\
 [0:v]${gpTrim},scale=1080:1080:force_original_aspect_ratio=increase,crop=1080:1080,gblur=sigma=28,eq=brightness=0.06,fps=30,setsar=1[bg];\
 [0:v]${gpTrim},scale=-1:1040:flags=lanczos,fps=30[fg];\

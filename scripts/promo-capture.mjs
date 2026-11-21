@@ -4,9 +4,10 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const PROMO = path.resolve(ROOT, '../crittermino-growth/promo')
 const LEVEL = Number(process.env.LEVEL ?? 53)
 const BASE = process.env.BASE ?? 'http://localhost:3000'
-const OUT = path.resolve(ROOT, process.env.OUT ?? 'promo/raw')
+const OUT = path.resolve(PROMO, process.env.OUT ?? 'raw')
 const STEP = Number(process.env.STEP ?? 230)
 const REGION_PAUSE = Number(process.env.REGION_PAUSE ?? 360)
 const VW = Number(process.env.VW ?? 720)

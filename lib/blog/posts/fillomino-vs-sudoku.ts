@@ -109,7 +109,7 @@ export const fillominoVsSudoku: BlogPost = {
           'Switch to Fillomino when the rows feel automatic and you want the constraint to be a shape. [[https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/filling.html|Simon Tatham’s Filling]] is Fillomino with pencil-style numbers, and the sizes are not limited to the five animals. Crittermino is the same form with animals, a 300-level campaign, and a [[/daily-challenge|daily grid]] that is the same for everyone. Free, in the browser, no account. The [[/how-to-play|rules]] take less than a minute if Fillomino is the one you have not tried.',
         ),
         paragraph(
-          'Neither replaces the other. A week of only one of them is how you find out which silence you like. If you want a wider shelf of free grids after that week, the [[/blog/best-free-logic-puzzles-2026|2026 list]] keeps Fillomino, Sudoku, and a few puzzles that use neither rows nor regions.',
+          'Neither replaces the other. A week of only one of them is how you find out which silence you like. The same translation for a picture puzzle is [[/blog/fillomino-vs-nonogram|Fillomino versus a nonogram]]. For sums, it is [[/blog/fillomino-vs-kakuro|Fillomino versus Kakuro]]. If you want a wider shelf after that week, the [[/blog/best-free-logic-puzzles-2026|2026 list]] keeps Fillomino, Sudoku, and a few puzzles that use neither rows nor regions.',
         ),
       ],
     },

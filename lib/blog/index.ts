@@ -1,5 +1,8 @@
 import { bestFreeLogicPuzzles2026 } from '@/lib/blog/posts/best-free-logic-puzzles-2026'
 import { critterminoTips } from '@/lib/blog/posts/crittermino-tips-and-strategies'
+import { dailyBrainWorkout } from '@/lib/blog/posts/daily-brain-workout'
+import { fillominoVsKakuro } from '@/lib/blog/posts/fillomino-vs-kakuro'
+import { fillominoVsNonogram } from '@/lib/blog/posts/fillomino-vs-nonogram'
 import { fillominoVsSudoku } from '@/lib/blog/posts/fillomino-vs-sudoku'
 import { howToSolveFillomino } from '@/lib/blog/posts/how-to-solve-fillomino-puzzles'
 import { japaneseCrossword } from '@/lib/blog/posts/japanese-crossword'
@@ -23,8 +26,11 @@ export const BLOG_POSTS: readonly BlogPost[] = [
   kenkenRules,
   howToSolveFillomino,
   fillominoVsSudoku,
+  fillominoVsNonogram,
+  fillominoVsKakuro,
   bestFreeLogicPuzzles2026,
   critterminoTips,
+  dailyBrainWorkout,
   logicPuzzleBenefits,
 ]
 

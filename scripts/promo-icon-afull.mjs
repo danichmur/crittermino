@@ -4,7 +4,8 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const OUT = path.resolve(ROOT, 'promo/icons')
+const PROMO = path.resolve(ROOT, '../crittermino-growth/promo')
+const OUT = path.resolve(PROMO, 'icons')
 fs.mkdirSync(OUT, { recursive: true })
 const S = 512
 

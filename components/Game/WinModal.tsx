@@ -23,6 +23,7 @@ export const WinModal = () => {
   const level = useGame((state) => state.level)
   const open = useGame((state) => state.isComplete)
   const moves = useGame((state) => state.moves)
+  const hintsUsed = useGame((state) => state.hintsUsed)
   const elapsedMs = useGame((state) => state.elapsedMs)
   const isNewBest = useGame((state) => state.isNewBest)
   const tutorial = useGame((state) => state.tutorialCelebration)
@@ -123,14 +124,18 @@ export const WinModal = () => {
           ))}
         </div>
         <h2 className="text-center font-display text-3xl font-bold">{tutorial ? t.tutorialDone : t.homesFound}</h2>
-        <div className="mt-4 grid grid-cols-2 gap-3">
-          <div className="rounded-3xl bg-white px-2 py-4 text-center ring-1 ring-[#E5D5C0]">
-            <p className="font-display text-5xl leading-none font-bold tracking-tight text-[#3D2C29] tabular-nums sm:text-7xl">{moves}</p>
-            <p className="mt-2 text-base font-semibold text-[#8C7468]">{pluralWord(locale, moves, 'move')}</p>
+        <div className="mt-4 grid grid-cols-3 gap-2">
+          <div className="rounded-3xl bg-white px-1 py-3 text-center ring-1 ring-[#E5D5C0]">
+            <p className="font-display text-4xl leading-none font-bold tracking-tight text-[#3D2C29] tabular-nums sm:text-5xl">{moves}</p>
+            <p className="mt-2 text-sm font-semibold text-[#8C7468]">{pluralWord(locale, moves, 'move')}</p>
           </div>
-          <div className="rounded-3xl bg-white px-2 py-4 text-center ring-1 ring-[#E5D5C0]">
-            <p className="font-display text-5xl leading-none font-bold tracking-tight text-[#3D2C29] tabular-nums sm:text-7xl">{formatTime(elapsedMs)}</p>
-            <p className="mt-2 text-base font-semibold text-[#8C7468]">{t.time}</p>
+          <div className="rounded-3xl bg-white px-1 py-3 text-center ring-1 ring-[#E5D5C0]">
+            <p className="font-display text-4xl leading-none font-bold tracking-tight text-[#3D2C29] tabular-nums sm:text-5xl">{formatTime(elapsedMs)}</p>
+            <p className="mt-2 text-sm font-semibold text-[#8C7468]">{t.time}</p>
+          </div>
+          <div className="rounded-3xl bg-white px-1 py-3 text-center ring-1 ring-[#E5D5C0]">
+            <p className="font-display text-4xl leading-none font-bold tracking-tight text-[#3D2C29] tabular-nums sm:text-5xl">{hintsUsed}</p>
+            <p className="mt-2 text-sm font-semibold text-[#8C7468]">{pluralWord(locale, hintsUsed, 'hint')}</p>
           </div>
         </div>
         {isNewBest ? <p className="mt-3 text-center font-display text-xl font-bold text-[#E84B7F]">{t.newBest}</p> : null}

@@ -92,7 +92,7 @@ export const bestFreeLogicPuzzles2026: BlogPost = {
           'A nonogram, also called picross or a Japanese crossword, fills a picture from counts on the edges. Each row and column lists the lengths of the filled runs, in order, with at least one empty cell between runs. You deduce which cells are ink and which stay empty. There is no region size in the Fillomino sense. You are reading runs. [[https://webpbn.com/|Web Paint-by-Number]] is the long-running free set. [[https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/pattern.html|Tatham’s Pattern]] is the same genre when you already have his collection open.',
         ),
         paragraph(
-          'The last ten cells of a nonogram and the last ten cells of a Crittermino board collapse for the same reason. Once the board is tight, a single filled cell removes a run that no longer fits, and the rest of the line follows. People who like that click tend to like both. The picture at the end is a bonus. The logic is the point.',
+          'The last ten cells of a nonogram and the last ten cells of a Crittermino board collapse for the same reason. Once the board is tight, a single filled cell removes a run that no longer fits, and the rest of the line follows. People who like that click tend to like both. The picture at the end is a bonus. The logic is the point. The board-level difference is [[/blog/fillomino-vs-nonogram|Fillomino versus a nonogram]].',
         ),
       ],
     },

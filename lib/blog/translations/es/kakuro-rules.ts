@@ -13,7 +13,7 @@ export const kakuroEs: BlogCopy = {
           'El Kakuro parece un crucigrama hecho de dígitos. Las casillas blancas forman series, en horizontal y en vertical. Una casilla negra lleva una suma pequeña, y esa suma es el total de la serie a la que apunta. La pista horizontal va abajo en la casilla negra y señala a la derecha. La pista vertical va arriba y señala hacia abajo. Escribes dígitos del 1 al 9. Una serie suma su pista. Ningún dígito se repite dentro de una serie.',
         ),
         paragraph(
-          'Crittermino no es Kakuro. En este tablero no hay sumas. Si quieres el Kakuro, [[https://kakuro.com/|Kakuro.com]] reparte puzzles gratis en el navegador. Esta página son las reglas, y luego la bifurcación: quedarte con las sumas o jugar el puzzle de regiones de [[/|este sitio]].',
+          'Crittermino no es Kakuro. En este tablero no hay sumas. Si quieres el Kakuro, [[https://kakuro.com/|Kakuro.com]] reparte puzzles gratis en el navegador. Qué hábito se transfiere y cuál se atasca está en [[/blog/fillomino-vs-kakuro|Fillomino y Kakuro]]. Esta página son las reglas, y luego la bifurcación: quedarte con las sumas o jugar el puzzle de regiones de [[/|este sitio]].',
         ),
       ],
     },

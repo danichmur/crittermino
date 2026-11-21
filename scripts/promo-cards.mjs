@@ -4,6 +4,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const PROMO = path.resolve(ROOT, '../crittermino-growth/promo')
 
 const FONT = `
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -80,7 +81,7 @@ const run = async () => {
   for (const lang of LANGS) {
     const copy = COPY[lang]
     if (!copy) throw new Error(`No promo copy for ${lang}`)
-    const out = path.resolve(ROOT, 'promo/cards', lang)
+    const out = path.resolve(PROMO, 'cards', lang)
     fs.mkdirSync(out, { recursive: true })
     await page.setViewportSize({ width: 1080, height: 360 })
     await page.setContent(hookHtml(copy), { waitUntil: 'networkidle' })

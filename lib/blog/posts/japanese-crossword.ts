@@ -15,7 +15,7 @@ export const japaneseCrossword: BlogPost = {
           'A Japanese crossword is a nonogram. English players also call it picross or griddlers. It is not a crossword of words, and it is not a puzzle written in Japanese. The clues are runs of filled cells. Each row and each column lists those runs in order. You paint cells and leave cells empty until the picture matches every clue.',
         ),
         paragraph(
-          'Crittermino does not paint a picture. If the search was for the picture puzzle, play one at [[https://webpbn.com/|Web Paint-by-Number]]. The rules are here. The grid on this site is Fillomino, linked from the [[/how-to-play|how to play page]].',
+          'Crittermino does not paint a picture. If the search was for the picture puzzle, play one at [[https://webpbn.com/|Web Paint-by-Number]]. The difference, with a board, is [[/blog/fillomino-vs-nonogram|Fillomino versus a nonogram]]. The rules of the picture puzzle are below. The grid on this site is Fillomino, linked from the [[/how-to-play|how to play page]].',
         ),
       ],
     },

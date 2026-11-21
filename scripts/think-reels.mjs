@@ -8,11 +8,12 @@ import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const RAW_ROOT = path.join(ROOT, 'promo/raw/fails')
-const CARD_ROOT = path.join(ROOT, 'promo/think/cards')
-const OUT_ROOT = path.join(ROOT, 'promo/out/think')
-const SHARED_CARDS = path.join(ROOT, 'promo/fails/cards')
-const AUDIO_DIR = path.join(ROOT, 'promo/audio')
+const PROMO = path.resolve(ROOT, '../crittermino-growth/promo')
+const RAW_ROOT = path.join(PROMO, 'raw/fails')
+const CARD_ROOT = path.join(PROMO, 'think/cards')
+const OUT_ROOT = path.join(PROMO, 'out/think')
+const SHARED_CARDS = path.join(PROMO, 'fails/cards')
+const AUDIO_DIR = path.join(PROMO, 'audio')
 const OUT_W = 1080
 const OUT_H = 1920
 const FPS = 30
@@ -181,7 +182,7 @@ const composeClip = (clip, bed, questionSize, ringSize) => {
   const graph = [
     `[0:v]scale=${OUT_W}:${OUT_H}:flags=lanczos,setsar=1,fps=${FPS},trim=0:${HOLD.toFixed(3)},setpts=PTS-STARTPTS[hold]`,
     `[1:v]trim=${resumeAt.toFixed(3)}:${end.toFixed(3)},setpts=PTS-STARTPTS,fps=${FPS},scale=${OUT_W}:${OUT_H}:flags=lanczos,setsar=1[play]`,
-    `[hold][play]concat=n=2:v=1:a=0,fade=t=in:st=0:d=0.12,format=yuv420p[gp]`,
+    `[hold][play]concat=n=2:v=1:a=0,format=yuv420p[gp]`,
     `[2:v]format=rgba[chip]`,
     `[3:v]format=rgba,fade=t=in:st=0.1:d=0.14:alpha=1,fade=t=out:st=${HOLD.toFixed(3)}:d=0.2:alpha=1[ask]`,
     `[4:v]format=rgba,fade=t=in:st=0.1:d=0.16:alpha=1,fade=t=out:st=${HOLD.toFixed(3)}:d=0.18:alpha=1[ring]`,
@@ -240,7 +241,7 @@ const writeSheet = () => {
 const run = async () => {
   fs.mkdirSync(OUT_ROOT, { recursive: true })
   const bed = path.join(AUDIO_DIR, 'social-music.wav')
-  if (!fs.existsSync(bed)) throw new Error('Missing promo/audio/social-music.wav')
+  if (!fs.existsSync(bed)) throw new Error(`Missing ${bed}`)
   await renderCards()
   const questionSize = pngSize(path.join(CARD_ROOT, 'question.png'))
   const ringSize = pngSize(path.join(CARD_ROOT, 'hole.png'))

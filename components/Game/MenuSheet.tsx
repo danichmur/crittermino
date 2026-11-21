@@ -7,6 +7,7 @@ import { useI18n } from '@/components/Locale/LocaleProvider'
 import { Mascot } from '@/components/Brand/Mascot'
 import { Button } from '@/components/UI/Button'
 import { utcDateString } from '@/lib/daily'
+import { STORE_MONETIZATION } from '@/lib/monetization'
 import { IS_APP_SHELL, IS_IOS_APP, IS_PORTAL_BUILD } from '@/lib/platform'
 import { Modal } from '@/components/UI/Modal'
 import { useGame } from '@/hooks/useGame'
@@ -23,8 +24,16 @@ export const MenuSheet = () => {
   const showToast = useGame((state) => state.showToast)
   const openSettings = useGame((state) => state.openSettings)
   const { t } = useI18n()
+  const startLevel = useGame((state) => state.startLevel)
   const handleDaily = (): void => {
-    const finishedToday = useProgress.getState().progress.lastDaily === utcDateString()
+    const progress = useProgress.getState().progress
+    if (!progress.tutorialCompleted) {
+      closeMenu()
+      showToast(t.dailyNeedsLesson)
+      startLevel(1)
+      return
+    }
+    const finishedToday = progress.lastDaily === utcDateString()
     if (finishedToday) {
       closeMenu()
       showToast(t.dailyDoneToday)
@@ -110,7 +119,7 @@ export const SettingsDialog = () => {
         <p className="mb-2 font-display font-semibold">{t.language}</p>
         <LanguageChoices />
       </div>
-      {IS_IOS_APP ? (
+      {IS_IOS_APP && STORE_MONETIZATION ? (
         <button
           type="button"
           onClick={() => {

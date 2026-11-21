@@ -34,6 +34,7 @@ export const HomeScreen = () => {
   const showLevels = useGame((state) => state.showLevels)
   const showSoon = useGame((state) => state.showSoon)
   const [dailyFinishedNote, setDailyFinishedNote] = useState(false)
+  const [dailyLessonNote, setDailyLessonNote] = useState(false)
   const reduceMotion = useReducedMotion()
   const { canInstall, install } = useInstallPrompt()
   const { locale, t } = useI18n()
@@ -41,14 +42,29 @@ export const HomeScreen = () => {
   const caughtUp = progress.completedLevels.includes(LEVEL_CAP)
   const nextLevel = Math.min(progress.currentLevel, LEVEL_CAP)
   const continueLabel = nextLevel > 1 || progress.completedLevels.length > 0
+  const needsLesson = ready && !progress.tutorialCompleted
+  const handlePlay = (): void => {
+    setDailyFinishedNote(false)
+    setDailyLessonNote(false)
+    if (caughtUp) showSoon()
+    else startLevel(needsLesson ? 1 : nextLevel)
+  }
   const handleDailyClick = (): void => {
     hydrate()
-    const finishedToday = useProgress.getState().progress.lastDaily === utcDateString()
+    const current = useProgress.getState().progress
+    if (!current.tutorialCompleted) {
+      setDailyFinishedNote(false)
+      setDailyLessonNote(true)
+      return
+    }
+    const finishedToday = current.lastDaily === utcDateString()
     if (finishedToday) {
+      setDailyLessonNote(false)
       setDailyFinishedNote(true)
       return
     }
     setDailyFinishedNote(false)
+    setDailyLessonNote(false)
     startDaily()
   }
   return (
@@ -72,9 +88,12 @@ export const HomeScreen = () => {
       <main className="relative z-10 flex flex-1 flex-col items-center justify-center text-center">
         <Mascot className="h-36 w-36 [@media(max-height:600px)]:h-20 [@media(max-height:600px)]:w-20" />
         <p className="mt-3 text-sm font-semibold tracking-wide text-[#E84B7F] uppercase [@media(max-height:600px)]:mt-2">{t.logicPuzzle}</p>
-        <h1 className="mt-2 font-display text-5xl font-bold text-[#3D2C29]">Crittermino</h1>
-        <p className="mt-3 max-w-xs text-base text-[#8C7468] [@media(max-height:600px)]:hidden">{IS_APP_SHELL ? t.shellTagline : t.tagline}</p>
-        <div className="mt-5 flex gap-2 text-3xl [@media(max-height:600px)]:mt-3" aria-hidden="true">
+        <h1 className="mt-2 font-display text-5xl font-bold text-[#3D2C29] [@media(max-height:600px)]:text-4xl">Crittermino</h1>
+        <p className="mt-3 max-w-xs text-base text-[#8C7468] [@media(max-height:600px)]:mt-1.5 [@media(max-height:600px)]:text-sm [@media(max-height:600px)]:leading-snug">
+          <span className="[@media(max-height:600px)]:hidden">{IS_APP_SHELL ? t.shellTagline : t.tagline}</span>
+          <span className="hidden [@media(max-height:600px)]:inline">{t.shortTagline}</span>
+        </p>
+        <div className="mt-5 flex gap-2 text-3xl [@media(max-height:600px)]:mt-2 [@media(max-height:600px)]:text-2xl" aria-hidden="true">
           {ANIMALS.map((animal) => (
             <span key={animal.emoji} title={`${t.animals[animal.emoji]} ${animal.size}`}>
               {animal.emoji}
@@ -82,9 +101,9 @@ export const HomeScreen = () => {
           ))}
         </div>
         {streak ? <p className="mt-4 rounded-full bg-white px-3 py-1 text-sm font-medium ring-1 ring-[#E5D5C0]">{streak}</p> : null}
-        <div className="mt-6 flex w-full max-w-xs flex-col gap-3 [@media(max-height:600px)]:mt-4">
-          <Button size="lg" onClick={() => (caughtUp ? showSoon() : startLevel(nextLevel))}>
-            {caughtUp ? t.comingSoon : continueLabel ? fill(t.continueLevel, { n: nextLevel }) : t.play}
+        <div className="mt-6 flex w-full max-w-xs flex-col gap-3 [@media(max-height:600px)]:mt-4 [@media(max-height:600px)]:gap-2">
+          <Button size="lg" onClick={handlePlay}>
+            {caughtUp ? t.comingSoon : needsLesson ? t.play : continueLabel ? fill(t.continueLevel, { n: nextLevel }) : t.play}
           </Button>
           <Button variant="secondary" onClick={handleDailyClick}>
             {t.dailyPuzzle}
@@ -94,9 +113,19 @@ export const HomeScreen = () => {
               {t.dailyDoneToday}
             </p>
           ) : null}
-          <Button variant="secondary" onClick={showLevels}>
-            {t.levelSelect}
-          </Button>
+          {dailyLessonNote ? (
+            <div role="status" className="rounded-2xl bg-white px-4 py-3 text-sm font-medium leading-relaxed text-[#3D2C29] ring-1 ring-[#E5D5C0]">
+              <p>{t.dailyNeedsLesson}</p>
+              <Button className="mt-3 w-full" onClick={handlePlay}>
+                {t.startLesson}
+              </Button>
+            </div>
+          ) : null}
+          {needsLesson ? null : (
+            <Button variant="secondary" onClick={showLevels}>
+              {t.levelSelect}
+            </Button>
+          )}
           {IS_APP_SHELL ? null : (
             <Link
               href="/how-to-play"

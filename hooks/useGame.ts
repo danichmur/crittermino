@@ -416,7 +416,7 @@ export const useGame = create<GameStore>((set, get) => ({
     const state = get()
     if (!state.level || state.isComplete) return
     if (needsRewardedHint(state.hintsUsed)) {
-      set({ hintAdOpen: true })
+      get().showToast(copy[getActiveLocale()].hintsGone)
       return
     }
     applyHint()

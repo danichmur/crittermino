@@ -249,7 +249,11 @@
         2,
         3,
         4
-      ]
+      ],
+      "tutorial": {
+        "message": "Homes can bend. They stay in one piece.",
+        "spotlight": []
+      }
     },
     {
       "number": 5,

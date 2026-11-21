@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/UI/Button'
 import { Modal } from '@/components/UI/Modal'
 import { useI18n } from '@/components/Locale/LocaleProvider'
@@ -15,6 +15,9 @@ export const HintAdModal = () => {
   const showToast = useGame((state) => state.showToast)
   const { t } = useI18n()
   const [busy, setBusy] = useState(false)
+  useEffect(() => {
+    if (!open) setBusy(false)
+  }, [open])
   const handleWatch = async (): Promise<void> => {
     if (busy) return
     setBusy(true)

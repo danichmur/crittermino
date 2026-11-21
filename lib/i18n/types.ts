@@ -4,6 +4,7 @@ export const BOARD_LINES = [
   'Tap the glowing cell to give Mouse a 2-cell home.',
   'Cat needs more room than Mouse — exactly 3 cells.',
   "Same-size homes can't share a wall. Cat sits between these mice.",
+  'Homes can bend. They stay in one piece.',
   'First real puzzle. The givens are all you need.',
   'Panda needs a connected home of exactly 5 cells.',
   'Lion needs a roomy home of exactly 6 cells.',
@@ -30,6 +31,7 @@ export interface Copy {
   readonly logicPuzzle: string
   readonly tagline: string
   readonly shellTagline: string
+  readonly shortTagline: string
   readonly play: string
   readonly continueLevel: string
   readonly comingSoon: string
@@ -64,6 +66,7 @@ export interface Copy {
   readonly hintAdBody: string
   readonly hintWatch: string
   readonly hintNotNow: string
+  readonly hintsGone: string
   readonly plusName: string
   readonly plusBody: string
   readonly plusYearly: string
@@ -97,6 +100,8 @@ export interface Copy {
   readonly restartLevel: string
   readonly dailyPuzzle: string
   readonly dailyDoneToday: string
+  readonly dailyNeedsLesson: string
+  readonly startLesson: string
   readonly settings: string
   readonly moreAnimals: string
   readonly moreAnimalsBody: string
@@ -118,6 +123,9 @@ export interface Copy {
   readonly moveOne: string
   readonly moveFew: string
   readonly moveMany: string
+  readonly hintOne: string
+  readonly hintFew: string
+  readonly hintMany: string
   readonly dayOne: string
   readonly dayFew: string
   readonly dayMany: string

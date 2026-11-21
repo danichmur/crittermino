@@ -17,6 +17,7 @@ export const en: Copy = {
     'A free Fillomino puzzle in the browser. No download. Fill the grid with animal homes. Each critter needs a region of exactly the right size, and same-size homes cannot touch.',
   shellTagline:
     'Fill the grid with animal homes. Each critter needs a region of exactly the right size, and same-size homes cannot touch.',
+  shortTagline: 'Animal homes. Right size. Same sizes stay apart.',
   play: 'Play',
   continueLevel: 'Continue · Level {n}',
   comingSoon: 'Coming soon',
@@ -75,8 +76,9 @@ export const en: Copy = {
   hintAdBody: 'The first two hints on a level are free. This one outlines a whole home.',
   hintWatch: 'Watch ad',
   hintNotNow: 'Not now',
+  hintsGone: 'No hints left on this level.',
   plusName: 'Crittermino Plus',
-  plusBody: 'No breaks between levels, and every hint without an ad. Every puzzle stays free.',
+  plusBody: 'Every hint, with no limit, and no ads. Every puzzle stays free.',
   plusYearly: 'Yearly',
   plusMonthly: 'Monthly',
   plusWeekly: 'Weekly',
@@ -108,6 +110,8 @@ export const en: Copy = {
   restartLevel: 'Restart level',
   dailyPuzzle: 'Daily puzzle',
   dailyDoneToday: "Today's puzzle is finished. Come back tomorrow.",
+  dailyNeedsLesson: 'Five short lesson levels first. Then the daily board opens.',
+  startLesson: 'Start the lesson',
   settings: 'Settings',
   moreAnimals: 'More animals',
   moreAnimalsBody: 'Cosmetic unlocks are coming later. The puzzle stays free.',
@@ -129,6 +133,9 @@ export const en: Copy = {
   moveOne: 'move',
   moveFew: 'moves',
   moveMany: 'moves',
+  hintOne: 'hint',
+  hintFew: 'hints',
+  hintMany: 'hints',
   dayOne: 'day',
   dayFew: 'days',
   dayMany: 'days',
@@ -180,6 +187,7 @@ export const en: Copy = {
     'Cat needs more room than Mouse — exactly 3 cells.': 'Cat needs more room than Mouse — exactly 3 cells.',
     "Same-size homes can't share a wall. Cat sits between these mice.":
       "Same-size homes can't share a wall. Cat sits between these mice.",
+    'Homes can bend. They stay in one piece.': 'Homes can bend. They stay in one piece.',
     'First real puzzle. The givens are all you need.': 'First real puzzle. The givens are all you need.',
     'Panda needs a connected home of exactly 5 cells.': 'Panda needs a connected home of exactly 5 cells.',
     'Lion needs a roomy home of exactly 6 cells.': 'Lion needs a roomy home of exactly 6 cells.',
@@ -259,11 +267,11 @@ export const en: Copy = {
   privacySections: [
     {
       title: 'The short version',
-      body: 'Crittermino is a free puzzle. The website has no account and no ads. The iOS app shows ads between some levels and offers Plus, a subscription that removes those ads and the hint limit. Progress stays on this device. Google Analytics counts visits to the website. You can erase the saved game yourself.',
+      body: 'Crittermino is a free puzzle. The website has no account and no ads. The iOS app shows ads through Unity Ads. Plus is a subscription that removes those ads and the hint limit. Progress stays on this device. Google Analytics counts visits to the website. You can erase the saved game yourself.',
     },
     {
       title: 'What stays on this device',
-      body: 'The game saves progress in this browser’s local storage: the current level, cleared levels, best scores, hints used, move count, daily streak, the last day you played, the last daily puzzle you cleared, and whether sound and haptics are on. The language you choose is saved there too, and in a cookie, so the next visit opens in that language. The iOS app also remembers whether Plus is active, when you first opened it, and when the last full-screen ad played, so those ads stay spaced out. A share message includes the level number, the move count, and the time as text, plus a link to the game. It does not include your name. If you install the game, or visit the live site, the browser may keep a copy of the app on the device so it can open again. That copy is the game, not a profile of you.',
+      body: 'The game saves progress in this browser’s local storage: the current level, cleared levels, best scores, hints used, move count, daily streak, the last day you played, the last daily puzzle you cleared, and whether sound and haptics are on. The language you choose is saved there too, and in a cookie, so the next visit opens in that language. The iOS app also remembers whether Plus is active, when you first opened it, and when the last full-screen ad was shown. A share message includes the level number, the move count, and the time as text, plus a link to the game. It does not include your name. If you install the game, or visit the live site, the browser may keep a copy of the app on the device so it can open again. That copy is the game, not a profile of you.',
     },
     {
       title: 'What the game sends',
@@ -275,7 +283,7 @@ export const en: Copy = {
     },
     {
       title: 'Advertising and cookies',
-      body: 'The website does not show ads and does not use an ad network. The iOS app shows ads through Google AdMob: an optional short video when you ask for a hint past the two free ones, and a full-screen ad between some campaign levels after you have been playing for a while. Plus, bought through Apple, removes the full-screen ads and the hint limit. If you allow tracking, AdMob can use the advertising identifier. It also receives the device type and a coarse location. It does not receive your name or email. On the website, Google Analytics sets a cookie in this browser so it can count a return visit. A separate cookie remembers the language you chose. Google receives the page address, a rough location, the device and browser type, and the time. It does not receive your name or email. Browser tracking protection, or clearing site data for this site, stops those cookies.',
+      body: 'The website does not show ads and does not use an ad network. The iOS app shows ads through Unity Ads: a short video for an extra hint, and a full-screen ad between some levels. If you allow tracking, Unity can use the device identifier to make those ads more relevant. If you decline, the ads are not personalized. Plus, bought through Apple, removes the ads and the limit on hints. On the website, Google Analytics sets a cookie in this browser so it can count a return visit. A separate cookie remembers the language you chose. Google receives the page address, a rough location, the device and browser type, and the time. It does not receive your name or email. Browser tracking protection, or clearing site data for this site, stops those cookies.',
     },
     {
       title: 'Children',
@@ -304,7 +312,7 @@ export const en: Copy = {
     },
     {
       title: 'What Plus includes',
-      body: 'Plus removes the full-screen ads between levels and the limit on hints. The plans are Weekly at $2.99, Monthly at $4.99, and Yearly at $19.99. The yearly plan includes 7 days free. When those 7 days end, the yearly price is charged. The price you confirm is the price shown on the Plus screen.',
+      body: 'Plus removes the ads and the limit on hints. The plans are Weekly at $2.99, Monthly at $4.99, and Yearly at $19.99. The yearly plan includes 7 days free. When those 7 days end, the yearly price is charged. The price you confirm is the price shown on the Plus screen.',
     },
     {
       title: 'Renewal and cancellation',

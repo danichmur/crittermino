@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { ContentPage } from '@/components/Layout/ContentPage'
 import { PlayLink } from '@/components/Layout/PlayLink'
 import { copy, fill } from '@/lib/i18n'
+import { playNextHref } from '@/lib/locale'
 import { getLocale } from '@/lib/locale-server'
 import { pageMeta } from '@/lib/seo'
 import { SITE } from '@/lib/site'
@@ -16,7 +17,8 @@ export const generateMetadata = async (): Promise<Metadata> => {
 }
 
 export default async function PrivacyPage() {
-  const text = copy[await getLocale()]
+  const locale = await getLocale()
+  const text = copy[locale]
   return (
     <ContentPage crumbs={[{ href: '/', label: text.home }, { label: text.privacy }]}>
       <h1 className="font-display text-4xl font-bold">{text.privacyHeading}</h1>
@@ -36,7 +38,7 @@ export default async function PrivacyPage() {
         </a>
       </p>
       <div className="mt-8">
-        <PlayLink>{text.privacyPlay}</PlayLink>
+        <PlayLink href={playNextHref(locale)}>{text.privacyPlay}</PlayLink>
       </div>
     </ContentPage>
   )

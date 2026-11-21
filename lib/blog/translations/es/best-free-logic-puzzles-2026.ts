@@ -85,7 +85,7 @@ export const listEs: BlogCopy = {
           'Un nonograma, también llamado picross, llena un dibujo a partir de cuentas en los bordes. Cada fila y cada columna lista las longitudes de los tramos pintados, en orden, con al menos una casilla vacía entre tramos. Deduces qué casillas son tinta y cuáles se quedan vacías. No hay un tamaño de región al estilo Fillomino. Estás leyendo tramos. [[https://webpbn.com/|Web Paint-by-Number]] es el conjunto gratis de toda la vida. [[https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/pattern.html|Pattern de Tatham]] es el mismo género cuando ya tienes abierta su colección.',
         ),
         paragraph(
-          'Las últimas diez casillas de un nonograma y las últimas diez de un tablero de Crittermino se desploman por la misma razón. Cuando el tablero está apretado, una casilla pintada quita un tramo que ya no cabe, y el resto de la línea sigue. A quien le gusta ese clic suelen gustarle los dos. El dibujo del final es un extra. La lógica es el punto.',
+          'Las últimas diez casillas de un nonograma y las últimas diez de un tablero de Crittermino se desploman por la misma razón. Cuando el tablero está apretado, una casilla pintada quita un tramo que ya no cabe, y el resto de la línea sigue. A quien le gusta ese clic suelen gustarle los dos. El dibujo del final es un extra. La lógica es el punto. La diferencia sobre el tablero está en [[/blog/fillomino-vs-nonogram|Fillomino y un nonograma]].',
         ),
       ],
     },

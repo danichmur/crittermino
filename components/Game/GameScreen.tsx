@@ -15,7 +15,8 @@ import { PlusSheet } from '@/components/Game/PlusSheet'
 import { WinModal } from '@/components/Game/WinModal'
 import { InteractiveTutorial } from '@/components/Tutorial/InteractiveTutorial'
 import { useI18n } from '@/components/Locale/LocaleProvider'
-import { fill, homeCountLabel } from '@/lib/i18n'
+import { fill, homeCountLabel, translateBoardLine } from '@/lib/i18n'
+import { STORE_MONETIZATION } from '@/lib/monetization'
 import { IS_IOS_APP } from '@/lib/platform'
 import { useGame } from '@/hooks/useGame'
 import { usePlus } from '@/hooks/usePlus'
@@ -81,8 +82,12 @@ export const GameScreen = () => {
     level.tutorial?.spotlight.find((spot) => grid[spot.row]?.[spot.col]?.animal !== animalFromSize(level.solution[spot.row]?.[spot.col] ?? 0)) ??
     null
   const showSkip = playMode === 'campaign' && level.number <= 5 && !tutorialCompleted && !isComplete
+  const tutorialMessage =
+    playMode === 'campaign' && level.number <= 5 && level.tutorial?.message && !isComplete
+      ? translateBoardLine(locale, level.tutorial.message)
+      : null
   const coachText = (() => {
-    if (!coach) return null
+    if (tutorialMessage || !coach) return null
     if (coach.kind === 'region') return fill(t.outlined, { name: t.animals[coach.animal] })
     return coach.note === 'only-one' ? t.onlyOne : t.lookHere
   })()
@@ -111,10 +116,12 @@ export const GameScreen = () => {
         </button>
       ) : null}
       <div className="flex min-h-0 flex-1 flex-col py-2 [@media(max-height:700px)]:py-1">
-        <p className="mb-2 flex h-5 shrink-0 items-center justify-center text-center text-sm font-medium leading-5 text-[#8C7468]" role="status">
-          {coachText}
-        </p>
-        <InteractiveTutorial message={null} fill>
+        {coachText ? (
+          <p className="mb-2 flex h-5 shrink-0 items-center justify-center text-center text-sm font-medium leading-5 text-[#8C7468]" role="status">
+            {coachText}
+          </p>
+        ) : null}
+        <InteractiveTutorial message={tutorialMessage} fill>
           <Grid
             grid={grid}
             shakes={shakes}
@@ -127,7 +134,7 @@ export const GameScreen = () => {
           />
         </InteractiveTutorial>
       </div>
-      {IS_IOS_APP && plusNudge && !plus ? (
+      {STORE_MONETIZATION && IS_IOS_APP && plusNudge && !plus ? (
         <div className="mb-2 flex shrink-0 items-center gap-2">
           <button
             type="button"

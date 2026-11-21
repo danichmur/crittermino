@@ -44,7 +44,8 @@ export const GameApp = () => {
     if (play === 'next' || play === 'daily') {
       claimedLaunch.current = true
       window.history.replaceState(null, '', '/')
-      if (play === 'daily') startDaily()
+      const progress = useProgress.getState().progress
+      if (play === 'daily' && progress.tutorialCompleted) startDaily()
       else openSavedLevel()
       setBooted(true)
       return

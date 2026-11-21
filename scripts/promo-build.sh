@@ -2,12 +2,13 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PROMO="$(cd "$ROOT/../crittermino-growth/promo" && pwd)"
 cd "$ROOT"
 
 LEVEL="${LEVEL:-53}"
-RAW="promo/raw/gameplay-${LEVEL}.webm"
-AUDIO="promo/audio/audio.wav"
-OUT="promo/out"
+RAW="$PROMO/raw/gameplay-${LEVEL}.webm"
+AUDIO="$PROMO/audio/audio.wav"
+OUT="$PROMO/out"
 CREAM="0xfff9f0"
 mkdir -p "$OUT"
 
@@ -24,8 +25,8 @@ echo "level=${LEVEL} dur=${DUR}s gameplay=${GPLEN}s"
 
 # 1) Vertical 9:16 (TikTok / Reels / Shorts) in EN, RU and ES
 for LANG in en ru es; do
-  HOOK="promo/cards/${LANG}/hook.png"
-  END="promo/cards/${LANG}/endcard.png"
+  HOOK="$PROMO/cards/${LANG}/hook.png"
+  END="$PROMO/cards/${LANG}/endcard.png"
   ffmpeg -y -hide_banner -loglevel error \
     -t "$GPLEN" -i "$RAW" -loop 1 -t "$ENDT" -i "$END" -loop 1 -framerate 30 -t "$GPLEN" -i "$HOOK" -i "$AUDIO" \
     -filter_complex "\
@@ -41,7 +42,7 @@ done
 
 # 2) Square 1:1 (Instagram / X) with EN endcard
 ffmpeg -y -hide_banner -loglevel error \
-  -t "$GPLEN" -i "$RAW" -loop 1 -t "$ENDT" -i "promo/cards/en/endcard.png" -i "$AUDIO" \
+  -t "$GPLEN" -i "$RAW" -loop 1 -t "$ENDT" -i "$PROMO/cards/en/endcard.png" -i "$AUDIO" \
   -filter_complex "\
 [0:v]scale=1080:1080:force_original_aspect_ratio=increase,crop=1080:1080,gblur=sigma=28,eq=brightness=0.06,fps=30,setsar=1[bg];\
 [0:v]scale=-1:1040:flags=lanczos[fg];\
@@ -54,7 +55,7 @@ echo "built square"
 
 # 3) Horizontal 16:9 (YouTube / X) with EN endcard
 ffmpeg -y -hide_banner -loglevel error \
-  -t "$GPLEN" -i "$RAW" -loop 1 -t "$ENDT" -i "promo/cards/en/endcard.png" -i "$AUDIO" \
+  -t "$GPLEN" -i "$RAW" -loop 1 -t "$ENDT" -i "$PROMO/cards/en/endcard.png" -i "$AUDIO" \
   -filter_complex "\
 [0:v]scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,gblur=sigma=34,eq=brightness=0.06,fps=30,setsar=1[bg];\
 [0:v]scale=-1:1040:flags=lanczos[fg];\

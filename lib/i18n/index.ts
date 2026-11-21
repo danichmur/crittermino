@@ -22,12 +22,13 @@ const plural = (locale: Locale, count: number, forms: { one: string; few: string
   return forms.many
 }
 
-type WordKind = 'move' | 'day' | 'home' | 'cell'
+type WordKind = 'move' | 'hint' | 'day' | 'home' | 'cell'
 
 export const pluralWord = (locale: Locale, count: number, kind: WordKind): string => {
   const text = copy[locale]
   const forms = {
     move: { one: text.moveOne, few: text.moveFew, many: text.moveMany },
+    hint: { one: text.hintOne, few: text.hintFew, many: text.hintMany },
     day: { one: text.dayOne, few: text.dayFew, many: text.dayMany },
     home: { one: text.homeOne, few: text.homeFew, many: text.homeMany },
     cell: { one: text.cellOne, few: text.cellFew, many: text.cellMany },
