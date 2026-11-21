@@ -6,6 +6,7 @@ import { LanguageChoices } from '@/components/Locale/LanguageMenu'
 import { useI18n } from '@/components/Locale/LocaleProvider'
 import { Mascot } from '@/components/Brand/Mascot'
 import { Button } from '@/components/UI/Button'
+import { LEVEL_CAP } from '@/lib/campaign'
 import { utcDateString } from '@/lib/daily'
 import { STORE_MONETIZATION } from '@/lib/monetization'
 import { IS_APP_SHELL, IS_IOS_APP, IS_PORTAL_BUILD } from '@/lib/platform'
@@ -30,7 +31,7 @@ export const MenuSheet = () => {
     if (!progress.tutorialCompleted) {
       closeMenu()
       showToast(t.dailyNeedsLesson)
-      startLevel(1)
+      startLevel(Math.min(LEVEL_CAP, Math.max(1, progress.currentLevel)))
       return
     }
     const finishedToday = progress.lastDaily === utcDateString()

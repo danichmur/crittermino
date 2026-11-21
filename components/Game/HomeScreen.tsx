@@ -47,7 +47,7 @@ export const HomeScreen = () => {
     setDailyFinishedNote(false)
     setDailyLessonNote(false)
     if (caughtUp) showSoon()
-    else startLevel(needsLesson ? 1 : nextLevel)
+    else startLevel(nextLevel)
   }
   const handleDailyClick = (): void => {
     hydrate()
@@ -103,7 +103,7 @@ export const HomeScreen = () => {
         {streak ? <p className="mt-4 rounded-full bg-white px-3 py-1 text-sm font-medium ring-1 ring-[#E5D5C0]">{streak}</p> : null}
         <div className="mt-6 flex w-full max-w-xs flex-col gap-3 [@media(max-height:600px)]:mt-4 [@media(max-height:600px)]:gap-2">
           <Button size="lg" onClick={handlePlay}>
-            {caughtUp ? t.comingSoon : needsLesson ? t.play : continueLabel ? fill(t.continueLevel, { n: nextLevel }) : t.play}
+            {caughtUp ? t.comingSoon : continueLabel ? fill(t.continueLevel, { n: nextLevel }) : t.play}
           </Button>
           <Button variant="secondary" onClick={handleDailyClick}>
             {t.dailyPuzzle}
